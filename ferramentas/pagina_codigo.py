@@ -115,6 +115,27 @@ GRUPOS = [
          'segunda ordem.'),
     ]),
 
+    ('Ondas', [
+        ('onda_plana.py', 'Capítulo 9',
+         'Verifica, por diferenças finitas, que a onda plana satisfaz as quatro '
+         'equações de Maxwell, e calcula Poynting, intensidade e pressão de '
+         'radiação.',
+         'Os divergentes dão zero, os dois rotacionais casam com as derivadas '
+         'temporais em 1e-4, as densidades elétrica e magnética de energia são '
+         'iguais, e a intensidade bate com (1/2)cε₀E₀².'),
+        ('fresnel.py', 'Capítulo 9',
+         'R e T das duas polarizações em função do ângulo, com Brewster, '
+         'ângulo crítico e a onda evanescente tratada com cosseno complexo.',
+         'R + T = 1 em todo ângulo e nas duas polarizações; R paralelo zera '
+         'exatamente em arctan(n₂/n₁); acima do crítico R = 1.'),
+        ('guia_onda.py', 'Capítulo 9',
+         'Modos de um guia por autovalores do laplaciano discreto, com '
+         'Dirichlet para TM e Neumann para TE, em qualquer seção.',
+         'No WR-90 o TE10 sai 6,5566 GHz contra 6,5571 analíticos; e a seção '
+         'em L, sem fórmula fechada, tem corte maior que o retângulo que a '
+         'contém.'),
+    ]),
+
     ('Trajetórias e circuitos no tempo', [
         ('trajetoria_lorentz.py', 'Capítulo 5',
          'Movimento de uma carga em campos E e B pelo método de Boris, o '
@@ -214,9 +235,6 @@ S3 = r'''
 correspondentes:</p>
 
 <ul>
-<li><strong>Propagação de pulso</strong>, no capítulo 9: integrar a equação de
-onda no tempo e ver a reflexão numa interface, com a fração refletida batendo
-com os coeficientes de Fresnel.</li>
 <li><strong>Dipolo radiante</strong>, no capítulo 11: os campos retardados de
 uma carga oscilante, e o padrão de radiação em sen²θ.</li>
 </ul>

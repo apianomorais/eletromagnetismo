@@ -27,7 +27,7 @@
       <a href="cap07.html" class="num" title="Capítulo 7: eletrodinâmica">7</a>
       <span class="grupo">EM III</span>
       <span class="num pendente" title="Capítulo 8: leis de conservação: em preparação">8</span>
-      <span class="num pendente" title="Capítulo 9: ondas eletromagnéticas: em preparação">9</span>
+      <a href="cap09.html" class="num" title="Capítulo 9: ondas eletromagnéticas">9</a>
       <span class="num pendente" title="Capítulo 10: potenciais e campos: em preparação">10</span>
       <span class="num pendente" title="Capítulo 11: radiação: em preparação">11</span>
       <a href="formulario.html">Formulário</a>
@@ -209,6 +209,27 @@
       <p><strong>Confira assim:</strong> A reciprocidade é confirmada por dois caminhos independentes, o resultado bate com a fórmula de integrais elípticas e converge em segunda ordem.</p>
     </article>
   </div>
+  <h3>Ondas</h3>
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/onda_plana.py">onda_plana.py</a></h3>
+      <p class="ficha">Capítulo 9</p>
+      <p>Verifica, por diferenças finitas, que a onda plana satisfaz as quatro equações de Maxwell, e calcula Poynting, intensidade e pressão de radiação.</p>
+      <p><strong>Confira assim:</strong> Os divergentes dão zero, os dois rotacionais casam com as derivadas temporais em 1e-4, as densidades elétrica e magnética de energia são iguais, e a intensidade bate com (1/2)cε₀E₀².</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/fresnel.py">fresnel.py</a></h3>
+      <p class="ficha">Capítulo 9</p>
+      <p>R e T das duas polarizações em função do ângulo, com Brewster, ângulo crítico e a onda evanescente tratada com cosseno complexo.</p>
+      <p><strong>Confira assim:</strong> R + T = 1 em todo ângulo e nas duas polarizações; R paralelo zera exatamente em arctan(n₂/n₁); acima do crítico R = 1.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/guia_onda.py">guia_onda.py</a></h3>
+      <p class="ficha">Capítulo 9</p>
+      <p>Modos de um guia por autovalores do laplaciano discreto, com Dirichlet para TM e Neumann para TE, em qualquer seção.</p>
+      <p><strong>Confira assim:</strong> No WR-90 o TE10 sai 6,5566 GHz contra 6,5571 analíticos; e a seção em L, sem fórmula fechada, tem corte maior que o retângulo que a contém.</p>
+    </article>
+  </div>
   <h3>Trajetórias e circuitos no tempo</h3>
   <div class="cartoes">
     <article class="cartao">
@@ -247,9 +268,6 @@
   correspondentes:</p>
 
   <ul>
-  <li><strong>Propagação de pulso</strong>, no capítulo 9: integrar a equação de
-  onda no tempo e ver a reflexão numa interface, com a fração refletida batendo
-  com os coeficientes de Fresnel.</li>
   <li><strong>Dipolo radiante</strong>, no capítulo 11: os campos retardados de
   uma carga oscilante, e o padrão de radiação em sen²θ.</li>
   </ul>
