@@ -25,6 +25,13 @@ campo \(\vet{B}\) fica <em>definido</em> operacionalmente. Lançar cargas
 conhecidas numa região e medir o desvio é, literalmente, a maneira de dizer
 quanto vale o campo magnético ali.</p>
 
+<figure class="figura-exemplo" style="max-width:40rem">
+  <img src="assets/img/cap05_lorentz.svg" alt="Orientação da força magnética">
+  <figcaption>Para onde aponta a força magnética. Com o mesmo campo e a mesma
+  velocidade, trocar o sinal da carga inverte a força, e em nenhum dos casos
+  ela tem componente ao longo do movimento.</figcaption>
+</figure>
+
 <p>Duas consequências saem antes de qualquer conta.</p>
 
 <p><strong>A primeira:</strong> o produto vetorial é perpendicular a

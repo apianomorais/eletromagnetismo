@@ -255,9 +255,68 @@ def casca_girante():
     return 'cap05_casca.svg'
 
 
+# ---------------------------------------------------------------------------
+def forca_de_lorentz():
+    """Para onde aponta qv x B: o caso positivo, o negativo e a regra da mão."""
+    p = []
+    L, A = 960, 420
+    cy = 180
+
+    def painel(x0, sinal):
+        """Campo entrando na tela, velocidade para a direita, força vertical."""
+        q = []
+        cx = x0 + 140
+        q.append('<rect x="%d" y="%d" width="260" height="210" rx="8" '
+                 'fill="%s" stroke="%s" stroke-width="1.6"/>'
+                 % (x0 + 10, cy - 100, CLARO, BORDA))
+        for i in range(4):
+            for j in range(3):
+                q.append(entra(x0 + 45 + i * 62, cy - 72 + j * 72, 8, SUAVE))
+        # a carga, com o sinal dentro
+        q.append('<circle cx="%d" cy="%d" r="17" fill="#ffffff" stroke="%s" '
+                 'stroke-width="2.6"/>' % (cx, cy, COBRE))
+        q.append(texto(cx, cy + 8, '+' if sinal > 0 else '−', COBRE, 24))
+        # velocidade, sempre para a direita
+        q.append(seta(cx + 20, cy, cx + 104, cy, TINTA, 3.2))
+        q.append(texto(cx + 112, cy + 7, 'v', TINTA, 21, anc='start', italico=True))
+        # força: para cima se a carga é positiva, para baixo se é negativa
+        ya, yb = (cy - 22, cy - 96) if sinal > 0 else (cy + 22, cy + 96)
+        q.append(seta(cx, ya, cx, yb, VERDE, 3.4))
+        q.append(texto(cx + 14, yb + (6 if sinal > 0 else 16),
+                       'F', VERDE, 21, anc='start', italico=True))
+        rot = 'carga positiva' if sinal > 0 else 'carga negativa'
+        q.append(texto(cx, cy + 142, rot, SUAVE, 17))
+        if sinal < 0:
+            q.append(texto(cx, cy + 166, 'com os mesmos v e B', SUAVE, 17))
+        return q
+
+    p += painel(10, +1)
+    p += painel(330, -1)
+    p.append(texto(150, cy - 120, 'B entrando na tela', SUAVE, 17))
+    p.append(texto(470, cy - 120, 'B entrando na tela', SUAVE, 17))
+
+    # ------------------------------------------------ o caso geral, em espaço
+    ox, oy = 740, cy + 30
+    p.append(seta(ox, oy, ox + 96, oy + 28, TINTA, 3.2))
+    p.append(texto(ox + 104, oy + 40, 'v', TINTA, 21, anc='start', italico=True))
+    p.append(seta(ox, oy, ox - 58, oy - 40, SUAVE, 3.2))
+    p.append(texto(ox - 70, oy - 46, 'B', SUAVE, 21, anc='end', italico=True))
+    p.append(seta(ox, oy, ox, oy - 104, VERDE, 3.4))
+    p.append(texto(ox + 12, oy - 104, 'F = q v × B', VERDE, 19,
+                   anc='start', italico=True))
+    p.append('<circle cx="%d" cy="%d" r="4.5" fill="%s"/>' % (ox, oy, COBRE))
+    p.append(texto(ox + 20, cy + 142, 'os dedos ao longo de v,', SUAVE, 17))
+    p.append(texto(ox + 20, cy + 166, 'dobrando para B: o polegar dá F',
+                   SUAVE, 17))
+
+    io.open(IMG / 'cap05_lorentz.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Orientação da força magnética'))
+    return 'cap05_lorentz.svg'
+
+
 def main():
     IMG.mkdir(parents=True, exist_ok=True)
-    for fn in (balanca_de_corrente, cabo_coaxial, casca_girante):
+    for fn in (forca_de_lorentz, balanca_de_corrente, cabo_coaxial, casca_girante):
         print('  ' + fn())
 
 
