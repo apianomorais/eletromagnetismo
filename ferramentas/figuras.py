@@ -405,10 +405,149 @@ def torque_na_espira():
     return 'cap06_torque.svg'
 
 
+# ---------------------------------------------------------------------------
+def correntes_ligadas():
+    """O empilhamento de espirinhas: o interior se cancela, a borda sobra."""
+    p = []
+    L, A = 940, 470
+    x0, y0, cel, nc, nl = 60, 90, 86, 5, 3
+    larg, alt = cel * nc, cel * nl
+
+    p.append('<rect x="%d" y="%d" width="%d" height="%d" fill="%s" '
+             'stroke="%s" stroke-width="1.6"/>' % (x0, y0, larg, alt, CLARO, BORDA))
+
+    def circulacao(cx, cy, lado, cor, esp, tam):
+        """Quatro setinhas no meio dos lados, girando no sentido anti-horário."""
+        m = lado / 2.0 - 4
+        d = lado * 0.3
+        q = []
+        q.append(seta(cx + m, cy + d, cx + m, cy - d, cor, esp, tam))   # sobe à direita
+        q.append(seta(cx + d, cy - m, cx - d, cy - m, cor, esp, tam))   # vai à esquerda
+        q.append(seta(cx - m, cy - d, cx - m, cy + d, cor, esp, tam))   # desce
+        q.append(seta(cx - d, cy + m, cx + d, cy + m, cor, esp, tam))   # volta
+        return q
+
+    for i in range(nc):
+        for j in range(nl):
+            cx, cy = x0 + cel * (i + 0.5), y0 + cel * (j + 0.5)
+            p.append('<rect x="%.1f" y="%.1f" width="%d" height="%d" fill="none" '
+                     'stroke="%s" stroke-width="1" stroke-dasharray="4 4"/>'
+                     % (cx - cel / 2, cy - cel / 2, cel, cel, BORDA))
+            p += circulacao(cx, cy, cel, SUAVE, 1.8, 9)
+
+    # a borda, que não tem com quem cancelar
+    p += circulacao(x0 + larg / 2, y0 + alt / 2, 0, COBRE, 0, 0)[:0]
+    cx, cy = x0 + larg / 2.0, y0 + alt / 2.0
+    for xa, ya, xb, yb in ((x0 + larg, y0 + alt - 20, x0 + larg, y0 + 20),
+                           (x0 + larg - 20, y0, x0 + 20, y0),
+                           (x0, y0 + 20, x0, y0 + alt - 20),
+                           (x0 + 20, y0 + alt, x0 + larg - 20, y0 + alt)):
+        p.append(seta(xa, ya, xb, yb, COBRE, 4.0, 15))
+    p.append(texto(x0 + larg / 2, y0 - 24,
+                   'a corrente da borda contorna o objeto', COBRE, 18))
+    p.append(texto(x0 + larg / 2, y0 + alt + 40,
+                   'no interior, cada trecho encontra o do vizinho em sentido '
+                   'oposto', SUAVE, 17))
+    p.append(texto(x0 + larg / 2, y0 + alt + 64,
+                   'e os dois se anulam', SUAVE, 17))
+
+    # a ampliação de duas vizinhas
+    zx, zy, z = 600, 120, 130
+    p.append(texto(zx + z, zy - 26, 'duas vizinhas, de perto', SUAVE, 18))
+    for k in (0, 1):
+        q = zx + k * z
+        p.append('<rect x="%d" y="%d" width="%d" height="%d" fill="%s" '
+                 'stroke="%s" stroke-width="1.4"/>' % (q, zy, z, z, CLARO, BORDA))
+        p += circulacao(q + z / 2, zy + z / 2, z, SUAVE, 2.4, 12)
+    # o lado comum, com as duas setas opostas destacadas
+    p.append('<rect x="%d" y="%d" width="32" height="%d" fill="%s"/>'
+             % (zx + z - 16, zy + 10, z - 20, CLARO))
+    p.append(seta(zx + z - 13, zy + z - 22, zx + z - 13, zy + 22, COBRE, 3.0, 13))
+    p.append(seta(zx + z + 13, zy + 22, zx + z + 13, zy + z - 22, COBRE, 3.0, 13))
+    p.append(texto(zx + z, zy + z + 36, 'no lado comum as correntes', COBRE, 17))
+    p.append(texto(zx + z, zy + z + 60, 'são opostas: resultado nulo', COBRE, 17))
+
+    io.open(IMG / 'cap06_ligadas.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Cancelamento das correntes ligadas'))
+    return 'cap06_ligadas.svg'
+
+
+# ---------------------------------------------------------------------------
+def laco_de_histerese():
+    """O laço com os três números, e a comparação entre material doce e duro."""
+    p = []
+    L, A = 940, 480
+
+    def eixos(ox, oy, lx, ly, rh, rb):
+        q = [seta(ox - lx, oy, ox + lx, oy, SUAVE, 1.8, 11),
+             seta(ox, oy + ly, ox, oy - ly, SUAVE, 1.8, 11),
+             texto(ox + lx + 4, oy + 22, rh, SUAVE, 19, anc='end', italico=True),
+             texto(ox + 18, oy - ly + 4, rb, SUAVE, 19, anc='start', italico=True)]
+        return q
+
+    def curva(pontos, cor, esp=2.6, traco=False):
+        d = ' '.join('%.1f,%.1f' % (x, y) for x, y in pontos)
+        t = ' stroke-dasharray="7 6"' if traco else ''
+        return ('<polyline points="%s" fill="none" stroke="%s" stroke-width="%.1f" '
+                'stroke-linejoin="round" stroke-linecap="round"%s/>' % (d, cor, esp, t))
+
+    def ramo(ox, oy, ex, ey, hc, larg, sentido):
+        """Um ramo do laço: B = tanh((H -+ Hc)/larg), já em coordenadas de tela."""
+        pts = []
+        n = 160
+        for i in range(n + 1):
+            h = -1.6 + 3.2 * i / n
+            b = math.tanh((h - sentido * hc) / larg)
+            pts.append((ox + h * ex, oy - b * ey))
+        return pts if sentido > 0 else pts[::-1]
+
+    # ------------------------------------------------- painel 1: os três números
+    ox, oy, ex, ey = 240, 230, 118, 112
+    hc, larg = 0.42, 0.34
+    p += eixos(ox, oy, 180, 160, 'H', 'B')
+    sobe = ramo(ox, oy, ex, ey, hc, larg, +1)
+    desce = ramo(ox, oy, ex, ey, hc, larg, -1)
+    p.append(curva(sobe, COBRE))
+    p.append(curva(desce, COBRE))
+    # a curva virgem, do material nunca magnetizado
+    virgem = [(ox + h * ex, oy - math.tanh(h / (larg * 2.3)) * ey)
+              for h in [1.6 * i / 80 for i in range(81)]]
+    p.append(curva(virgem, VERDE, 2.2, True))
+    p.append(texto(ox + 176, oy + 80, 'curva virgem, do material', VERDE, 17, anc='end'))
+    p.append(texto(ox + 176, oy + 100, 'nunca magnetizado', VERDE, 17, anc='end'))
+
+    br = math.tanh(hc / larg)
+    p.append('<circle cx="%d" cy="%.1f" r="4.5" fill="%s"/>' % (ox, oy - br * ey, TINTA))
+    p.append(texto(ox - 12, oy - br * ey - 10, 'remanência', TINTA, 17, anc='end'))
+    p.append('<circle cx="%.1f" cy="%d" r="4.5" fill="%s"/>' % (ox - hc * ex, oy, TINTA))
+    p.append(texto(ox - hc * ex - 10, oy + 26, 'coercividade', TINTA, 17, anc='end'))
+    p.append(texto(ox + 176, oy - 68, 'saturação', TINTA, 17, anc='end'))
+    # o sentido de percurso
+    p.append(seta(ox + 30 * 1.0, oy - 104, ox + 62, oy - 108, COBRE, 2.4, 11))
+    p.append(seta(ox - 30, oy + 104, ox - 62, oy + 108, COBRE, 2.4, 11))
+    p.append(texto(ox, oy + 216, 'o caminho de ida não é o de volta', SUAVE, 17))
+
+    # ---------------------------------------------- painel 2: doce contra duro
+    ox2 = 700
+    p += eixos(ox2, oy, 180, 160, 'H', 'B')
+    for hcx, cor, rot, dy in ((0.08, VERDE, 'doce: transformador', 150),
+                              (0.78, COBRE, 'duro: ímã permanente', 174)):
+        p.append(curva(ramo(ox2, oy, ex, ey, hcx, larg, +1), cor, 2.4))
+        p.append(curva(ramo(ox2, oy, ex, ey, hcx, larg, -1), cor, 2.4))
+        p.append(texto(ox2 - 176, oy + dy, rot, cor, 17, anc='start'))
+    p.append(texto(ox2, oy + 216, 'a área do laço é a energia perdida por ciclo',
+                   SUAVE, 17))
+
+    io.open(IMG / 'cap06_histerese.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Laço de histerese'))
+    return 'cap06_histerese.svg'
+
+
 def main():
     IMG.mkdir(parents=True, exist_ok=True)
     for fn in (forca_de_lorentz, balanca_de_corrente, cabo_coaxial,
-               casca_girante, torque_na_espira):
+               casca_girante, torque_na_espira, correntes_ligadas,
+               laco_de_histerese):
         print('  ' + fn())
 
 

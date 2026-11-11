@@ -199,6 +199,13 @@ não é nulo onde a magnetização varia. Na superfície externa, porém, não h
 vizinha para cancelar, e sobra uma corrente que contorna o objeto. Um ímã
 cilíndrico uniformemente magnetizado é, para todos os efeitos, um solenoide sem
 fio.</p>
+
+<figure class="figura-exemplo" style="max-width:40rem">
+  <img src="assets/img/cap06_ligadas.svg" alt="Cancelamento das correntes ligadas">
+  <figcaption>As espirinhas vistas de frente. Em todo lado compartilhado as
+  duas correntes são opostas e se anulam, e o que sobra é a volta na borda.
+  </figcaption>
+</figure>
 </div>
 '''
 
@@ -339,6 +346,14 @@ alinhar átomo por átomo: é fazer os domínios favoravelmente orientados
 impurezas e defeitos. Daí a <strong>histerese</strong>. Percorrendo um ciclo de
 \(H\), a curva \(B(H)\) não é uma função: ela depende do caminho. Os três
 números que a descrevem são</p>
+
+<figure class="figura-exemplo" style="max-width:40rem">
+  <img src="assets/img/cap06_histerese.svg" alt="Laço de histerese">
+  <figcaption>O laço, com os três números, e a diferença entre o material doce
+  do núcleo de transformador, que precisa percorrer o ciclo sessenta vezes por
+  segundo sem desperdiçar, e o material duro do ímã de geladeira, que precisa
+  justamente resistir a ser desmagnetizado.</figcaption>
+</figure>
 
 <div class="cartoes">
   <article class="cartao">
