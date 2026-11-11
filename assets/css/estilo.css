@@ -30,14 +30,14 @@
   --azul-pastel:#edf0f4;
   --vinho:#b05a1f;
   --verde:#2c6e63;
-  --ambar:#b5831f;
+  --ambar:#a2531d;
   --tinta:#1b1f24;
   --tinta-suave:#4a5560;
   --papel:#ffffff;
   --papel-alt:#f7f8fa;
   --borda:#dde2e8;
   --raio:10px;
-  --sombra:0 1px 3px rgba(28,44,96,.10), 0 6px 20px rgba(28,44,96,.06);
+  --sombra:0 1px 3px rgba(43,50,64,.10), 0 6px 20px rgba(43,50,64,.06);
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --mono:"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
@@ -78,14 +78,14 @@ body{
 .marca span{opacity:.72;font-weight:400}
 .menu{display:flex;gap:.2rem;flex-wrap:wrap;margin-left:auto;font-family:var(--sans);font-size:.82rem}
 .menu a{
-  color:#dbe6f2;text-decoration:none;padding:.3rem .62rem;border-radius:6px;
+  color:var(--topo-texto);text-decoration:none;padding:.3rem .62rem;border-radius:6px;
   transition:background .15s,color .15s;
 }
 .menu a:hover{background:rgba(255,255,255,.12);color:#fff}
 .menu a.ativo{background:#fff;color:var(--azul);font-weight:600}
 .menu .grupo{
   font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
-  color:#9fb6cd;padding:.3rem .1rem .3rem .55rem;align-self:center;
+  color:var(--topo-suave);padding:.3rem .1rem .3rem .55rem;align-self:center;
 }
 .menu .grupo:first-of-type{padding-left:.3rem}
 .menu a.num{min-width:1.85em;text-align:center;padding:.3rem .4rem}
@@ -137,14 +137,14 @@ code{font-family:var(--mono);font-size:.88em;background:var(--papel-alt);
 }
 .bloco.def{border-left-color:var(--azul-claro)}
 .bloco.def .rotulo{color:var(--azul-claro)}
-.bloco.ex{border-left-color:var(--verde);background:#f1f8f5}
+.bloco.ex{border-left-color:var(--verde);background:var(--verde-leve)}
 .bloco.ex .rotulo{color:var(--verde)}
-.bloco.alerta{border-left-color:var(--vinho);background:#fdf3f4}
+.bloco.alerta{border-left-color:var(--vinho);background:var(--vinho-leve)}
 .bloco.alerta .rotulo{color:var(--vinho)}
-.bloco.fisica{border-left-color:var(--ambar);background:#fdf8ec}
+.bloco.fisica{border-left-color:var(--ambar);background:var(--ambar-leve)}
 .bloco.fisica .rotulo{color:var(--ambar)}
 .destaque{
-  background:linear-gradient(0deg,#fff8dd,#fff8dd);border:1px solid #e8d79a;
+  background:var(--ambar-leve);border:1px solid var(--ambar-forte);
   border-radius:var(--raio);padding:.75rem 1.1rem;margin:1.2rem 0;text-align:center;
 }
 
@@ -161,7 +161,7 @@ details.solucao>summary{
 details.solucao>summary::-webkit-details-marker{display:none}
 details.solucao>summary::before{content:"▸ ";font-size:.9em}
 details.solucao[open]>summary::before{content:"▾ "}
-details.solucao>summary:hover{background:#dbe7f3}
+details.solucao>summary:hover{background:var(--pastel-forte)}
 .corpo-solucao{padding:.5rem 1.15rem 1rem}
 
 /* ---------- Tabelas ---------- */
@@ -378,7 +378,7 @@ mjx-container[display="true"]{
 .gd-cel .gd-soma{font-size:1.05rem;font-weight:700;color:var(--tinta-suave)}
 .gd-cel .gd-par{font-size:.62rem;color:#96a2ad;margin-top:1px}
 .gd-cel.favoravel{
-  background:#fbe9c8;border-color:var(--ambar);transform:scale(1.04);
+  background:var(--ambar-forte);border-color:var(--ambar);transform:scale(1.04);
 }
 .gd-cel.favoravel .gd-soma{color:#8a5f0d}
 .gd-cel.favoravel .gd-par{color:#a8822f}
@@ -448,7 +448,7 @@ mjx-container[display="true"]{
   cursor:pointer;transition:all .12s;
 }
 .tri-cel:hover{border-color:var(--laranja);color:var(--laranja-texto);background:#fff}
-.tri-cel.linha-ativa{background:#eaf1f8;border-color:#b9cfe3;color:var(--azul)}
+.tri-cel.linha-ativa{background:var(--pastel-forte);border-color:var(--borda-forte);color:var(--azul)}
 .tri-cel.pai{background:var(--acento-forte);border-color:var(--laranja);color:var(--laranja-texto)}
 .tri-cel.sel{
   background:var(--azul);border-color:var(--azul);color:#fff;
@@ -507,7 +507,7 @@ h3.unidade:first-of-type{margin-top:1.2rem}
 .quadrado .vazio{border:none;background:transparent}
 .quadrado .aceso{background:var(--azul);border-color:var(--azul);color:#fff}
 .quadrado .aceso mjx-container,.quadrado .aceso svg{color:#fff;fill:currentColor}
-.quadrado .conjugado{border-color:var(--vinho);background:#fdf3f4;color:var(--vinho)}
+.quadrado .conjugado{border-color:var(--vinho);background:var(--vinho-leve);color:var(--vinho)}
 
 /* Cartão de módulo ainda não publicado, na página inicial */
 .cartao.em-preparo{

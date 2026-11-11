@@ -314,9 +314,101 @@ def forca_de_lorentz():
     return 'cap05_lorentz.svg'
 
 
+# ---------------------------------------------------------------------------
+def torque_na_espira():
+    """A espira inclinada no campo uniforme: o binário e o braço b sen(theta)."""
+    import math as _m
+    p = []
+    L, A = 940, 480
+    tet = math.radians(38)
+
+    def campo(x0, x1, cy, rotulo):
+        """Fundo de campo uniforme: setas horizontais, bem claras."""
+        q = []
+        for j in range(5):
+            y = cy - 152 + j * 76
+            q.append(seta(x0, y, x1, y, BORDA, 2.2, 11))
+        if rotulo:
+            q.append(texto(x1 - 6, cy - 166, 'B', SUAVE, 21, anc='end', italico=True))
+        return q
+
+    # ---------------------------------------------------- painel 1: inclinada
+    ox, oy = 250, 215
+    p += campo(40, 470, oy, True)
+    meia = 88.0
+    dx, dy = _m.sin(tet), _m.cos(tet)            # direção do plano, visto de perfil
+    x1, y1 = ox + meia * dx, oy + meia * dy      # ponta de baixo, corrente saindo
+    x2, y2 = ox - meia * dx, oy - meia * dy      # ponta de cima, corrente entrando
+
+    # as linhas de ação das duas forças, e o braço entre elas
+    for xx in (x1, x2):
+        p.append('<line x1="%.1f" y1="%d" x2="%.1f" y2="%d" stroke="%s" '
+                 'stroke-width="1.3" stroke-dasharray="6 6"/>'
+                 % (xx, oy - 160, xx, oy + 176, SUAVE))
+    p.append('<line x1="%.1f" y1="%d" x2="%.1f" y2="%d" stroke="%s" '
+             'stroke-width="1.6"/>' % (x2, oy + 174, x1, oy + 174, SUAVE))
+    p.append(seta(x2 + 2, oy + 174, x2, oy + 174, SUAVE, 1.6, 9))
+    p.append(seta(x1 - 2, oy + 174, x1, oy + 174, SUAVE, 1.6, 9))
+    p.append(texto((x1 + x2) / 2, oy + 198, 'b sen θ', SUAVE, 18, italico=True))
+
+    # a espira, de perfil
+    p.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+             'stroke-width="5" stroke-linecap="round"/>' % (x1, y1, x2, y2, COBRE))
+    p.append(texto((ox + x1) / 2 - 20, (oy + y1) / 2 + 14, 'b', COBRE, 19,
+                   italico=True))
+    p.append(entra(x2, y2, 11, COBRE))
+    p.append(sai(x1, y1, 11, COBRE))
+    p.append(texto(x2 - 26, y2 - 10, 'a', COBRE, 19, anc='end', italico=True))
+
+    # o binário
+    p.append(seta(x2, y2 - 16, x2, y2 - 92, VERDE, 3.4))
+    p.append(texto(x2 - 10, y2 - 92, 'F = I a B', VERDE, 19, anc='end', italico=True))
+    p.append(seta(x1, y1 + 16, x1, y1 + 92, VERDE, 3.4))
+    p.append(texto(x1 + 10, y1 + 96, 'F', VERDE, 19, anc='start', italico=True))
+
+    # o momento magnético e o ângulo até o campo
+    mx, my = ox + 96 * _m.cos(tet), oy - 96 * _m.sin(tet)
+    p.append(seta(ox, oy, mx, my, TINTA, 3.2))
+    p.append(texto(mx + 10, my - 6, 'm', TINTA, 21, anc='start', italico=True))
+    p.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" '
+             'stroke-width="1.3" stroke-dasharray="6 6"/>'
+             % (ox, oy, ox + 104, oy, SUAVE))
+    r = 56
+    p.append('<path d="M %.1f %.1f A %d %d 0 0 0 %.1f %.1f" fill="none" '
+             'stroke="%s" stroke-width="1.6"/>'
+             % (ox + r, oy, r, r, ox + r * _m.cos(tet), oy - r * _m.sin(tet), SUAVE))
+    p.append(texto(ox + r + 16, oy - 14, 'θ', SUAVE, 19, anc='start', italico=True))
+    p.append('<circle cx="%d" cy="%d" r="4" fill="%s"/>' % (ox, oy, TINTA))
+    p.append(texto(250, oy + 236, 'braço b sen θ, torque τ = m B sen θ', SUAVE, 17))
+
+    # ----------------------------------------------------- painel 2: alinhada
+    ox2, oy2 = 730, 215
+    p += campo(560, 900, oy2, False)
+    p.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" '
+             'stroke-width="1.3" stroke-dasharray="6 6"/>'
+             % (ox2, oy2 - 150, ox2, oy2 + 150, SUAVE))
+    p.append('<line x1="%d" y1="%.1f" x2="%d" y2="%.1f" stroke="%s" '
+             'stroke-width="5" stroke-linecap="round"/>'
+             % (ox2, oy2 - meia, ox2, oy2 + meia, COBRE))
+    p.append(entra(ox2, oy2 - meia, 11, COBRE))
+    p.append(sai(ox2, oy2 + meia, 11, COBRE))
+    p.append(seta(ox2, oy2 - meia - 16, ox2, oy2 - meia - 92, VERDE, 3.4))
+    p.append(seta(ox2, oy2 + meia + 16, ox2, oy2 + meia + 92, VERDE, 3.4))
+    p.append(seta(ox2, oy2, ox2 + 96, oy2, TINTA, 3.2))
+    p.append(texto(ox2 + 106, oy2 - 8, 'm', TINTA, 21, anc='start', italico=True))
+    p.append('<circle cx="%d" cy="%d" r="4" fill="%s"/>' % (ox2, oy2, TINTA))
+    p.append(texto(ox2, oy2 + 236, 'θ = 0: braço nulo, torque nulo,', SUAVE, 17))
+    p.append(texto(ox2, oy2 + 260, 'e é onde a espira para', SUAVE, 17))
+
+    io.open(IMG / 'cap06_torque.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Torque sobre uma espira num campo uniforme'))
+    return 'cap06_torque.svg'
+
+
 def main():
     IMG.mkdir(parents=True, exist_ok=True)
-    for fn in (forca_de_lorentz, balanca_de_corrente, cabo_coaxial, casca_girante):
+    for fn in (forca_de_lorentz, balanca_de_corrente, cabo_coaxial,
+               casca_girante, torque_na_espira):
         print('  ' + fn())
 
 

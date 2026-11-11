@@ -89,23 +89,23 @@
       function Y(z) { return A - 36 - (z - zmin) / (zmax - zmin) * (A - 54); }
 
       // eixos
-      ct.strokeStyle = '#d9ddea'; ct.lineWidth = 1;
+      ct.strokeStyle = cor('--borda'); ct.lineWidth = 1;
       ct.beginPath(); ct.moveTo(46, Y(0)); ct.lineTo(L - 16, Y(0)); ct.stroke();
-      rotulo(ct, 'y', L - 22, Y(0) + 14, '#4a5560');
-      rotulo(ct, 'z', 34, 24, '#4a5560');
+      rotulo(ct, 'y', L - 22, Y(0) + 14, cor('--tinta-suave'));
+      rotulo(ct, 'z', 34, 24, cor('--tinta-suave'));
 
       // os dois campos, no canto
-      seta(ct, 70, A - 60, 70, A - 96, '#a8181d', 2.4);
-      rotulo(ct, 'E', 82, A - 92, '#a8181d');
-      ct.strokeStyle = '#1c2c60'; ct.lineWidth = 2;
+      seta(ct, 70, A - 60, 70, A - 96, cor('--vinho'), 2.4);
+      rotulo(ct, 'E', 82, A - 92, cor('--vinho'));
+      ct.strokeStyle = cor('--azul'); ct.lineWidth = 2;
       ct.beginPath(); ct.arc(118, A - 78, 9, 0, 2 * Math.PI); ct.stroke();
       ct.beginPath();
       ct.moveTo(112, A - 84); ct.lineTo(124, A - 72);
       ct.moveTo(124, A - 84); ct.lineTo(112, A - 72); ct.stroke();
-      rotulo(ct, 'B', 132, A - 88, '#1c2c60');
+      rotulo(ct, 'B', 132, A - 88, cor('--azul'));
 
       // a trajetória
-      ct.strokeStyle = '#1c2c60'; ct.lineWidth = 2.2;
+      ct.strokeStyle = cor('--azul'); ct.lineWidth = 2.2;
       ct.lineJoin = 'round'; ct.beginPath();
       pts.forEach(function (p, i) {
         var x = X(p[0]), y = Y(p[1]);
@@ -115,7 +115,7 @@
 
       // a reta de deriva, para comparar
       var vd = E0 / B0;
-      ct.strokeStyle = '#a8181d'; ct.lineWidth = 1.4;
+      ct.strokeStyle = cor('--vinho'); ct.lineWidth = 1.4;
       ct.setLineDash([6, 5]);
       ct.beginPath();
       ct.moveTo(X(0), Y(vd ? (zmin + zmax) / 2 : 0));
@@ -123,7 +123,7 @@
       ct.stroke();
       ct.setLineDash([]);
 
-      ct.fillStyle = '#b5831f';
+      ct.fillStyle = cor('--ambar');
       ct.beginPath(); ct.arc(X(0), Y(0), 4.5, 0, 2 * Math.PI); ct.fill();
 
       var vtot = Math.abs(v0);

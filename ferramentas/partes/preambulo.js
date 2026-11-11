@@ -102,6 +102,13 @@
     }
   }
 
+  /* As cores dos desenhos vêm do CSS, e não escritas à mão aqui, para que
+     trocar a paleta do site troque também o que é pintado no canvas. */
+  function cor(nome, alternativa) {
+    var v = getComputedStyle(document.documentElement).getPropertyValue(nome);
+    return (v || '').trim() || alternativa || '#2b3240';
+  }
+
   var REGISTRO = {};
 
 

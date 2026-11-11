@@ -61,9 +61,23 @@ def aplica(nome):
              ('--acento-etiqueta', mistura(destaque, 0.88)),
              ('--acento-fundo', mistura(destaque, 0.95)),
              ('--acento-borda', mistura(destaque, 0.62)),
-             ('--acento-forte', mistura(destaque, 0.80))]
+             ('--acento-forte', mistura(destaque, 0.80)),
+             ('--ambar', escurece(destaque, 0.08)),
+             ('--ambar-leve', mistura(destaque, 0.93)),
+             ('--ambar-forte', mistura(destaque, 0.84)),
+             ('--topo-texto', mistura(p, 0.82)),
+             ('--topo-suave', mistura(p, 0.60)),
+             ('--pastel-forte', mistura(p, 0.88)),
+             ('--borda-forte', mistura(p, 0.72)),
+             ('--verde-leve', mistura(sec, 0.94)),
+             ('--vinho-leve', mistura(destaque, 0.95))]
     for var, cor in pares:
         s = re.sub(r'(%s:)#[0-9a-fA-F]{6}' % var, r'\g<1>' + cor, s, count=1)
+    # a sombra também era navy, escrita em rgba à mão
+    r, v, a = (int(p[i:i + 2], 16) for i in (1, 3, 5))
+    s = re.sub(r'--sombra:[^;]+;',
+               '--sombra:0 1px 3px rgba(%d,%d,%d,.10), 0 6px 20px rgba(%d,%d,%d,.06);'
+               % (r, v, a, r, v, a), s, count=1)
     io.open(CSS, 'w', encoding='utf-8').write(s)
     print('paleta %s aplicada: %s' % (nome, p))
 

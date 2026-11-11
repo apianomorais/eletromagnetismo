@@ -90,8 +90,8 @@
       function Z(z) { return cz - z * esc; }
 
       // a esfera
-      ct.fillStyle = '#edf0f4';
-      ct.strokeStyle = '#2b3240';
+      ct.fillStyle = cor('--azul-pastel');
+      ct.strokeStyle = cor('--azul');
       ct.lineWidth = 2;
       ct.beginPath(); ct.arc(cx, cz, R * esc, 0, 2 * Math.PI);
       ct.fill(); ct.stroke();
@@ -113,7 +113,7 @@
         }
       }
 
-      var cor = (qual === 'B') ? '#b05a1f' : '#2c6e63';
+      var cor = (qual === 'B') ? cor('--vinho') : cor('--verde');
       ct.strokeStyle = cor;
       ct.lineWidth = 1.6;
       ct.lineJoin = 'round';
@@ -142,8 +142,8 @@
       });
 
       // a magnetização, sempre visível
-      seta(ct, cx, cz + 0.42 * esc, cx, cz - 0.42 * esc, '#2b3240', 2.6);
-      rotulo(ct, 'M', cx + 14, cz - 0.3 * esc, '#2b3240');
+      seta(ct, cx, cz + 0.42 * esc, cx, cz - 0.42 * esc, cor('--azul'), 2.6);
+      rotulo(ct, 'M', cx + 14, cz - 0.3 * esc, cor('--azul'));
 
       // a corrente ligada de superfície, Kb = M sen(theta) phi^
       if (mostraK) {
@@ -153,7 +153,7 @@
             var xx = cx + lado * R * esc * Math.cos(ang);
             var zz = cz - R * esc * Math.sin(ang);
             var rr = 4.2 + 2.4 * Math.cos(ang);
-            ct.strokeStyle = '#4f5a6b'; ct.lineWidth = 1.6;
+            ct.strokeStyle = cor('--azul-claro'); ct.lineWidth = 1.6;
             ct.beginPath(); ct.arc(xx, zz, rr, 0, 2 * Math.PI); ct.stroke();
             if (lado > 0) {
               ct.beginPath();
@@ -163,12 +163,12 @@
               ct.lineTo(xx - rr * 0.6, zz + rr * 0.6);
               ct.stroke();
             } else {
-              ct.fillStyle = '#4f5a6b';
+              ct.fillStyle = cor('--azul-claro');
               ct.beginPath(); ct.arc(xx, zz, 1.9, 0, 2 * Math.PI); ct.fill();
             }
           }
         });
-        rotulo(ct, 'Kb', cx + R * esc + 26, cz + 0.8 * esc, '#4f5a6b');
+        rotulo(ct, 'Kb', cx + R * esc + 26, cz + 0.8 * esc, cor('--azul-claro'));
       }
 
       mostrar({
