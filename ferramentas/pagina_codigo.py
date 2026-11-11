@@ -63,6 +63,21 @@ GRUPOS = [
          'total deixa de ser nula.'),
     ]),
 
+    ('Potenciais, radiação e calibre', [
+        ('lienard_wiechert.py', 'Capítulo 10',
+         'Resolve o tempo retardado por bisseção e monta os campos de uma carga '
+         'em movimento qualquer, com as parcelas de velocidade e de aceleração.',
+         'Em movimento uniforme o campo bate com a fórmula fechada em 1e-16 e '
+         'aponta exatamente para a posição presente; a potência média que '
+         'atravessa qualquer esfera é a de Larmor.'),
+        ('calibre.py', 'Capítulo 10',
+         'Aplica uma transformação de calibre arbitrária e mede o que muda e o '
+         'que não muda.',
+         'E e B ficam iguais; os potenciais ficam irreconhecíveis; e a condição '
+         'de Lorenz deixa de valer, porque o lambda escolhido não satisfaz a '
+         'equação de onda.'),
+    ]),
+
     ('Matéria polarizada e magnetizada', [
         ('esfera_dieletrica.py', 'Capítulo 4',
          'A esfera dielétrica num campo uniforme, pela série de Legendre e por '
@@ -128,6 +143,11 @@ GRUPOS = [
          'ângulo crítico e a onda evanescente tratada com cosseno complexo.',
          'R + T = 1 em todo ângulo e nas duas polarizações; R paralelo zera '
          'exatamente em arctan(n₂/n₁); acima do crítico R = 1.'),
+        ('fibra_fabry.py', 'Capítulo 9',
+         'Os modos de um guia dielétrico pela equação transcendental, e o '
+         'filtro Fabry-Perot pela função de Airy.',
+         'A fibra fica monomodo acima do comprimento de onda de corte, e o FSR '
+         'e a finesse medidos na curva reproduzem c/2nL e π√R/(1−R) em 4e-5.'),
         ('guia_onda.py', 'Capítulo 9',
          'Modos de um guia por autovalores do laplaciano discreto, com '
          'Dirichlet para TM e Neumann para TE, em qualquer seção.',

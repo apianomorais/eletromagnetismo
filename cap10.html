@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capítulo 10: potenciais e campos | Eletromagnetismo</title>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/css/estilo.css">
+<script src="assets/js/comum.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="marca" href="index.html">Eletromagnetismo <span>· LFCA/URCA</span></a>
+    <nav class="menu">
+      <a href="index.html">Início</a>
+      <span class="grupo">EM I</span>
+      <a href="cap01.html" class="num" title="Capítulo 1: análise vetorial">1</a>
+      <a href="cap02.html" class="num" title="Capítulo 2: eletrostática">2</a>
+      <a href="cap03.html" class="num" title="Capítulo 3: potenciais e técnicas especiais">3</a>
+      <a href="cap04.html" class="num" title="Capítulo 4: campos elétricos na matéria">4</a>
+      <span class="grupo">EM II</span>
+      <a href="cap05.html" class="num" title="Capítulo 5: magnetostática">5</a>
+      <a href="cap06.html" class="num" title="Capítulo 6: campos magnéticos na matéria">6</a>
+      <a href="cap07.html" class="num" title="Capítulo 7: eletrodinâmica">7</a>
+      <span class="grupo">EM III</span>
+      <span class="num pendente" title="Capítulo 8: leis de conservação: em preparação">8</span>
+      <a href="cap09.html" class="num" title="Capítulo 9: ondas eletromagnéticas">9</a>
+      <a href="cap10.html" class="num ativo" title="Capítulo 10: potenciais e campos">10</a>
+      <span class="num pendente" title="Capítulo 11: radiação: em preparação">11</span>
+      <a href="formulario.html">Formulário</a>
+      <a href="codigo.html">Código</a>
+    </nav>
+  </div>
+</header>
+
+<div class="envoltorio">
+
+<aside class="lateral">
+  <h4>Neste capítulo</h4>
+  <ol>
+    <li><a href="#s1">1. Trocando os campos pelos potenciais</a></li>
+    <li><a href="#s2">2. Calibre: a liberdade que se usa como ferramenta</a></li>
+    <li><a href="#s3">3. Potenciais retardados</a></li>
+    <li><a href="#s4">4. Liénard-Wiechert</a></li>
+    <li><a href="#s5">5. Os campos de uma carga em movimento</a></li>
+    <li><a href="#s6">6. No Spyder</a></li>
+    <li><a href="#s7">7. Exercícios propostos</a></li>
+  </ol>
+</aside>
+
+<main class="conteudo">
+
+  <p class="chapeu">EM III · 7 encontros de duas horas</p>
+  <h1>Capítulo 10: potenciais e campos</h1>
+  <p class="subtitulo">Potencial escalar e vetor, transformações de calibre, Coulomb e Lorenz, potenciais retardados e os potenciais de Liénard-Wiechert.</p>
+  <!-- ============================================== -->
+  <h2 id="s1">1. Trocando os campos pelos potenciais</h2>
+
+  <p>As quatro equações de Maxwell são seis funções incógnitas, as componentes de
+  \(\vet{E}\) e \(\vet{B}\), amarradas por oito equações escalares. É mais do que
+  o necessário, e há um jeito melhor de organizar: trocar os campos por
+  potenciais.</p>
+
+  <p>Duas das quatro equações são homogêneas, isto é, não têm fonte, e são elas
+  que permitem a troca. De \(\divg{\vet{B}} = 0\) e da identidade do capítulo 1,</p>
+
+  \[ \vet{B} = \rot{\vet{A}}, \]
+
+  <p>sempre, inclusive com tudo variando no tempo. Levando isso à lei de
+  Faraday,</p>
+
+  \[ \rot{\vet{E}} = -\pder{}{t}\left(\rot{\vet{A}}\right)
+     \;\Longrightarrow\;
+     \rot{\left(\vet{E} + \pder{\vet{A}}{t}\right)} = 0, \]
+
+  <p>e o que tem rotacional nulo é gradiente de alguma coisa:</p>
+
+  \[ \boxed{\;\vet{E} = -\nabla V - \pder{\vet{A}}{t}.\;} \]
+
+  <p>Repare na novidade em relação à eletrostática: agora o campo elétrico tem
+  <em>duas</em> origens. Uma é a carga, pelo gradiente do potencial escalar; a
+  outra é a variação do potencial vetor, isto é, do campo magnético. É a lei de
+  Faraday escrita em potenciais.</p>
+
+  <p>Levando as duas definições às equações com fonte, sobram duas equações
+  acopladas:</p>
+
+  \[ \nabla^2 V + \pder{}{t}\left(\divg{\vet{A}}\right)
+     = -\frac{\rho}{\varepsilon_0}, \]
+
+  \[ \nabla^2\vet{A} - \mu_0\varepsilon_0\frac{\partial^2\vet{A}}{\partial t^2}
+     - \nabla\left(\divg{\vet{A}}
+     + \mu_0\varepsilon_0\pder{V}{t}\right) = -\mu_0\vet{J}. \]
+
+  <p>São feias, e estão acopladas: \(V\) aparece na equação de \(\vet{A}\) e
+  vice-versa. A próxima seção mostra que essa feiura é removível, e de graça.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s2">2. Calibre: a liberdade que se usa como ferramenta</h2>
+
+  <p>Os potenciais não são únicos. Troque</p>
+
+  \[ \vet{A}' = \vet{A} + \nabla\lambda,
+     \qquad V' = V - \pder{\lambda}{t}, \]
+
+  <p>com \(\lambda(\vet{r},t)\) uma função qualquer. Os campos não mudam:</p>
+
+  \[ \rot{\vet{A}'} = \rot{\vet{A}} + \rot{\left(\nabla\lambda\right)}
+     = \vet{B}, \]
+
+  \[ -\nabla V' - \pder{\vet{A}'}{t}
+     = -\nabla V + \nabla\pder{\lambda}{t}
+       - \pder{\vet{A}}{t} - \pder{}{t}\nabla\lambda = \vet{E}. \]
+
+  <p>Essa liberdade chama-se <strong>transformação de calibre</strong>, e ela é
+  usada como ferramenta: escolhe-se o \(\lambda\) que simplifica o problema.</p>
+
+  <div class="cartoes">
+    <article class="cartao">
+      <h3>Calibre de Coulomb</h3>
+      \[ \divg{\vet{A}} = 0 \]
+      <p>A equação de \(V\) vira a de Poisson, e \(V\) é o potencial
+      instantâneo da carga, como na eletrostática.</p>
+      <p>Bom para problemas quase estáticos; ruim para radiação.</p>
+    </article>
+    <article class="cartao">
+      <h3>Calibre de Lorenz</h3>
+      \[ \divg{\vet{A}} = -\mu_0\varepsilon_0\pder{V}{t} \]
+      <p>As duas equações desacoplam e viram equações de onda idênticas, uma
+      para \(V\) e outra para \(\vet{A}\).</p>
+      <p>É o calibre deste capítulo e de toda a eletrodinâmica relativística.</p>
+    </article>
+  </div>
+
+  <div class="bloco alerta">
+  <span class="rotulo">Lorenz, e não Lorentz</span>
+  <p>A condição de calibre é de <strong>Ludvig Lorenz</strong>, dinamarquês, de
+  1867. A força \(q(\vet{E}+\vet{v}\cruz\vet{B})\) e as transformações da
+  relatividade são de <strong>Hendrik Lorentz</strong>, holandês, trinta anos
+  depois. A troca dos dois nomes é tão comum que boa parte da literatura escreve
+  "calibre de Lorentz" por engano.</p>
+  </div>
+
+  <p>No calibre de Lorenz, as duas equações acopladas da seção anterior viram</p>
+
+  \[ \boxed{\;\Box^2 V = -\frac{\rho}{\varepsilon_0},
+     \qquad \Box^2\vet{A} = -\mu_0\vet{J},\;} \]
+
+  <p>com o operador d'alembertiano
+  \(\Box^2 \equiv \nabla^2 - \mu_0\varepsilon_0\,\partial^2/\partial t^2\).</p>
+
+  <p>São quatro equações de onda independentes, com a mesma estrutura, cada uma
+  com a sua fonte. Toda a eletrodinâmica está aí, e a simetria entre \(V\) com
+  \(\rho\) e \(\vet{A}\) com \(\vet{J}\) é a primeira pista de que, na
+  relatividade, os quatro formam um único objeto.</p>
+
+  <p><strong>Um ponto que convém saber:</strong> sempre existe um \(\lambda\) que
+  leva ao calibre de Lorenz. Partindo de potenciais quaisquer, basta resolver
+  \(\Box^2\lambda = -\left(\divg{\vet{A}}+\mu_0\varepsilon_0\partial V/\partial
+  t\right)\), que é de novo uma equação de onda com fonte, e sempre tem
+  solução.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s3">3. Potenciais retardados</h2>
+
+  <p>A solução da equação de onda com fonte, na eletrostática, era a integral de
+  Coulomb. Com o tempo entrando, o que muda é <em>quando</em> a fonte é
+  avaliada:</p>
+
+  \[ \boxed{\;V(\vet{r},t) = \frac{1}{4\pi\varepsilon_0}
+     \int\frac{\rho(\vet{r}',t_r)}{\imath}\,d\tau',
+     \qquad
+     \vet{A}(\vet{r},t) = \frac{\mu_0}{4\pi}
+     \int\frac{\vet{J}(\vet{r}',t_r)}{\imath}\,d\tau',\;} \]
+
+  <p>com o <strong>tempo retardado</strong></p>
+
+  \[ t_r = t - \frac{\imath}{c}. \]
+
+  <p>A leitura é física e bonita: o potencial aqui e agora depende do que a fonte
+  estava fazendo há \(\imath/c\) segundos, que é o tempo que a notícia leva para
+  chegar. Nada se propaga instantaneamente.</p>
+
+  <div class="bloco alerta">
+  <span class="rotulo">A tentação que não funciona</span>
+  <p>Se os potenciais retardados são as fórmulas da eletrostática com \(t_r\) no
+  lugar de \(t\), seria natural supor que vale o mesmo para os campos, isto é,
+  que \(\vet{E}\) é a integral de Coulomb avaliada no tempo retardado.</p>
+  <p><strong>É falso.</strong> A razão é que \(\vet{E} = -\nabla V - \partial
+  \vet{A}/\partial t\), e o gradiente age também sobre o \(t_r\), que depende da
+  posição. Derivar \(\rho(\vet{r}',t_r)/\imath\) em relação a \(\vet{r}\) produz
+  termos extras, com \(\dot\rho\) e \(\dot{\vet{J}}\), que não existem na
+  eletrostática e que são justamente os termos de radiação.</p>
+  <p>As fórmulas corretas, chamadas de equações de Jefimenko, têm esses termos a
+  mais. Guarde a moral: <em>potenciais</em> se retardam de graça, <em>campos</em>
+  não.</p>
+  </div>
+
+  <h3>Por que a solução é essa</h3>
+
+  <p>Não vamos deduzir linha a linha, mas vale o argumento. A equação de onda com
+  fonte pontual e instantânea tem como solução uma casca esférica que se afasta à
+  velocidade \(c\), e isso é a função de Green retardada. Qualquer fonte é uma
+  superposição de pontos e instantes, e a integral acima é a soma dessas
+  contribuições, cada uma com o seu atraso.</p>
+
+  <p>Matematicamente existe também a solução <strong>avançada</strong>, com
+  \(t_a = t + \imath/c\), que descreve ondas convergindo do futuro. Ela satisfaz
+  as equações igualmente bem e é descartada por causalidade, não por
+  matemática. Essa assimetria entre passado e futuro, que não está nas equações,
+  é um dos problemas mais antigos e menos resolvidos da física.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s4">4. Liénard-Wiechert</h2>
+
+  <p>Para uma carga pontual em movimento arbitrário, a integral dos potenciais
+  retardados tem uma sutileza que vale examinar, porque ela produz um fator
+  inesperado.</p>
+
+  <p>A carga está em \(\vet{w}(t)\), e no instante retardado estava em
+  \(\vet{w}(t_r)\), definido implicitamente por</p>
+
+  \[ \left|\vet{r}-\vet{w}(t_r)\right| = c\,(t-t_r). \]
+
+  <p>Essa equação tem <em>uma</em> solução só, para \(v \lt c\): a carga não pode
+  aparecer duas vezes no cone de luz do passado. A demonstração é simples e vale
+  pensar nela: se houvesse duas, a carga teria de ter viajado entre elas mais
+  rápido que a luz.</p>
+
+  <h3>O fator que ninguém espera</h3>
+
+  <p>Ao integrar sobre a distribuição de uma carga que se move, o volume
+  "efetivo" que contribui não é o volume próprio dela. Como a informação de cada
+  pedaço sai em instantes diferentes, uma carga que se aproxima entrega mais
+  contribuição por unidade de volume, e uma que se afasta entrega menos. O fator
+  de correção é</p>
+
+  \[ \frac{1}{1 - \vers{\imath}\cdot\vet{v}/c}, \]
+
+  <p>e ele <em>não</em> é um efeito relativístico de contração: aparece mesmo na
+  conta clássica, e vem apenas da geometria do atraso. Com ele,</p>
+
+  \[ \boxed{\;V(\vet{r},t) = \frac{1}{4\pi\varepsilon_0}
+     \frac{qc}{\imath c - \vet{\imath}\cdot\vet{v}},
+     \qquad
+     \vet{A}(\vet{r},t) = \frac{\vet{v}}{c^2}V(\vet{r},t),\;} \]
+
+  <p>que são os <strong>potenciais de Liénard-Wiechert</strong>, com todas as
+  quantidades do lado direito avaliadas no tempo retardado.</p>
+
+  <div class="destaque">
+  <p><strong>Exemplo trabalhado: a carga que passa reto.</strong> Uma carga \(q\)
+  move-se com velocidade constante \(\vet{v} = v\vers{x}\), passando pela origem
+  em \(t=0\). Qual o campo elétrico num ponto qualquer?</p>
+
+  <p>Resolvendo a condição de retardo e levando aos potenciais, a álgebra (que é
+  longa, e cujo resultado vale guardar) dá</p>
+
+  \[ \vet{E}(\vet{r},t) = \frac{q}{4\pi\varepsilon_0}
+     \frac{1-v^2/c^2}
+          {\left(1-\frac{v^2}{c^2}\sen^2\theta\right)^{3/2}}
+     \frac{\vers{R}}{R^2}, \]
+
+  <p>com \(\vet{R}\) o vetor que liga a posição <em>atual</em> da carga ao ponto
+  de observação, e \(\theta\) o ângulo entre \(\vet{R}\) e a velocidade.</p>
+
+  <p><strong>Três leituras.</strong></p>
+
+  <p>Primeira: o campo aponta para a posição <em>presente</em> da carga, e não
+  para onde ela estava quando a informação saiu. Isso parece violar causalidade e
+  não viola: a carga está em movimento uniforme, e o campo "extrapola" o que ela
+  vinha fazendo. Se ela for freada, a notícia da freada leva \(R/c\) para
+  chegar, e só a partir daí o campo deixa de apontar para a posição extrapolada.
+  É dessa discrepância que nasce a radiação do capítulo 11.</p>
+
+  <p>Segunda: o campo não é mais isotrópico. Para \(\theta = 0\), na direção do
+  movimento, ele é <em>reduzido</em> pelo fator \(1-v^2/c^2\); para
+  \(\theta = 90^\circ\), perpendicular, é <em>aumentado</em> por
+  \(1/\sqrt{1-v^2/c^2}\). O campo de uma carga rápida se achata num disco
+  perpendicular ao movimento.</p>
+
+  <p><strong>Números.</strong> A \(v = 0{,}9c\), o campo perpendicular é
+  \(1/\sqrt{1-0{,}81} = 2{,}29\) vezes o de Coulomb, e o longitudinal é
+  \(0{,}19\) vezes. Uma diferença de doze vezes entre as duas direções.</p>
+
+  <p>Terceira: com \(v \to 0\) tudo volta a Coulomb, como tinha de voltar.</p>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="s5">5. Os campos de uma carga em movimento</h2>
+
+  <p>Derivando os potenciais de Liénard-Wiechert, com o cuidado de tratar a
+  dependência implícita de \(t_r\) com a posição, chega-se ao campo de uma carga
+  pontual em movimento arbitrário. O resultado se organiza em duas partes:</p>
+
+  \[ \vet{E}(\vet{r},t) = \frac{q}{4\pi\varepsilon_0}
+     \frac{\imath}{\left(\vet{\imath}\cdot\vet{u}\right)^3}
+     \left[\underbrace{\left(c^2-v^2\right)\vet{u}}_{\text{campo de velocidade}}
+     + \underbrace{\vet{\imath}\cruz\left(\vet{u}\cruz\vet{a}\right)}
+       _{\text{campo de aceleração}}\right], \]
+
+  <p>com \(\vet{u} = c\,\vers{\imath}-\vet{v}\), e</p>
+
+  \[ \vet{B}(\vet{r},t) = \frac{1}{c}\,\vers{\imath}\cruz\vet{E}(\vet{r},t). \]
+
+  <p>Vale a pena olhar o que distingue as duas parcelas.</p>
+
+  <div class="cartoes">
+    <article class="cartao">
+      <h3>Campo de velocidade</h3>
+      <p>Não depende da aceleração, cai com \(1/\imath^2\) e é o que sobra numa
+      carga em movimento uniforme.</p>
+      <p>Energia fica <em>presa</em> à carga: ela acompanha o movimento e não vai
+      embora.</p>
+    </article>
+    <article class="cartao">
+      <h3>Campo de aceleração</h3>
+      <p>Proporcional a \(\vet{a}\), cai com \(1/\imath\) apenas.</p>
+      <p>É este que sobrevive a grandes distâncias e que leva energia embora para
+      sempre: é a <strong>radiação</strong>.</p>
+    </article>
+  </div>
+
+  <p>A diferença entre \(1/\imath^2\) e \(1/\imath\) é o que decide tudo. O fluxo
+  de energia vai com \(E^2\), e a área de uma esfera cresce com \(\imath^2\); logo
+  a potência que atravessa uma esfera grande vai com \(E^2\imath^2\). Para o campo
+  de velocidade isso cai como \(1/\imath^2\) e tende a zero, mas para o campo de
+  aceleração ela é <strong>constante</strong>: a energia escapa de verdade, até o
+  infinito.</p>
+
+  <p>E o campo magnético é sempre perpendicular ao elétrico e à linha de visada
+  retardada, com \(B = E/c\), exatamente como na onda plana do capítulo 9.</p>
+
+  <div class="bloco fisica">
+  <span class="rotulo">A força de uma carga sobre outra não obedece à terceira lei</span>
+  <p>Com os campos acima, calcule a força que uma carga em movimento faz sobre
+  outra, e vice-versa: elas não são iguais e opostas. A terceira lei de Newton
+  falha na eletrodinâmica, e isso não é um defeito da teoria.</p>
+  <p>O que se conserva é o momento <em>total</em>, somando o das cargas com o
+  momento guardado no campo eletromagnético, que o capítulo 8 contabiliza. O
+  campo é um participante, e não um intermediário passivo.</p>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="s6">6. No Spyder</h2>
+
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/lienard_wiechert.py">lienard_wiechert.py</a></h3>
+      <p>Resolve a condição de tempo retardado por bisseção, monta os potenciais e
+      os campos de uma carga em movimento qualquer, e compara com os resultados
+      fechados conhecidos.</p>
+      <p><strong>Confira assim:</strong> em movimento uniforme, o campo tem de
+      reproduzir a fórmula do achatamento, e apontar para a posição
+      <em>presente</em> da carga; com \(v \to 0\) tem de virar Coulomb; e
+      \(\vet{B}\) tem de ser perpendicular a \(\vet{E}\) com \(B = E/c\).</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/calibre.py">calibre.py</a></h3>
+      <p>Aplica uma transformação de calibre arbitrária a potenciais dados e
+      verifica, numericamente, que os campos não mudam.</p>
+      <p><strong>Confira assim:</strong> \(\vet{E}\) e \(\vet{B}\) calculados a
+      partir de \((V,\vet{A})\) e de \((V',\vet{A}')\) têm de coincidir até o erro
+      de truncamento; e a condição de Lorenz, que valia antes, não vale mais
+      depois de uma transformação qualquer.</p>
+    </article>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="s7">7. Exercícios propostos</h2>
+
+  <p>Os enunciados são nossos, e as soluções estão aqui mesmo, recolhidas. Resolva antes de abrir: ler solução pronta dá a sensação de ter entendido, que é diferente de ter entendido.</p>
+
+  <div class="bloco ex">
+    <span class="rotulo">10.1  Um calibre esquisito, e os campos que não mudam</span>
+    <p>Considere os potenciais \(V = 0\) e \(\vet{A} = -\dfrac{1}{4\pi
+       \varepsilon_0}\dfrac{qt}{r^2}\vers{r}\). Calcule \(\vet{E}\) e \(\vet{B}\)
+       e diga que situação física eles descrevem. Depois ache a função
+       \(\lambda\) que leva esses potenciais aos mais familiares da
+       eletrostática.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>Os campos.</b> Como \(\vet{A}\) é radial e só depende de \(r\),
+       \(\rot{\vet{A}} = 0\) e portanto \(\vet{B} = 0\). E</p>
+       <p>\[ \vet{E} = -\nabla V - \pder{\vet{A}}{t}
+          = 0 + \frac{1}{4\pi\varepsilon_0}\frac{q}{r^2}\vers{r}. \]</p>
+       <p>É o campo de uma carga pontual parada na origem, sem campo magnético
+       nenhum: a eletrostática de sempre, escrita de um jeito irreconhecível.</p>
+       <p><b>A transformação.</b> Queremos chegar a \(V' = q/4\pi\varepsilon_0 r\)
+       e \(\vet{A}' = 0\). De \(V' = V - \partial\lambda/\partial t\),</p>
+       <p>\[ \pder{\lambda}{t} = -\frac{q}{4\pi\varepsilon_0 r}
+          \;\Longrightarrow\;
+          \lambda = -\frac{qt}{4\pi\varepsilon_0 r}, \]</p>
+       <p>e conferindo na outra equação,
+       \(\vet{A}' = \vet{A} + \nabla\lambda = \vet{A}
+       + \frac{qt}{4\pi\varepsilon_0 r^2}\vers{r} = 0\). Fecha.</p>
+       <p><b>A moral.</b> Os potenciais não são observáveis: a mesma física admite
+       descrições completamente diferentes. O que é observável é o campo, e, na
+       mecânica quântica, também a <em>integral</em> de \(\vet{A}\) ao longo de um
+       caminho fechado, que é o efeito Aharonov-Bohm. Mas nunca \(\vet{A}\)
+       ponto a ponto.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">10.2  Por que não se pode simplesmente retardar Coulomb</span>
+    <p>Mostre, com um exemplo concreto, que escrever
+       \(\vet{E}(\vet{r},t) = \frac{1}{4\pi\varepsilon_0}\int
+       \frac{\rho(\vet{r}',t_r)}{\imath^2}\vers{\imath}\,d\tau'\) está errado.
+       Use uma carga pontual em movimento uniforme e compare com o resultado
+       correto do texto.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>Para uma carga pontual em \(\vet{w}(t_r)\), a fórmula ingênua daria
+       um campo que aponta da posição <b>retardada</b> para o observador, com
+       módulo \(q/4\pi\varepsilon_0\imath^2\), isto é, Coulomb avaliado no passado.</p>
+       <p>O resultado correto, do exemplo do texto, aponta para a posição
+       <b>presente</b> e tem o fator de achatamento:</p>
+       <p>\[ \vet{E} = \frac{q}{4\pi\varepsilon_0}
+          \frac{1-v^2/c^2}{\left(1-\frac{v^2}{c^2}\sen^2\theta\right)^{3/2}}
+          \frac{\vers{R}}{R^2}. \]</p>
+       <p>São diferentes em <em>direção</em> (posição retardada contra presente) e
+       em <em>módulo</em> (o fator angular). A \(v = 0{,}5c\) e \(\theta =
+       90^\circ\), por exemplo, o fator vale \(1/\sqrt{1-0{,}25}\cdot ... \) — a
+       conta dá \(1{,}155\), ou seja, 15 % de diferença só no módulo.</p>
+       <p><b>De onde vem o erro.</b> O campo é \(-\nabla V - \partial\vet{A}
+       /\partial t\), e o gradiente age também sobre o \(t_r\), que depende de
+       \(\vet{r}\). Essa dependência produz termos com \(\dot\rho\) e
+       \(\dot{\vet{J}}\) que a fórmula ingênua não tem, e são exatamente esses
+       termos que carregam a radiação. Sem eles, cargas aceleradas não irradiariam
+       nada, o que contraria qualquer antena.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">10.3  Uma carga só aparece uma vez no cone de luz</span>
+    <p>Prove que a equação do tempo retardado,
+       \(\left|\vet{r}-\vet{w}(t_r)\right| = c(t-t_r)\), tem exatamente uma
+       solução para qualquer carga com \(v \lt c\). Em seguida explique o que
+       aconteceria se a carga pudesse exceder \(c\).</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>A prova.</b> Suponha duas soluções, \(t_1 \lt t_2\), ambas
+       anteriores a \(t\). Então</p>
+       <p>\[ \left|\vet{r}-\vet{w}(t_1)\right| = c(t-t_1),\qquad
+          \left|\vet{r}-\vet{w}(t_2)\right| = c(t-t_2). \]</p>
+       <p>Subtraindo, o lado direito dá \(c(t_2-t_1)\), que é a distância que a
+       luz percorre entre os dois instantes. O lado esquerdo é a diferença entre
+       duas distâncias ao mesmo ponto, que pela desigualdade triangular não passa
+       de \(\left|\vet{w}(t_2)-\vet{w}(t_1)\right|\), a distância que a
+       <em>carga</em> percorreu.</p>
+       <p>Logo seria preciso que a carga tivesse percorrido pelo menos tanto
+       quanto a luz no mesmo intervalo, isto é, \(v \ge c\). Com \(v \lt c\) isso
+       é impossível, e a solução é única.</p>
+       <p><b>Se a carga excedesse c.</b> Haveria mais de uma contribuição
+       simultânea da mesma carga, e o observador a "veria" em vários lugares ao
+       mesmo tempo. Isso não é só ficção: num meio material a velocidade da luz é
+       \(c/n\), e uma partícula pode ultrapassá-la. O resultado é a radiação
+       Cherenkov, com o seu cone característico e o brilho azul dos reatores
+       nucleares.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">10.4  O campo achatado de uma carga rápida</span>
+    <p>Para uma carga em movimento uniforme, calcule a razão entre o campo
+       perpendicular ao movimento e o campo paralelo, a mesma distância, para
+       \(v/c = 0{,}1\), \(0{,}5\), \(0{,}9\) e \(0{,}99\). Comente a consequência
+       para a colisão de dois feixes num acelerador.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>Da fórmula do texto, com \(\beta = v/c\):</p>
+       <p>\[ E_\perp = \frac{q}{4\pi\varepsilon_0R^2}\frac{1}{\sqrt{1-\beta^2}},
+          \qquad
+          E_\parallel = \frac{q}{4\pi\varepsilon_0R^2}\left(1-\beta^2\right), \]</p>
+       <p>de modo que a razão é</p>
+       <p>\[ \frac{E_\perp}{E_\parallel} = \frac{1}{\left(1-\beta^2\right)^{3/2}}
+          = \gamma^3. \]</p>
+       <div class="tabela-rolavel">
+       <table>
+       <thead><tr><th>\(\beta\)</th><th>\(\gamma\)</th>
+       <th>\(E_\perp/E_\parallel\)</th></tr></thead>
+       <tbody>
+       <tr><td>0,10</td><td>1,005</td><td>1,02</td></tr>
+       <tr><td>0,50</td><td>1,155</td><td>1,54</td></tr>
+       <tr><td>0,90</td><td>2,294</td><td>12,1</td></tr>
+       <tr><td>0,99</td><td>7,089</td><td>356</td></tr>
+       </tbody>
+       </table>
+       </div>
+       <p><b>No acelerador.</b> O campo de um feixe ultrarrelativístico é um
+       "panqueca" transversal, quase um pulso plano. Quando dois feixes se
+       cruzam, cada partícula de um vê o campo do outro como um tapa curto e
+       intenso, perpendicular ao movimento. É esse achatamento que torna
+       possível tratar colisões como interação de fótons quase reais, a chamada
+       aproximação de Weizsäcker-Williams.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">10.5  A potência de uma antena de dipolo, por análise dimensional</span>
+    <p>Sem fazer a conta completa do capítulo 11, mostre por análise
+       dimensional que a potência irradiada por uma carga acelerada tem de ter a
+       forma \(P \propto \mu_0q^2a^2/c\), e estime a constante comparando com o
+       campo de aceleração do texto.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>A dimensional.</b> A potência tem de depender de \(q\), de
+       \(a\), e das constantes do eletromagnetismo. O campo de aceleração do
+       texto vai com \(qa/\imath\) vezes constantes, e o fluxo de energia vai com
+       \(E^2/\mu_0c\). Multiplicando pela área, \(\imath^2\):</p>
+       <p>\[ P \sim \frac{1}{\mu_0 c}\left(\frac{\mu_0qa}{4\pi \imath}\right)^2
+          \imath^2 = \frac{\mu_0q^2a^2}{16\pi^2c}, \]</p>
+       <p>e o \(\imath\) sumiu, que é o conteúdo físico: a potência atravessa
+       qualquer esfera igualmente.</p>
+       <p><b>A constante.</b> Falta a integral angular do padrão
+       \(\sen^2\theta\), que vale</p>
+       <p>\[ \int\sen^2\theta\,d\Omega
+          = 2\pi\int_0^\pi\sen^3\theta\,d\theta = \frac{8\pi}{3}, \]</p>
+       <p>e isso leva de \(16\pi^2\) para</p>
+       <p>\[ P = \frac{\mu_0q^2a^2}{6\pi c}, \]</p>
+       <p>que é a fórmula de Larmor, deduzida por inteiro no capítulo 11.</p>
+       <p><b>Quanto vale.</b> Para um elétron com a aceleração de um átomo de
+       hidrogênio no estado fundamental, \(a \sim 9\times10^{22}\
+       \mathrm{m/s^2}\), isso dá \(P = 4{,}7\times10^{-8}\ \mathrm{W}\). Com a
+       energia de ligação de 13,6 eV, o átomo clássico gastaria toda a energia em
+       \(4{,}7\times10^{-11}\) s, isto é, dezenas de picossegundos (a conta
+       feita com cuidado, acompanhando o raio encolher, dá algo ainda menor). O
+       átomo existir é, portanto, uma prova de que a eletrodinâmica clássica não
+       vale lá dentro.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">10.6  O calibre de Coulomb e a propagação instantânea</span>
+    <p>No calibre de Coulomb, \(V(\vet{r},t)\) é o potencial instantâneo da
+       distribuição de carga, isto é, ele muda em todo o espaço no mesmo instante
+       em que a carga muda. Isso viola a relatividade? Justifique.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>Não viola.</b> O potencial escalar não é observável; o campo é. No
+       calibre de Coulomb, o termo instantâneo de \(-\nabla V\) é exatamente
+       cancelado por uma parte de \(-\partial\vet{A}/\partial t\), e o campo
+       resultante propaga a \(c\), como tem de ser.</p>
+       <p>Dito de outro jeito: a divisão da informação entre \(V\) e \(\vet{A}\)
+       depende do calibre, e nada impede que uma das partes seja instantânea
+       desde que a soma não seja. O calibre de Lorenz distribui a informação de
+       modo que cada potencial, separadamente, já propaga a \(c\), o que é mais
+       elegante e muito mais conveniente.</p>
+       <p><b>Por que alguém usaria Coulomb, então.</b> Porque nele
+       \(\nabla^2 V = -\rho/\varepsilon_0\) é a equação de Poisson de sempre, com
+       solução conhecida, e sobra apenas uma equação de onda para \(\vet{A}\).
+       Em problemas quase estáticos, e em boa parte da física da matéria
+       condensada, isso simplifica muito. O preço é que a parte instantânea
+       assusta quem vê pela primeira vez.</p>
+    </div>
+    </details>
+  </div>
+
+
+  <nav class="nav-aulas">
+    <a href="cap09.html"><small>Anterior</small>← Capítulo 9: ondas eletromagnéticas</a>
+    <a class="prox" href="formulario.html"><small>Próximo</small>Formulário →</a>
+  </nav>
+
+</main>
+</div>
+
+<footer class="rodape">
+  <img class="logo-rodape" src="assets/img/logo.png" alt="LFCA | URCA">
+  <p><strong>Prof. Apiano Morais</strong> · <a href="mailto:apiano.morais@urca.br">apiano.morais@urca.br</a><br>
+  Laboratório de Física Computacional Aplicada (LFCA) · Universidade Regional do Cariri</p>
+</footer>
+
+<script src="assets/js/widgets.js"></script>
+</body>
+</html>

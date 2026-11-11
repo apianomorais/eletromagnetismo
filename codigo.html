@@ -28,7 +28,7 @@
       <span class="grupo">EM III</span>
       <span class="num pendente" title="Capítulo 8: leis de conservação: em preparação">8</span>
       <a href="cap09.html" class="num" title="Capítulo 9: ondas eletromagnéticas">9</a>
-      <span class="num pendente" title="Capítulo 10: potenciais e campos: em preparação">10</span>
+      <a href="cap10.html" class="num" title="Capítulo 10: potenciais e campos">10</a>
       <span class="num pendente" title="Capítulo 11: radiação: em preparação">11</span>
       <a href="formulario.html">Formulário</a>
       <a href="codigo.html" class="ativo">Código</a>
@@ -155,6 +155,21 @@
       <p><strong>Confira assim:</strong> O erro da ordem n cai com o expoente certo (medido: 2,00 para o dipolo), e o momento de dipolo muda com a origem assim que a carga total deixa de ser nula.</p>
     </article>
   </div>
+  <h3>Potenciais, radiação e calibre</h3>
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/lienard_wiechert.py">lienard_wiechert.py</a></h3>
+      <p class="ficha">Capítulo 10</p>
+      <p>Resolve o tempo retardado por bisseção e monta os campos de uma carga em movimento qualquer, com as parcelas de velocidade e de aceleração.</p>
+      <p><strong>Confira assim:</strong> Em movimento uniforme o campo bate com a fórmula fechada em 1e-16 e aponta exatamente para a posição presente; a potência média que atravessa qualquer esfera é a de Larmor.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/calibre.py">calibre.py</a></h3>
+      <p class="ficha">Capítulo 10</p>
+      <p>Aplica uma transformação de calibre arbitrária e mede o que muda e o que não muda.</p>
+      <p><strong>Confira assim:</strong> E e B ficam iguais; os potenciais ficam irreconhecíveis; e a condição de Lorenz deixa de valer, porque o lambda escolhido não satisfaz a equação de onda.</p>
+    </article>
+  </div>
   <h3>Matéria polarizada e magnetizada</h3>
   <div class="cartoes">
     <article class="cartao">
@@ -222,6 +237,12 @@
       <p class="ficha">Capítulo 9</p>
       <p>R e T das duas polarizações em função do ângulo, com Brewster, ângulo crítico e a onda evanescente tratada com cosseno complexo.</p>
       <p><strong>Confira assim:</strong> R + T = 1 em todo ângulo e nas duas polarizações; R paralelo zera exatamente em arctan(n₂/n₁); acima do crítico R = 1.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/fibra_fabry.py">fibra_fabry.py</a></h3>
+      <p class="ficha">Capítulo 9</p>
+      <p>Os modos de um guia dielétrico pela equação transcendental, e o filtro Fabry-Perot pela função de Airy.</p>
+      <p><strong>Confira assim:</strong> A fibra fica monomodo acima do comprimento de onda de corte, e o FSR e a finesse medidos na curva reproduzem c/2nL e π√R/(1−R) em 4e-5.</p>
     </article>
     <article class="cartao">
       <h3><a href="codigo/guia_onda.py">guia_onda.py</a></h3>

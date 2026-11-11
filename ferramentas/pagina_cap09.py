@@ -491,6 +491,188 @@ monomodo, com folga nas duas pontas, e é exatamente a banda X.</p>
 pulso de micro-ondas atravessa um guia de dez metros em 44 ns, e não em 33 ns
 como faria no vácuo. Em radar, essa diferença é distância.</p>
 </div>
+
+<h3>A fibra óptica: o guia sem metal</h3>
+
+<p>Um tubo metálico não serve para luz visível: nessas frequências o metal
+absorve demais, e além disso o diâmetro teria de ser micrométrico. A fibra
+resolve isso trocando a parede condutora por uma parede <em>dielétrica</em>, em
+que a luz fica presa por reflexão interna total, como a seção 5 descreveu.</p>
+
+<p>A diferença técnica é grande. No guia metálico, o campo é rigorosamente nulo
+fora; na fibra, ele vaza para a casca como onda evanescente, e o modo é uma
+solução que casa duas regiões. Escrevendo a componente longitudinal em cada
+uma, com \(\beta\) o número de onda ao longo da fibra,</p>
+
+\[ \text{núcleo}\;(s \lt a):\quad
+   \left(\nabla_t^2 + \kappa^2\right)E_z = 0,
+   \qquad \kappa^2 = n_1^2k_0^2 - \beta^2 \gt 0, \]
+
+\[ \text{casca}\;(s \gt a):\quad
+   \left(\nabla_t^2 - \gamma^2\right)E_z = 0,
+   \qquad \gamma^2 = \beta^2 - n_2^2k_0^2 \gt 0, \]
+
+<p>com \(k_0 = \omega/c\). A primeira dá oscilação (funções de Bessel \(J_m\)),
+a segunda dá decaimento (funções de Bessel modificadas \(K_m\)), e casar as
+duas na interface produz uma <strong>equação transcendental</strong> para
+\(\beta\). Ela não tem solução fechada, e é resolvida numericamente: cada raiz
+é um modo.</p>
+
+<div class="bloco def">
+<span class="rotulo">O parâmetro que decide tudo: o número V</span>
+<p>As duas condições acima só podem valer ao mesmo tempo se
+\(n_2k_0 \lt \beta \lt n_1k_0\), e toda a física de quantos modos existem cabe
+num único número adimensional,</p>
+<p>\[ V = k_0\,a\sqrt{n_1^2-n_2^2} = \frac{2\pi a}{\lambda}\,\mathrm{NA}. \]</p>
+<p>O número de modos guiados é aproximadamente \(V^2/2\), e a fibra é
+<strong>monomodo</strong> quando \(V \lt 2{,}405\), que é o primeiro zero de
+\(J_0\). Abaixo desse valor sobra um único modo, o LP\(_{01}\), que não tem
+corte: ele existe em qualquer frequência, por menor que seja.</p>
+</div>
+
+<div class="destaque">
+<p><strong>Exemplo trabalhado: a fibra de telecomunicações.</strong> A fibra
+padrão de enlace tem núcleo de raio \(a = 4{,}1\ \mu\mathrm{m}\),
+\(n_1 = 1{,}4504\) e \(n_2 = 1{,}4447\). Ela é monomodo em quais comprimentos
+de onda?</p>
+
+<p>A abertura numérica é</p>
+
+\[ \mathrm{NA} = \sqrt{n_1^2-n_2^2} = \sqrt{1{,}4504^2-1{,}4447^2} = 0{,}1285, \]
+
+<p>e o número V vale</p>
+
+\[ V(\lambda) = \frac{2\pi\times4{,}1\times10^{-6}}{\lambda}\times0{,}1285. \]
+
+<div class="tabela-rolavel">
+<table>
+<thead><tr><th>\(\lambda\)</th><th>\(V\)</th><th>regime</th></tr></thead>
+<tbody>
+<tr><td>850 nm</td><td>3,89</td><td>multimodo (cerca de 7 modos)</td></tr>
+<tr><td>1310 nm</td><td>2,53</td><td>logo acima do corte</td></tr>
+<tr><td>1550 nm</td><td>2,14</td><td>monomodo</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>O comprimento de onda de corte, onde \(V = 2{,}405\), é</p>
+
+\[ \lambda_c = \frac{2\pi a\,\mathrm{NA}}{2{,}405} = 1376\ \mathrm{nm}, \]
+
+<p>de modo que a fibra é monomodo acima disso. Não é coincidência que as duas
+janelas de telecomunicações sejam 1310 nm e 1550 nm: a primeira é onde a
+dispersão do sílica passa por zero, e a segunda é onde a atenuação é mínima,
+0,2 dB por quilômetro. Em 1550 nm a luz percorre 100 km e ainda chega com 1 %
+da potência, o que é o motivo de os cabos submarinos existirem.</p>
+
+<p><strong>Uma comparação que vale guardar.</strong> O guia metálico da seção
+anterior tem corte <em>inferior</em>: abaixo de \(f_{10}\) nada passa. A fibra
+monomodo tem corte <em>superior</em> para os modos de ordem alta: acima de
+\(\lambda_c\) só o fundamental sobrevive. São problemas de autovalor com
+condições de contorno diferentes, e os comportamentos se invertem.</p>
+</div>
+'''
+
+S7B = r'''
+<p>Feche as duas pontas de um guia com paredes metálicas e a onda deixa de
+viajar: ela vai e volta, e só sobrevivem as frequências em que a ida e a volta
+se somam em fase. O tubo vira uma <strong>cavidade ressonante</strong>, que é o
+análogo eletromagnético de um tubo de órgão.</p>
+
+<p>Para a cavidade retangular de lados \(a\), \(b\), \(d\), a condição de onda
+estacionária nas três direções dá</p>
+
+\[ \boxed{\;f_{mnp} = \frac{c}{2}\sqrt{\frac{m^2}{a^2}+\frac{n^2}{b^2}
+   +\frac{p^2}{d^2}}.\;} \]
+
+<p>Note a diferença em relação ao guia: lá havia um contínuo de frequências
+acima do corte, aqui há um conjunto <em>discreto</em>. Prender a onda nos três
+eixos quantiza tudo.</p>
+
+<p>A qualidade de uma cavidade se mede pelo fator \(Q\),</p>
+
+\[ Q = 2\pi\frac{\text{energia guardada}}{\text{energia perdida por ciclo}}
+   = \frac{f_0}{\Delta f}, \]
+
+<p>que é também a razão entre a frequência de ressonância e a largura do pico.
+Uma cavidade de cobre na banda X tem \(Q\) de alguns milhares; uma cavidade
+supercondutora de nióbio, usada em aceleradores, chega a \(10^{10}\), e nela um
+fóton de micro-ondas dá bilhões de voltas antes de ser absorvido.</p>
+
+<h3>O Fabry-Perot</h3>
+
+<p>Na óptica, a cavidade mais usada não tem paredes metálicas: são dois
+espelhos parcialmente transparentes, paralelos, separados por \(L\). A luz
+entra, faz muitas idas e voltas, e o que sai é a soma de infinitas
+contribuições, cada uma com um atraso de fase</p>
+
+\[ \delta = \frac{4\pi n L\cos\theta}{\lambda}. \]
+
+<p>Somando a série geométrica, a transmissão é a função de Airy:</p>
+
+\[ \boxed{\;T(\delta) = \frac{1}{1 + F\sen^2(\delta/2)},
+   \qquad F = \frac{4R}{(1-R)^2},\;} \]
+
+<p>com \(R\) a refletância de cada espelho. É um <strong>filtro</strong>:
+transmite 100 % nas ressonâncias, onde \(\delta\) é múltiplo de \(2\pi\), e
+quase nada entre elas.</p>
+
+<p>Duas grandezas descrevem o filtro:</p>
+
+<div class="cartoes">
+  <article class="cartao">
+    <h3>Intervalo espectral livre</h3>
+    \[ \mathrm{FSR} = \frac{c}{2nL} \]
+    <p>A distância em frequência entre dois picos vizinhos. Depende só do
+    comprimento da cavidade.</p>
+  </article>
+  <article class="cartao">
+    <h3>Finesse</h3>
+    \[ \mathcal{F} = \frac{\pi\sqrt{R}}{1-R}
+       = \frac{\mathrm{FSR}}{\Delta f} \]
+    <p>Quantas vezes o pico é mais estreito que o espaçamento. Depende só da
+    refletância dos espelhos.</p>
+  </article>
+</div>
+
+<div class="destaque">
+<p><strong>Exemplo trabalhado: um Fabry-Perot de bancada.</strong> Dois espelhos
+de \(R = 0{,}99\) separados por \(L = 1{,}0\ \mathrm{cm}\) de ar, usados em
+1550 nm. Calcule o intervalo espectral livre, a finesse, a largura de cada pico
+e o fator \(Q\).</p>
+
+\[ \mathrm{FSR} = \frac{c}{2L} = \frac{3{,}00\times10^{8}}{0{,}02}
+   = 15{,}0\ \mathrm{GHz}, \]
+
+\[ \mathcal{F} = \frac{\pi\sqrt{0{,}99}}{1-0{,}99} = 313, \]
+
+\[ \Delta f = \frac{\mathrm{FSR}}{\mathcal{F}}
+   = \frac{15{,}0\ \mathrm{GHz}}{313} = 48\ \mathrm{MHz}. \]
+
+<p>Com a frequência da luz em 1550 nm valendo \(193{,}4\ \mathrm{THz}\),</p>
+
+\[ Q = \frac{f_0}{\Delta f} = \frac{1{,}934\times10^{14}}{4{,}8\times10^{7}}
+   = 4{,}0\times10^{6}. \]
+
+<p><strong>O que esses números significam.</strong> O filtro separa frequências
+que diferem de 48 MHz numa portadora de 193 THz, isto é, uma parte em quatro
+milhões. É com isso que se mede a largura de linha de um laser, que se estabiliza
+a frequência de um relógio óptico, e que se escolhe um único canal num cabo
+que carrega oitenta deles.</p>
+
+<p><strong>O preço.</strong> O FSR de 15 GHz significa que o filtro transmite em
+<em>muitas</em> frequências, espaçadas de 15 GHz. Para escolher uma só é preciso
+combinar o Fabry-Perot com um filtro mais grosseiro, ou usar dois em série com
+comprimentos ligeiramente diferentes, no arranjo chamado de Vernier. Nenhum
+filtro é bom em resolução e em alcance ao mesmo tempo, e isso é geral.</p>
+
+<p><strong>E o laser?</strong> Um laser é exatamente isto com meio de ganho no
+meio: a cavidade escolhe as frequências, o ganho repõe a energia perdida, e o
+que sai é uma onda com a largura de linha da cavidade dividida por um fator que
+depende da potência. O LIGO, no extremo, usa cavidades Fabry-Perot de 4 km com
+finesse perto de 450, e é assim que ele mede deslocamentos de
+\(10^{-18}\ \mathrm{m}\).</p>
+</div>
 '''
 
 S8 = r'''
@@ -514,6 +696,16 @@ S8 = r'''
     \(\arctan(n_2/n_1)\); e acima do ângulo crítico \(R\) tem de valer 1.</p>
   </article>
   <article class="cartao">
+    <h3><a href="codigo/fibra_fabry.py">fibra_fabry.py</a></h3>
+    <p>Resolve a equação transcendental dos modos de um guia dielétrico e conta
+    quantos sobrevivem em cada comprimento de onda; depois monta a função de
+    Airy e mede FSR, finesse e largura direto da curva.</p>
+    <p><strong>Confira assim:</strong> o número de modos tem de crescer como
+    \(V\) e a fibra tem de ficar monomodo acima do corte; e o FSR e a finesse
+    medidos na curva têm de reproduzir \(c/2nL\) e
+    \(\pi\sqrt{R}/(1-R)\).</p>
+  </article>
+  <article class="cartao">
     <h3><a href="codigo/guia_onda.py">guia_onda.py</a></h3>
     <p>Acha os modos de um guia por autovalores do laplaciano discreto, para a
     seção retangular e para seções que não têm solução fechada.</p>
@@ -532,7 +724,8 @@ SECOES = [
     ('Ondas na matéria e incidência normal', S4),
     ('Incidência oblíqua: Snell, Fresnel, Brewster', S5),
     ('Dispersão e condutores', S6),
-    ('Guias de onda', S7),
+    ('Guias de onda e fibras', S7),
+    ('Cavidades e o Fabry-Perot', S7B),
     ('No Spyder', S8),
 ]
 
