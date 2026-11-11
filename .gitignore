@@ -1,0 +1,5 @@
+# o material-fonte (slides, livros, notas) fica fora do repositório público
+fonte/
+conteudo/
+__pycache__/
+*.pyc

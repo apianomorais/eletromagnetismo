@@ -1,0 +1,704 @@
+# -*- coding: utf-8 -*-
+"""Capítulo 5: magnetostática.
+
+O texto é escrito do zero. O Griffiths entra como referência de ordem e de
+numeração de capítulo, nunca como fonte de frases, enunciados ou figuras:
+os exemplos aqui são de nossa autoria, com contextos e números próprios.
+"""
+from molde import escreve, secoes_html
+
+S1 = r'''
+<p>A eletrostática começa com uma força entre cargas paradas e termina com
+quatro afirmações sobre o campo que elas criam. A magnetostática faz o mesmo
+caminho, mas a partir de uma força que só existe para cargas em movimento, e
+que não aponta na direção de nada: ela é perpendicular à velocidade e ao campo
+ao mesmo tempo.</p>
+
+<p>A força sobre uma carga \(q\) que se move com velocidade \(\vet{v}\) numa
+região onde há campo elétrico e campo magnético é</p>
+
+\[ \vet{F} = q\left(\vet{E} + \vet{v}\cruz\vet{B}\right). \]
+
+<p>Esta expressão não se deduz de nada mais fundamental dentro do
+eletromagnetismo clássico: ela é o resultado de medidas, e é com ela que o
+campo \(\vet{B}\) fica <em>definido</em> operacionalmente. Lançar cargas
+conhecidas numa região e medir o desvio é, literalmente, a maneira de dizer
+quanto vale o campo magnético ali.</p>
+
+<p>Duas consequências saem antes de qualquer conta.</p>
+
+<p><strong>A primeira:</strong> o produto vetorial é perpendicular a
+\(\vet{v}\), de modo que a força magnética nunca tem componente ao longo do
+movimento. Ela entorta a trajetória, mas não acelera nem freia a partícula.</p>
+
+<p><strong>A segunda:</strong> por isso mesmo, a força magnética não realiza
+trabalho. O trabalho infinitesimal é</p>
+
+\[ \delta W = \vet{F}_m\cdot d\vet{\ell}
+            = q\left(\vet{v}\cruz\vet{B}\right)\cdot\vet{v}\,dt = 0, \]
+
+<p>porque \(d\vet{\ell} = \vet{v}\,dt\) e o vetor \(\vet{v}\cruz\vet{B}\) é
+ortogonal a \(\vet{v}\). O resultado é mais forte do que parece: <em>nenhum</em>
+campo magnético, por mais intenso, pode aumentar a energia cinética de uma
+carga. Quando um motor elétrico levanta um peso, quem entrega energia é a fonte
+que mantém a corrente, não o ímã.</p>
+
+<div class="destaque">
+<p><strong>Um incômodo legítimo.</strong> Se a força magnética não trabalha,
+como é que um ímã levanta um clipe de papel? A resposta não cabe aqui: ela
+envolve os dipolos magnéticos do material e a energia da fonte que os mantém
+alinhados, e é o assunto do capítulo 6. Por enquanto, guarde o incômodo: ele é
+um bom sinal de que a frase foi entendida.</p>
+</div>
+'''
+
+S2 = r'''
+<p>Com a força de Lorentz na mão, duas trajetórias já explicam quase tudo o que
+se vê em laboratório.</p>
+
+<h3>Campo magnético sozinho: a órbita circular</h3>
+
+<p>Tome \(\vet{B} = B_0\vers{x}\) uniforme e uma carga lançada
+perpendicularmente ao campo, sem campo elétrico. A força tem módulo \(qvB_0\) e
+aponta sempre para o centro da curva, de modo que ela é exatamente a força
+centrípeta:</p>
+
+\[ qvB_0 = \frac{mv^2}{R} \quad\Longrightarrow\quad R = \frac{mv}{qB_0}
+   = \frac{p}{qB_0}. \]
+
+<p>O raio mede o momento linear. É assim que se identificam partículas nas
+câmaras de bolhas e nos detectores modernos: fotografa-se a curvatura e lê-se o
+momento. Dividindo a velocidade pelo raio obtém-se a frequência angular</p>
+
+\[ \omega_c = \frac{v}{R} = \frac{qB_0}{m}, \]
+
+<p>que <strong>não depende da velocidade</strong>. Uma partícula rápida descreve
+um círculo grande e uma lenta um círculo pequeno, mas as duas completam a volta
+no mesmo tempo. É esse acidente que torna o cíclotron possível: basta inverter a
+tensão entre os dois "dês" com período fixo, e o feixe ganha energia a cada
+passagem sem precisar de nenhum ajuste de sincronia.</p>
+
+<p><strong>Um número para fixar a escala.</strong> Um elétron acelerado por
+\(1\,\mathrm{kV}\) tem \(v \approx 1{,}9\cdot10^{7}\,\mathrm{m/s}\). Num campo de
+\(1\,\mathrm{mT}\), que é o de um ímã de geladeira a alguns centímetros, o raio
+fica</p>
+
+\[ R = \frac{m v}{q B_0}
+     = \frac{(9{,}11\cdot10^{-31})(1{,}9\cdot10^{7})}{(1{,}60\cdot10^{-19})(10^{-3})}
+     \approx 11\;\mathrm{cm}. \]
+
+<p>Ou seja: um campo fraquíssimo entorta um feixe de elétrons numa escala de
+bancada. É por isso que o tubo de raios catódicos funcionava, e também por que
+era preciso blindá-lo.</p>
+
+<h3>Campos cruzados: a cicloide</h3>
+
+<p>Agora ponha os dois campos, perpendiculares entre si:
+\(\vet{B} = B_0\vers{x}\) e \(\vet{E} = E_0\vers{z}\), com a partícula partindo
+do repouso na origem. A equação de movimento é</p>
+
+\[ m\,\frac{d\vet{v}}{dt} = q E_0\vers{z}
+   + q\begin{vmatrix}\vers{x} & \vers{y} & \vers{z}\\
+      v_x & v_y & v_z\\ B_0 & 0 & 0\end{vmatrix}
+   = q E_0\vers{z} + q B_0\left(v_z\vers{y} - v_y\vers{z}\right), \]
+
+<p>que se separa em três equações escalares:</p>
+
+\[ \der{v_x}{t} = 0, \qquad
+   \der{v_y}{t} = \omega\, v_z, \qquad
+   \der{v_z}{t} = \omega\left(\frac{E_0}{B_0} - v_y\right),
+   \qquad \omega \equiv \frac{qB_0}{m}. \]
+
+<p>A primeira já resolve a direção do campo: \(v_x\) é constante, e como a
+partícula partiu do repouso, \(v_x = 0\) para sempre. O movimento acontece todo
+no plano \(yz\).</p>
+
+<p>As outras duas estão acopladas. Derive a terceira no tempo e substitua a
+segunda:</p>
+
+\[ \frac{d^2 v_z}{dt^2} = -\omega\,\der{v_y}{t} = -\omega^2 v_z, \]
+
+<p>que é a equação do oscilador harmônico. Com \(v_z(0)=0\), sobra</p>
+
+\[ v_z = C\,\sen(\omega t). \]
+
+<p>Integrando uma vez para obter \(z\), e levando \(v_z\) de volta na equação de
+\(v_y\) para integrar duas vezes, chega-se a</p>
+
+\[ z = \frac{C}{\omega}\left[1 - \cos(\omega t)\right], \qquad
+   y = \frac{C}{\omega}\left[\omega t - \sen(\omega t)\right]. \]
+
+<p>Falta a constante \(C\), e ela sai de impor a própria equação de movimento em
+\(z\). Derivando \(v_z\) e comparando com
+\(\der{v_z}{t} = \omega(E_0/B_0 - v_y)\), todos os termos oscilantes se cancelam
+e resta</p>
+
+\[ C = \frac{E_0}{B_0}. \]
+
+<p>O resultado final é o par de equações paramétricas</p>
+
+\[ \boxed{\;y = \frac{E_0}{\omega B_0}\left[\omega t - \sen(\omega t)\right],
+   \qquad
+   z = \frac{E_0}{\omega B_0}\left[1 - \cos(\omega t)\right].\;} \]
+
+<p>É a cicloide: a curva que um ponto da borda de uma roda descreve enquanto a
+roda rola sem deslizar. A roda tem raio \(E_0/\omega B_0\) e seu centro caminha
+na direção \(y\) com velocidade constante</p>
+
+\[ v_{\text{deriva}} = \frac{E_0}{B_0}. \]
+
+<p>Esta é a <strong>deriva \(\vet{E}\cruz\vet{B}\)</strong>, e ela merece
+atenção porque é contraintuitiva de três maneiras ao mesmo tempo. A partícula
+é empurrada na direção \(z\) pelo campo elétrico, mas caminha na direção
+\(y\). A velocidade média não depende da carga: íon e elétron derivam juntos, no
+mesmo sentido, de modo que a deriva não produz corrente líquida. E não depende
+da massa: o plasma inteiro desliza em bloco. Em forma vetorial,</p>
+
+\[ \vet{v}_{\text{deriva}} = \frac{\vet{E}\cruz\vet{B}}{B^2}, \]
+
+<p>que é a base do confinamento magnético e da operação dos filtros de
+velocidade.</p>
+
+<div data-widget="trajetoria"></div>
+
+<p class="legenda">Mexa nos dois campos e veja a trajetória mudar de família. Com
+\(E_0 = 0\) a curva fecha num círculo de raio \(mv/qB_0\). Ligando o campo
+elétrico, o círculo começa a caminhar, e a curva passa por cicloide
+encurtada, cicloide comum e cicloide alongada conforme a velocidade inicial
+fica abaixo, igual ou acima de \(E_0/B_0\).</p>
+'''
+
+S3 = r'''
+<p>Até aqui, cargas isoladas. Para chegar aos campos de verdade é preciso
+descrever carga em movimento distribuída, e isso se faz em três geometrias.</p>
+
+<div class="cartoes">
+  <article class="cartao">
+    <h3>Corrente de linha</h3>
+    <p>Uma densidade linear \(\lambda\) deslizando com velocidade \(\vet{v}\):</p>
+    \[ \vet{I} = \lambda\vet{v} \]
+    <p>Mede-se em ampères. É o fio.</p>
+  </article>
+  <article class="cartao">
+    <h3>Corrente superficial</h3>
+    <p>Carga fluindo numa película, com densidade superficial \(\sigma\):</p>
+    \[ \vet{K} = \der{\vet{I}}{\ell_\perp} = \sigma\vet{v} \]
+    <p>Ampère por metro: corrente por unidade de largura.</p>
+  </article>
+  <article class="cartao">
+    <h3>Corrente volumétrica</h3>
+    <p>Carga fluindo num volume, com densidade \(\rho\):</p>
+    \[ \vet{J} = \der{\vet{I}}{a_\perp} = \rho\vet{v} \]
+    <p>Ampère por metro quadrado: o caso geral.</p>
+  </article>
+</div>
+
+<p>Repare na estrutura comum: em cada caso a densidade de corrente é a densidade
+de carga <em>daquela</em> dimensionalidade multiplicada pela velocidade de
+arrasto. E a corrente total que atravessa uma superfície é sempre o fluxo de
+\(\vet{J}\) por ela:</p>
+
+\[ I = \int_{\mathcal{S}} \vet{J}\cdot d\vet{a}. \]
+
+<h3>A força sobre um fio</h3>
+
+<p>Pegue a força de Lorentz e troque a carga pontual por um pedacinho de fio.
+Num comprimento \(d\ell\) há carga \(\lambda\,d\ell\), que se move com a
+velocidade de arrasto:</p>
+
+\[ d\vet{F}_m = \left(\vet{v}\cruz\vet{B}\right)\lambda\,d\ell
+              = \left(\vet{I}\cruz\vet{B}\right)d\ell
+              = I\left(d\vet{\ell}\cruz\vet{B}\right), \]
+
+<p>onde o último passo usa que \(\vet{I}\) e \(d\vet{\ell}\) apontam na mesma
+direção. Para corrente estacionária, \(I\) sai da integral:</p>
+
+\[ \vet{F}_m = I\int \left(d\vet{\ell}\cruz\vet{B}\right). \]
+
+<div class="destaque">
+<p><strong>Exemplo: a balança de corrente da bancada.</strong> Suspenda uma
+espira retangular rígida de um braço de balança, de modo que apenas o lado
+horizontal de baixo, de comprimento \(a = 5{,}0\,\mathrm{cm}\), fique dentro de
+um campo uniforme \(B_0 = 0{,}25\,\mathrm{T}\) de um ímã permanente, com o campo
+perpendicular ao plano da espira. Os dois lados verticais também sentem força,
+mas elas são horizontais, iguais e opostas, e se cancelam. Sobra a vertical:</p>
+\[ F_m = I\,a\,B_0. \]
+<p>Pendure uma massa \(m = 2{,}0\,\mathrm{g}\) no outro prato e pergunte qual
+corrente equilibra a balança:</p>
+\[ I = \frac{mg}{aB_0}
+     = \frac{(2{,}0\cdot10^{-3})(9{,}8)}{(5{,}0\cdot10^{-2})(0{,}25)}
+     \approx 1{,}6\;\mathrm{A}. \]
+<p>É uma corrente de bancada, medida com um multímetro comum. Esta é, aliás, a
+definição operacional de ampère que vigorou até 2019: comparar força magnética
+com peso. E vale a pergunta que o aluno sempre faz: se a corrente aumentar, a
+espira sobe? Sim, até o lado de baixo sair da região de campo, e aí a força
+deixa de crescer.</p>
+</div>
+
+<h3>Conservação da carga, escrita como equação</h3>
+
+<p>A carga que sai de um volume por unidade de tempo é o fluxo de \(\vet{J}\)
+pela superfície que o fecha. Se a carga não se cria nem se destrói, esse fluxo
+tem de vir às custas da carga lá dentro:</p>
+
+\[ \oint_{\mathcal{S}} \vet{J}\cdot d\vet{a}
+   = -\der{}{t}\int_{\mathcal{V}} \rho\,d\tau. \]
+
+<p>Aplique o teorema do divergente do lado esquerdo e passe a derivada para
+dentro da integral do lado direito:</p>
+
+\[ \int_{\mathcal{V}} \left(\divg{\vet{J}}\right) d\tau
+   = -\int_{\mathcal{V}} \pder{\rho}{t}\,d\tau. \]
+
+<p>Como o volume é arbitrário, os integrandos têm de ser iguais ponto a ponto:</p>
+
+\[ \boxed{\;\divg{\vet{J}} = -\pder{\rho}{t}.\;} \]
+
+<p>É a <strong>equação da continuidade</strong>, e ela é a conservação da carga
+em forma local. Guarde-a: no capítulo 7 ela vai denunciar que a lei de Ampère,
+como será escrita daqui a pouco, está incompleta, e a correção dessa
+inconsistência é a corrente de deslocamento de Maxwell.</p>
+
+<p>Em magnetostática, por definição, nada depende do tempo. Então
+\(\partial\rho/\partial t = 0\) e</p>
+
+\[ \divg{\vet{J}} = 0, \]
+
+<p>que é a condição de corrente estacionária: tudo o que entra num ponto sai
+dele. Esta hipótese será usada explicitamente na dedução do rotacional de
+\(\vet{B}\), e é bom saber onde ela entra.</p>
+'''
+
+S4 = r'''
+<p>A lei de Coulomb diz qual campo elétrico uma carga produz. O análogo
+magnético é a lei de Biot-Savart, obtida experimentalmente em 1820, poucas
+semanas depois de Oersted notar que uma bússola se mexia perto de um fio:</p>
+
+\[ \vet{B}(\vet{r}) = \frac{\mu_0}{4\pi} I \int
+   \frac{d\vet{\ell}' \cruz \vers{\imath}}{\imath^{2}}, \]
+
+<p>onde \(\vers{\imath}\) é o versor que aponta do elemento de corrente para o
+ponto de observação e \(\imath\) é a distância entre eles. A constante
+\(\mu_0 = 4\pi\cdot10^{-7}\,\mathrm{N/A^2}\) é a permeabilidade do vácuo.</p>
+
+<p>Vale comparar com a eletrostática antes de usar:</p>
+
+<div class="tabela-rolavel">
+<table>
+<thead><tr><th></th><th>Eletrostática</th><th>Magnetostática</th></tr></thead>
+<tbody>
+<tr><td>fonte</td><td>carga \(\rho\,d\tau\)</td><td>elemento de corrente \(I\,d\vet{\ell}\)</td></tr>
+<tr><td>queda com a distância</td><td>\(1/\imath^2\)</td><td>\(1/\imath^2\)</td></tr>
+<tr><td>direção do campo</td><td>ao longo de \(\vers{\imath}\)</td><td>perpendicular a \(d\vet{\ell}\) e a \(\vers{\imath}\)</td></tr>
+<tr><td>constante</td><td>\(1/4\pi\varepsilon_0\)</td><td>\(\mu_0/4\pi\)</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>A diferença decisiva está na terceira linha. O campo elétrico aponta para
+fora da fonte; o magnético circula em volta dela. É essa circulação que vai
+aparecer, logo adiante, como um rotacional que não se anula.</p>
+
+<h3>O fio retilíneo infinito</h3>
+
+<p>Tome um fio ao longo do eixo \(z\) com corrente \(I\), e um ponto a distância
+\(s\) dele. Chame de \(\theta\) o ângulo entre \(d\vet{\ell}'\) e
+\(\vers{\imath}\). Todos os elementos do fio produzem campo na mesma direção
+azimutal, de modo que a soma vetorial vira uma soma de módulos:</p>
+
+\[ \left|d\vet{\ell}'\cruz\vers{\imath}\right| = d\ell'\,\sen\theta. \]
+
+<p>Parametrize pelo ângulo. Com a origem no pé da perpendicular,
+\(\ell' = s\,\tg\alpha\), de modo que \(d\ell' = s\sec^2\alpha\,d\alpha\),
+\(\imath = s\sec\alpha\) e \(\sen\theta = \cos\alpha\). Substituindo,</p>
+
+\[ B = \frac{\mu_0 I}{4\pi}\int_{-\pi/2}^{\pi/2}
+      \frac{s\sec^2\alpha\,\cos\alpha}{s^2\sec^2\alpha}\,d\alpha
+    = \frac{\mu_0 I}{4\pi s}\int_{-\pi/2}^{\pi/2}\cos\alpha\,d\alpha
+    = \frac{\mu_0 I}{4\pi s}\Big[\sen\alpha\Big]_{-\pi/2}^{\pi/2}, \]
+
+\[ \boxed{\;B = \frac{\mu_0 I}{2\pi s}.\;} \]
+
+<p>Cai com \(1/s\), e não com \(1/s^2\): é o mesmo expoente do campo elétrico de
+um fio carregado, e pela mesma razão geométrica. As linhas de \(\vet{B}\) são
+círculos concêntricos ao fio, com o sentido dado pela regra da mão direita.</p>
+
+<p><strong>A escala do efeito.</strong> Um fio de chuveiro conduzindo
+\(30\,\mathrm{A}\) produz, a \(2\,\mathrm{cm}\),</p>
+
+\[ B = \frac{(4\pi\cdot10^{-7})(30)}{2\pi(0{,}02)}
+     = 3{,}0\cdot10^{-4}\;\mathrm{T}, \]
+
+<p>que é cerca de seis vezes o campo magnético da Terra. Daí a bússola de
+Oersted ter se mexido, e daí também a necessidade de trançar os pares de fios
+em instrumentação sensível.</p>
+
+<h3>A espira circular, no eixo</h3>
+
+<p>Uma espira de raio \(R\) com corrente \(I\), observada num ponto do eixo a
+distância \(z\) do centro. Cada elemento \(d\vet{\ell}'\) é perpendicular a
+\(\vers{\imath}\), então o módulo de \(d\vet{B}\) é simplesmente
+\(\mu_0 I\,d\ell'/4\pi\imath^2\), com \(\imath^2 = R^2 + z^2\).</p>
+
+<p>Aqui entra o argumento de simetria que vale por uma página de conta: para
+cada elemento da espira existe o elemento diametralmente oposto, e as
+componentes de \(d\vet{B}\) perpendiculares ao eixo se cancelam aos pares.
+Sobrevive apenas a componente axial, que vale \(d B\cos\phi\) com
+\(\cos\phi = R/\sqrt{R^2+z^2}\). Como esse fator é o mesmo para todos os
+elementos, ele sai da integral, e o que resta integrar é o comprimento da
+espira, \(2\pi R\):</p>
+
+\[ B_z = \frac{\mu_0 I}{4\pi}\,\frac{1}{R^2+z^2}\,
+        \frac{R}{\sqrt{R^2+z^2}}\,(2\pi R), \]
+
+\[ \boxed{\;B_z = \frac{\mu_0 I R^2}{2\left(R^2+z^2\right)^{3/2}}.\;} \]
+
+<p>Dois limites conferem o resultado. No centro, \(z=0\), dá
+\(B = \mu_0 I/2R\). Longe, \(z \gg R\), dá</p>
+
+\[ B_z \approx \frac{\mu_0 I R^2}{2z^3} = \frac{\mu_0}{4\pi}\,\frac{2m}{z^3},
+   \qquad m \equiv I\pi R^2, \]
+
+<p>que é o campo de um dipolo magnético de momento \(m = IA\). Guarde esta
+forma: ela reaparece na expansão multipolar, no fim do capítulo, e é o modelo de
+toda matéria magnetizada do capítulo 6.</p>
+'''
+
+S5 = r'''
+<p>A lei de Biot-Savart resolve qualquer caso, em princípio. Na prática, a
+integral só é factível quando há simetria, e mesmo aí dá trabalho. As duas
+equações a seguir reorganizam a mesma informação de um jeito muito mais
+utilizável, e são elas que vão para as equações de Maxwell.</p>
+
+<h3>O divergente: por que não existe carga magnética</h3>
+
+<p>Escreva Biot-Savart para uma corrente volumétrica:</p>
+
+\[ \vet{B}(\vet{r}) = \frac{\mu_0}{4\pi}\int
+   \frac{\vet{J}(\vet{r}')\cruz\vers{\imath}}{\imath^2}\,d\tau'. \]
+
+<p>Tome o divergente, lembrando que \(\nabla\) age em \(\vet{r}\) e
+\(\vet{J}\) depende só de \(\vet{r}'\), de modo que \(\vet{J}\) é constante para
+o operador. A identidade vetorial
+\(\divg{(\vet{A}\cruz\vet{B})} = \vet{B}\cdot(\nabla\cruz\vet{A}) - \vet{A}\cdot(\nabla\cruz\vet{B})\)
+dá</p>
+
+\[ \divg{\vet{B}} = \frac{\mu_0}{4\pi}\int\left[
+   \frac{\vers{\imath}}{\imath^2}\cdot\left(\nabla\cruz\vet{J}\right)
+   - \vet{J}\cdot\left(\nabla\cruz\frac{\vers{\imath}}{\imath^2}\right)
+   \right]d\tau'. \]
+
+<p>O primeiro termo é nulo porque \(\vet{J}\) não depende de \(\vet{r}\). O
+segundo é nulo porque o rotacional de \(\vers{\imath}/\imath^2\) se anula: esse
+campo é radial a partir de \(\vet{r}'\), e todo campo central é irrotacional.
+Logo</p>
+
+\[ \boxed{\;\divg{\vet{B}} = 0.\;} \]
+
+<p>Esta é a lei de Gauss do magnetismo, e o seu conteúdo é uma ausência: não há
+monopolo magnético. As linhas de \(\vet{B}\) não começam nem terminam em lugar
+nenhum, elas se fecham. Na forma integral,</p>
+
+\[ \oint_{\mathcal{S}} \vet{B}\cdot d\vet{a} = 0, \]
+
+<p>o fluxo magnético por qualquer superfície fechada é zero: toda linha que
+entra, sai. Compare com a lei de Gauss elétrica, em que o fluxo mede a carga
+interna, e veja que aqui não há o que medir.</p>
+
+<h3>O rotacional: a lei de Ampère</h3>
+
+<p>Agora o rotacional da mesma integral. Com a identidade
+\(\nabla\cruz(\vet{A}\cruz\vet{B}) = (\vet{B}\cdot\nabla)\vet{A} - (\vet{A}\cdot\nabla)\vet{B}
++ \vet{A}(\divg{\vet{B}}) - \vet{B}(\divg{\vet{A}})\),
+dois termos morrem de imediato porque \(\vet{J}\) não depende de \(\vet{r}\), e
+sobram</p>
+
+\[ \nabla\cruz\vet{B} = \frac{\mu_0}{4\pi}\int\left[
+   \vet{J}\left(\divg{\frac{\vers{\imath}}{\imath^2}}\right)
+   - \left(\vet{J}\cdot\nabla\right)\frac{\vers{\imath}}{\imath^2}
+   \right]d\tau'. \]
+
+<p><strong>O primeiro termo</strong> é onde mora a física. O divergente de
+\(\vers{\imath}/\imath^2\) é a função delta de Dirac,</p>
+
+\[ \divg{\frac{\vers{\imath}}{\imath^2}} = 4\pi\,\delta^3(\vet{\imath}), \]
+
+<p>de modo que a integral colapsa no ponto \(\vet{r}' = \vet{r}\) e entrega
+\(\mu_0\vet{J}(\vet{r})\).</p>
+
+<p><strong>O segundo termo</strong> se anula, mas o argumento exige cuidado.
+Troca-se \(\nabla\) por \(-\nabla'\) (porque \(\vers{\imath}/\imath^2\) depende
+apenas da diferença \(\vet{r}-\vet{r}'\)), integra-se por partes e aparece um
+termo de superfície mais um termo com \(\nabla'\cdot\vet{J}\). O termo de
+superfície é nulo se a superfície de integração contiver toda a corrente, e</p>
+
+\[ \nabla'\cdot\vet{J} = -\pder{\rho}{t} = 0 \]
+
+<p>em magnetostática, pela equação da continuidade. Note bem: <em>é aqui</em>
+que a hipótese de corrente estacionária entra. Quando ela cair, no capítulo 7,
+este termo voltará à vida e trará consigo a corrente de deslocamento.</p>
+
+<p>Resta, portanto,</p>
+
+\[ \boxed{\;\nabla\cruz\vet{B} = \mu_0\vet{J}.\;} \]
+
+<p>Pelo teorema de Stokes, a forma integral:</p>
+
+\[ \oint_{\mathcal{C}} \vet{B}\cdot d\vet{\ell} = \mu_0 I_{\text{enl}}, \]
+
+<p>onde \(I_{\text{enl}}\) é a corrente que atravessa qualquer superfície apoiada
+na curva \(\mathcal{C}\). O "qualquer" só é legítimo porque
+\(\divg{\vet{J}}=0\): se a corrente pudesse acumular carga em algum lugar, duas
+superfícies diferentes apoiadas na mesma curva dariam respostas diferentes, e a
+lei seria ambígua. Guarde também essa observação para o capítulo 7, porque é
+exatamente o que acontece com um capacitor carregando.</p>
+'''
+
+S6 = r'''
+<p>A lei de Ampère resolve de cabeça os casos com simetria suficiente para que
+\(\vet{B}\) saia da integral. O procedimento é sempre o mesmo, em três passos:
+descobrir a direção de \(\vet{B}\) por simetria, escolher uma curva em que o
+módulo seja constante, e contar a corrente enlaçada.</p>
+
+<div class="cartoes">
+  <article class="cartao">
+    <h3>Fio infinito</h3>
+    <p>Curva: círculo de raio \(s\) em torno do fio.</p>
+    \[ B\,(2\pi s) = \mu_0 I \;\Rightarrow\; B = \frac{\mu_0 I}{2\pi s} \]
+    <p>Em duas linhas, o que Biot-Savart deu em meia página.</p>
+  </article>
+  <article class="cartao">
+    <h3>Solenoide longo</h3>
+    <p>Curva: retângulo com um lado dentro e outro fora.</p>
+    \[ B\,L = \mu_0 n L I \;\Rightarrow\; B = \mu_0 n I \]
+    <p>Campo uniforme dentro, nulo fora, com \(n\) espiras por metro.</p>
+  </article>
+  <article class="cartao">
+    <h3>Toroide</h3>
+    <p>Curva: círculo de raio \(s\) dentro do enrolamento.</p>
+    \[ B = \frac{\mu_0 N I}{2\pi s} \]
+    <p>Não é uniforme: cai de dentro para fora da rosca.</p>
+  </article>
+  <article class="cartao">
+    <h3>Plano de corrente</h3>
+    <p>Curva: retângulo atravessando o plano, com \(\vet{K}=K\vers{x}\).</p>
+    \[ B = \frac{\mu_0 K}{2} \]
+    <p>Não depende da distância, e inverte de sentido ao cruzar o plano.</p>
+  </article>
+</div>
+
+<div class="destaque">
+<p><strong>Exemplo trabalhado: o cabo coaxial.</strong> Um cabo de antena tem um
+condutor central de raio \(a\) conduzindo corrente \(I\) distribuída
+uniformemente, e uma malha externa, de raios \(b\) e \(c\), conduzindo a mesma
+corrente \(I\) no sentido oposto. Vamos achar \(B(s)\) nas quatro regiões.</p>
+
+<p>Por simetria cilíndrica, \(\vet{B}\) é azimutal e só depende de \(s\), então
+a curva amperiana é sempre um círculo e o lado esquerdo é sempre \(B\,2\pi s\).
+Só muda a corrente enlaçada.</p>
+
+<p><strong>Dentro do condutor central</strong> (\(s<a\)): a corrente enlaçada é
+a fração da área,</p>
+\[ I_{\text{enl}} = I\,\frac{\pi s^2}{\pi a^2}
+   \;\Rightarrow\; B = \frac{\mu_0 I s}{2\pi a^2}. \]
+<p>Cresce linearmente do eixo até a superfície.</p>
+
+<p><strong>Entre os condutores</strong> (\(a<s<b\)): toda a corrente central
+está enlaçada,</p>
+\[ B = \frac{\mu_0 I}{2\pi s}, \]
+<p>idêntico ao fio infinito. É nesta região que vive o campo do cabo.</p>
+
+<p><strong>Dentro da malha</strong> (\(b<s<c\)): a corrente de volta entra
+progressivamente, com sinal contrário,</p>
+\[ I_{\text{enl}} = I - I\,\frac{s^2-b^2}{c^2-b^2}
+   \;\Rightarrow\; B = \frac{\mu_0 I}{2\pi s}\,\frac{c^2-s^2}{c^2-b^2}. \]
+
+<p><strong>Fora do cabo</strong> (\(s>c\)): as duas correntes se cancelam,</p>
+\[ I_{\text{enl}} = I - I = 0 \;\Rightarrow\; B = 0. \]
+
+<p>E aqui está a razão de ser do cabo coaxial: do lado de fora ele não produz
+campo nenhum, e por reciprocidade também não capta. É blindagem magnética obtida
+de graça, por geometria, sem material nenhum.</p>
+</div>
+'''
+
+S7 = r'''
+<p>Na eletrostática, \(\nabla\cruz\vet{E}=0\) permitiu escrever
+\(\vet{E} = -\nabla V\) e trocar um campo vetorial por um escalar. Na
+magnetostática o rotacional não se anula, mas o divergente sim, e é dele que sai
+o potencial correspondente: todo campo de divergente nulo pode ser escrito como
+o rotacional de alguma coisa,</p>
+
+\[ \vet{B} = \nabla\cruz\vet{A}, \]
+
+<p>onde \(\vet{A}\) é o <strong>potencial vetor</strong>. Com isso,
+\(\divg{\vet{B}}=0\) fica automaticamente satisfeita, do mesmo jeito que
+\(\nabla\cruz\vet{E}=0\) ficava automática com \(\vet{E}=-\nabla V\).</p>
+
+<h3>A liberdade de calibre</h3>
+
+<p>O potencial vetor não é único: somar a \(\vet{A}\) o gradiente de qualquer
+função escalar não muda \(\vet{B}\), porque o rotacional de um gradiente é
+sempre nulo,</p>
+
+\[ \vet{A}' = \vet{A} + \nabla\Lambda
+   \;\Longrightarrow\; \nabla\cruz\vet{A}' = \nabla\cruz\vet{A} = \vet{B}. \]
+
+<p>Essa liberdade é um presente: pode-se usá-la para impor uma condição que
+simplifique as contas. Em magnetostática escolhe-se o <strong>calibre de
+Coulomb</strong>,</p>
+
+\[ \divg{\vet{A}} = 0, \]
+
+<p>que sempre pode ser satisfeito. Com ele, a lei de Ampère
+\(\nabla\cruz(\nabla\cruz\vet{A}) = \mu_0\vet{J}\) e a identidade
+\(\nabla\cruz(\nabla\cruz\vet{A}) = \nabla(\divg{\vet{A}}) - \nabla^2\vet{A}\)
+colapsam em</p>
+
+\[ \boxed{\;\nabla^2\vet{A} = -\mu_0\vet{J}.\;} \]
+
+<p>São três equações de Poisson, uma por componente, idênticas em forma à
+\(\nabla^2 V = -\rho/\varepsilon_0\) da eletrostática. Ou seja: todo o arsenal
+do capítulo 3, imagens, separação de variáveis, relaxação numérica, vale aqui
+sem mudar uma vírgula. A solução, quando a corrente é localizada, é</p>
+
+\[ \vet{A}(\vet{r}) = \frac{\mu_0}{4\pi}\int
+   \frac{\vet{J}(\vet{r}')}{\imath}\,d\tau'. \]
+
+<div class="destaque">
+<p><strong>Exemplo trabalhado: a casca esférica girante.</strong> Uma casca
+esférica de raio \(R\) tem carga \(Q\) distribuída uniformemente na superfície e
+gira com velocidade angular \(\omega\) em torno do eixo \(z\). Queremos o campo
+dentro e fora.</p>
+
+<p>A densidade superficial é \(\sigma = Q/4\pi R^2\) e a velocidade de um ponto
+da casca a um ângulo polar \(\theta'\) é \(v = \omega R\sen\theta'\), na direção
+azimutal. Logo \(\vet{K} = \sigma\omega R\sen\theta'\,\vers{\phi}'\).</p>
+
+<p>A conta direta de \(\vet{A}\) tem um truque que vale aprender: escolha o
+ponto de observação <em>no eixo \(z\)</em>. Isso não perde generalidade, porque o
+problema tem simetria de revolução e qualquer ponto pode ser levado ao eixo por
+uma rotação; e ganha muito, porque as integrais em \(\phi'\) dos termos que
+envolvem \(\cos\phi'\) e \(\sen\phi'\) se anulam de imediato, por serem
+integrais de funções periódicas sobre um período completo.</p>
+
+<p>Sobra uma integral em \(\theta'\) que se resolve com a substituição
+\(u = \cos\theta'\), e o resultado, escrito de volta em coordenadas
+genéricas, é</p>
+
+\[ \vet{A}(r,\theta) = \begin{cases}
+   \dfrac{\mu_0 \sigma \omega R}{3}\,r\sen\theta\;\vers{\phi}, & r \le R,\\[1.1em]
+   \dfrac{\mu_0 \sigma \omega R^4}{3}\,\dfrac{\sen\theta}{r^2}\;\vers{\phi}, & r \ge R.
+   \end{cases} \]
+
+<p>Tomando o rotacional em coordenadas esféricas, o campo interno é</p>
+
+\[ \vet{B} = \frac{2\mu_0\sigma\omega R}{3}\,\vers{z}, \]
+
+<p>uniforme. Vale a pena parar nisso: uma casca girante produz, no seu interior,
+um campo rigorosamente constante em módulo e direção, como o de um solenoide
+infinito. É o jeito mais limpo de fabricar campo uniforme numa região esférica,
+e é também o modelo mais simples de dínamo planetário.</p>
+
+<p>Fora, o campo é exatamente o de um dipolo magnético puro, de momento
+\(m = \frac{4}{3}\pi\sigma\omega R^4\), sem nenhum termo de ordem superior. Essa
+coincidência não é acidental: ela vem de \(\vet{K}\) variar exatamente como
+\(\sen\theta'\).</p>
+</div>
+
+<h3>Condições de contorno</h3>
+
+<p>Ao atravessar uma superfície que conduz corrente \(\vet{K}\), o campo se
+comporta assim:</p>
+
+\[ B_\perp^{\text{acima}} = B_\perp^{\text{abaixo}}, \qquad
+   \vet{B}_\parallel^{\text{acima}} - \vet{B}_\parallel^{\text{abaixo}}
+   = \mu_0\left(\vet{K}\cruz\vers{n}\right). \]
+
+<p>A primeira sai de \(\divg{\vet{B}}=0\) aplicado a um tijolo achatado que
+atravessa a superfície: o fluxo que entra por baixo tem de sair por cima. A
+segunda sai da lei de Ampère aplicada a um retângulo que atravessa a mesma
+superfície. O padrão é o mesmo da eletrostática, com os papéis trocados: lá o
+que saltava era a componente perpendicular, por causa da carga superficial;
+aqui é a paralela, por causa da corrente superficial.</p>
+
+<p>O potencial vetor, por sua vez, é contínuo,
+\(\vet{A}^{\text{acima}} = \vet{A}^{\text{abaixo}}\), mas a sua derivada normal
+não é:</p>
+
+\[ \pder{\vet{A}^{\text{acima}}}{n} - \pder{\vet{A}^{\text{abaixo}}}{n}
+   = -\mu_0\vet{K}. \]
+'''
+
+S8 = r'''
+<p>Três programas, todos em <code>numpy</code> e <code>matplotlib</code>, para
+baixar e rodar no Spyder sem configuração nenhuma. Cada um traz no cabeçalho o
+que resolve, o que imprime e como conferir se a resposta está certa.</p>
+
+<div class="cartoes">
+  <article class="cartao">
+    <h3><a href="codigo/trajetoria_lorentz.py">trajetoria_lorentz.py</a></h3>
+    <p>Integra o movimento de uma carga em campos \(\vet{E}\) e \(\vet{B}\)
+    arbitrários pelo método de Boris, que é o integrador padrão de física de
+    plasmas: ele conserva a energia na ausência de campo elétrico, coisa que
+    Runge-Kutta não faz.</p>
+    <p><strong>Confira assim:</strong> com \(\vet{E}=0\), o raio numérico tem de
+    bater com \(mv/qB\) em todas as voltas, sem derivar; com campos cruzados, o
+    centro da órbita tem de caminhar com \(E_0/B_0\).</p>
+  </article>
+  <article class="cartao">
+    <h3><a href="codigo/biot_savart.py">biot_savart.py</a></h3>
+    <p>Calcula o campo de qualquer circuito fechado descrito por uma lista de
+    pontos, somando \(d\vet{\ell}\cruz\vers{\imath}/\imath^2\) elemento a
+    elemento. Serve para espira circular, quadrada, bobina de Helmholtz ou
+    qualquer geometria que você desenhar.</p>
+    <p><strong>Confira assim:</strong> para a espira circular no eixo, compare
+    com \(\mu_0 I R^2/2(R^2+z^2)^{3/2}\); o erro cai com o quadrado do número de
+    segmentos.</p>
+  </article>
+  <article class="cartao">
+    <h3><a href="codigo/helmholtz.py">helmholtz.py</a></h3>
+    <p>Usa o programa anterior para mostrar por que duas bobinas separadas por
+    exatamente um raio produzem a região mais uniforme possível: as derivadas
+    primeira e segunda do campo se anulam no centro.</p>
+    <p><strong>Confira assim:</strong> varie a separação e veja a uniformidade
+    piorar para os dois lados do valor \(d = R\).</p>
+  </article>
+</div>
+
+<h3>Por que o integrador de Boris</h3>
+
+<p>Vale explicar a escolha, porque ela é um bom exemplo de como a estrutura da
+física deve guiar a escolha do método numérico. A força magnética não realiza
+trabalho, como ficou demonstrado na primeira seção. Um integrador comum não sabe
+disso: ele erra um pouquinho em cada passo, e esses erros se acumulam sempre no
+mesmo sentido, de modo que a energia da partícula cresce ou decresce
+lentamente. Depois de algumas centenas de voltas, o círculo virou espiral, e a
+espiral não é física, é erro numérico.</p>
+
+<p>O método de Boris separa o passo em três: meio empurrão elétrico, uma rotação
+pura em torno de \(\vet{B}\), e o outro meio empurrão elétrico. Como a parte
+magnética é implementada como uma <em>rotação</em>, ela preserva o módulo da
+velocidade por construção, exatamente como a física manda. O erro continua
+existindo, mas vai para a fase, e não para a energia.</p>
+'''
+
+SECOES = [
+    ('A força de Lorentz', S1),
+    ('Duas trajetórias que explicam o resto', S2),
+    ('Correntes e conservação da carga', S3),
+    ('A lei de Biot-Savart', S4),
+    ('Divergente e rotacional de B', S5),
+    ('A lei de Ampère em ação', S6),
+    ('O potencial vetor', S7),
+    ('No Spyder', S8),
+]
+
+
+def main():
+    titulos = [t for t, _ in SECOES]
+    escreve('cap05.html', secoes_html(SECOES), secoes=titulos)
+
+
+if __name__ == '__main__':
+    main()
