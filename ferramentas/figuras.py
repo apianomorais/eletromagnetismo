@@ -510,8 +510,13 @@ def laco_de_histerese():
     p.append(curva(sobe, COBRE))
     p.append(curva(desce, COBRE))
     # a curva virgem, do material nunca magnetizado
-    virgem = [(ox + h * ex, oy - math.tanh(h / (larg * 2.3)) * ey)
-              for h in [1.6 * i / 80 for i in range(81)]]
+    # A curva virgem tem de ficar DENTRO do laço: ela parte da origem e
+    # encosta na saturação sem nunca cruzar nenhum dos dois ramos. A média
+    # dos dois ramos satisfaz isso por construção, e é o que se mede.
+    def primeira(h):
+        return 0.5 * (math.tanh((h - hc) / larg) + math.tanh((h + hc) / larg))
+    virgem = [(ox + h * ex, oy - primeira(h) * ey)
+              for h in [1.6 * i / 120 for i in range(121)]]
     p.append(curva(virgem, VERDE, 2.2, True))
     p.append(texto(ox + 176, oy + 80, 'curva virgem, do material', VERDE, 17, anc='end'))
     p.append(texto(ox + 176, oy + 100, 'nunca magnetizado', VERDE, 17, anc='end'))
