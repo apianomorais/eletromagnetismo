@@ -20,7 +20,7 @@
       <a href="cap01.html" class="num" title="Capítulo 1: análise vetorial">1</a>
       <a href="cap02.html" class="num" title="Capítulo 2: eletrostática">2</a>
       <a href="cap03.html" class="num" title="Capítulo 3: potenciais e técnicas especiais">3</a>
-      <span class="num pendente" title="Capítulo 4: campos elétricos na matéria: em preparação">4</span>
+      <a href="cap04.html" class="num" title="Capítulo 4: campos elétricos na matéria">4</a>
       <span class="grupo">EM II</span>
       <a href="cap05.html" class="num" title="Capítulo 5: magnetostática">5</a>
       <a href="cap06.html" class="num" title="Capítulo 6: campos magnéticos na matéria">6</a>
@@ -153,6 +153,21 @@
       <p class="ficha">Capítulo 3</p>
       <p>Momentos de uma distribuição discreta e comparação da série truncada com o potencial exato, ordem por ordem.</p>
       <p><strong>Confira assim:</strong> O erro da ordem n cai com o expoente certo (medido: 2,00 para o dipolo), e o momento de dipolo muda com a origem assim que a carga total deixa de ser nula.</p>
+    </article>
+  </div>
+  <h3>Matéria polarizada e magnetizada</h3>
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/esfera_dieletrica.py">esfera_dieletrica.py</a></h3>
+      <p class="ficha">Capítulo 4</p>
+      <p>A esfera dielétrica num campo uniforme, pela série de Legendre e por relaxação com a permissividade variável.</p>
+      <p><strong>Confira assim:</strong> O campo interno sai uniforme (desvio de 4e-4) e vale 3E₀/(εr+2); refinando, o erro cai só em primeira ordem, porque a interface curva numa grade quadrada é o fator limitante.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/cargas_ligadas.py">cargas_ligadas.py</a></h3>
+      <p class="ficha">Capítulo 4</p>
+      <p>Calcula ρ_b e σ_b de polarizações uniformes, radiais e azimutais, e monta o campo que elas produzem.</p>
+      <p><strong>Confira assim:</strong> A carga ligada total dá zero em todos os casos, o campo dentro da esfera uniformemente polarizada dá −P/3ε₀ com erro de 1e-5, e fora é dipolar.</p>
     </article>
   </div>
   <h3>Integração de campos: Biot-Savart e companhia</h3>

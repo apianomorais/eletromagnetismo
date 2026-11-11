@@ -781,12 +781,73 @@ def duas_superficies():
     return 'cap07_superficies.svg'
 
 
+# ---------------------------------------------------------------------------
+def cargas_ligadas():
+    """Os dipolos alinhados: o interior se cancela, as faces sobram."""
+    p = []
+    L, A = 880, 430
+    x0, y0, cel, nc, nl = 70, 80, 80, 7, 3
+    larg, alt = cel * nc, cel * nl
+
+    p.append('<rect x="%d" y="%d" width="%d" height="%d" rx="4" fill="%s" '
+             'stroke="%s" stroke-width="1.6"/>'
+             % (x0, y0, larg, alt, CLARO, BORDA))
+
+    # cada dipolo: um par de cargas, a negativa à esquerda e a positiva à direita
+    for i in range(nc):
+        for j in range(nl):
+            cx = x0 + cel * (i + 0.5)
+            cy = y0 + cel * (j + 0.5)
+            p.append('<circle cx="%.1f" cy="%.1f" r="13" fill="#ffffff" '
+                     'stroke="%s" stroke-width="2"/>' % (cx - 20, cy, SUAVE))
+            p.append(texto(cx - 20, cy + 7, '−', SUAVE, 20))
+            p.append('<circle cx="%.1f" cy="%.1f" r="13" fill="#ffffff" '
+                     'stroke="%s" stroke-width="2"/>' % (cx + 20, cy, COBRE))
+            p.append(texto(cx + 20, cy + 7, '+', COBRE, 20))
+            p.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" '
+                     'stroke="%s" stroke-width="2"/>'
+                     % (cx - 7, cy, cx + 7, cy, SUAVE))
+
+    # os pares internos que se cancelam
+    for i in range(nc - 1):
+        for j in range(nl):
+            cx = x0 + cel * (i + 1)
+            cy = y0 + cel * (j + 0.5)
+            p.append('<ellipse cx="%.1f" cy="%.1f" rx="34" ry="19" fill="none" '
+                     'stroke="%s" stroke-width="1.6" stroke-dasharray="6 5"/>'
+                     % (cx, cy, VERDE))
+    p.append(texto(x0 + larg / 2, y0 + alt + 36,
+                   'dentro, cada + encosta num − e os dois somam zero',
+                   VERDE, 17))
+
+    # as faces, que sobram
+    p.append('<rect x="%d" y="%d" width="26" height="%d" fill="%s" '
+             'opacity="0.22"/>' % (x0 - 4, y0, alt, SUAVE))
+    p.append('<rect x="%d" y="%d" width="26" height="%d" fill="%s" '
+             'opacity="0.22"/>' % (x0 + larg - 22, y0, alt, COBRE))
+    p.append(texto(x0 + 9, y0 - 20, '−σ', SUAVE, 21))
+    p.append(texto(x0 + larg - 9, y0 - 20, '+σ', COBRE, 21))
+    p.append(texto(x0 + larg / 2, y0 - 22,
+                   'nas faces não há vizinho para cancelar', SUAVE, 17))
+
+    # a polarização
+    p.append(seta(x0 + larg / 2 - 60, y0 + alt + 76,
+                  x0 + larg / 2 + 60, y0 + alt + 76, TINTA, 3.2))
+    p.append(texto(x0 + larg / 2 + 72, y0 + alt + 82, 'P', TINTA, 21,
+                   anc='start', italico=True))
+
+    io.open(IMG / 'cap04_ligadas.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Cargas ligadas num dielétrico polarizado'))
+    return 'cap04_ligadas.svg'
+
+
 def main():
     IMG.mkdir(parents=True, exist_ok=True)
     for fn in (forca_de_lorentz, balanca_de_corrente, cabo_coaxial,
                casca_girante, torque_na_espira, correntes_ligadas,
                laco_de_histerese, condicoes_de_contorno,
-               barra_nos_trilhos, campo_induzido, duas_superficies):
+               barra_nos_trilhos, campo_induzido, duas_superficies,
+               cargas_ligadas):
         print('  ' + fn())
 
 

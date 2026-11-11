@@ -63,6 +63,21 @@ GRUPOS = [
          'total deixa de ser nula.'),
     ]),
 
+    ('Matéria polarizada e magnetizada', [
+        ('esfera_dieletrica.py', 'Capítulo 4',
+         'A esfera dielétrica num campo uniforme, pela série de Legendre e por '
+         'relaxação com a permissividade variável.',
+         'O campo interno sai uniforme (desvio de 4e-4) e vale '
+         '3E₀/(εr+2); refinando, o erro cai só em primeira ordem, porque a '
+         'interface curva numa grade quadrada é o fator limitante.'),
+        ('cargas_ligadas.py', 'Capítulo 4',
+         'Calcula ρ_b e σ_b de polarizações uniformes, radiais e azimutais, e '
+         'monta o campo que elas produzem.',
+         'A carga ligada total dá zero em todos os casos, o campo dentro da '
+         'esfera uniformemente polarizada dá −P/3ε₀ com erro de 1e-5, e fora '
+         'é dipolar.'),
+    ]),
+
     ('Integração de campos: Biot-Savart e companhia', [
         ('biot_savart.py', 'Capítulo 5',
          'O módulo de base: discretiza um fio em segmentos e soma a '
