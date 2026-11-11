@@ -610,11 +610,183 @@ def condicoes_de_contorno():
     return 'cap05_contorno.svg'
 
 
+# ---------------------------------------------------------------------------
+def barra_nos_trilhos():
+    """A barra deslizante: fem de movimento, corrente e freio magnético."""
+    p = []
+    L, A = 700, 460
+    cy, meia = 210, 86
+    x_res, x_barra, x_fim = 110, 380, 620
+
+    # a região de campo
+    p.append('<rect x="%d" y="%d" width="%d" height="%d" rx="6" fill="%s" '
+             'stroke="%s" stroke-width="1.6"/>'
+             % (x_res - 20, cy - meia - 40, x_fim - x_res + 60, 2 * meia + 80,
+                CLARO, BORDA))
+    for i in range(7):
+        for j in range(3):
+            xx = x_res + 12 + i * 78
+            yy = cy - meia + 4 + j * (meia - 4)
+            if abs(xx - x_barra) > 20:
+                p.append(entra(xx, yy, 8, SUAVE))
+    p.append(texto(L / 2, cy + meia + 64, 'campo uniforme B, entrando na tela',
+                   SUAVE, 17))
+
+    # a faixa varrida no intervalo dt
+    p.append('<rect x="%d" y="%d" width="62" height="%d" fill="%s" '
+             'opacity="0.5"/>' % (x_barra, cy - meia, 2 * meia, '#e6d3c2'))
+    p.append(texto(x_barra + 31, cy - meia - 14, 'v dt', COBRE, 17, italico=True))
+
+    # trilhos e resistor
+    for yy in (cy - meia, cy + meia):
+        p.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" '
+                 'stroke-width="3.4"/>' % (x_res, yy, x_fim, yy, TINTA))
+    p.append('<path d="M %d %d L %d %d L %d %d L %d %d L %d %d L %d %d L %d %d" '
+             'fill="none" stroke="%s" stroke-width="3.4" stroke-linejoin="round"/>'
+             % (x_res, cy - meia, x_res, cy - 48,
+                x_res - 16, cy - 32, x_res + 16, cy - 8,
+                x_res - 16, cy + 16, x_res + 16, cy + 40,
+                x_res, cy + meia, TINTA))
+    p.append(texto(x_res - 30, cy + 8, 'R', TINTA, 20, anc='end', italico=True))
+
+    # a barra e a velocidade
+    p.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" '
+             'stroke-width="6" stroke-linecap="round"/>'
+             % (x_barra, cy - meia, x_barra, cy + meia, COBRE))
+    p.append(texto(x_barra - 16, cy + 48, 'h', COBRE, 20, anc='end', italico=True))
+    p.append(seta(x_barra + 70, cy - meia - 26, x_barra + 150, cy - meia - 26,
+                  TINTA, 3.2))
+    p.append(texto(x_barra + 160, cy - meia - 20, 'v', TINTA, 21, anc='start',
+                   italico=True))
+
+    # a corrente: sobe na barra, volta pelo circuito
+    p.append(seta(x_barra, cy + 40, x_barra, cy - 40, COBRE, 3.0))
+    p.append(texto(x_barra + 16, cy - 10, 'I', COBRE, 20, anc='start', italico=True))
+    p.append(seta(x_barra - 60, cy - meia, x_barra - 130, cy - meia, COBRE, 2.6))
+    p.append(seta(x_res + 130, cy + meia, x_res + 200, cy + meia, COBRE, 2.6))
+
+    # a força magnética sobre a barra, contra o movimento
+    p.append(seta(x_barra - 8, cy + meia + 30, x_barra - 92, cy + meia + 30,
+                  VERDE, 3.4))
+    p.append(texto(x_barra - 100, cy + meia + 36, 'F = I h B', VERDE, 19,
+                   anc='end', italico=True))
+
+    p.append(texto(L / 2, cy + meia + 112,
+                   'a fem vale v B h, e a força magnética freia:', SUAVE, 17))
+    p.append(texto(L / 2, cy + meia + 136,
+                   'quem gasta energia é quem puxa', SUAVE, 17))
+
+    io.open(IMG / 'cap07_barra.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Barra deslizante nos trilhos'))
+    return 'cap07_barra.svg'
+
+
+# ---------------------------------------------------------------------------
+def campo_induzido():
+    """A região de campo crescente e as linhas de E, dentro e fora."""
+    p = []
+    L, A = 620, 580
+    cx, cy, R = 310, 268, 105
+
+    p.append('<circle cx="%d" cy="%d" r="%d" fill="%s" stroke="%s" '
+             'stroke-width="2"/>' % (cx, cy, R, CLARO, BORDA))
+    for ang, raio in ((0.4, 58), (1.9, 58), (3.4, 58), (4.9, 58),
+                      (1.0, 0), (2.5, 95), (5.6, 95), (4.0, 95)):
+        p.append(sai(cx + raio * math.cos(ang), cy + raio * math.sin(ang), 9, SUAVE))
+    legenda_topo = (cx, cy - 1.6 * R - 44)
+
+    # linhas de E: dentro proporcional a s, fora caindo como 1/s
+    def circulo(raio, cor, esp, traco=False):
+        t = ' stroke-dasharray="7 6"' if traco else ''
+        return ('<circle cx="%d" cy="%d" r="%.1f" fill="none" stroke="%s" '
+                'stroke-width="%.1f"%s/>' % (cx, cy, raio, cor, esp, t))
+
+    for raio, esp in ((0.45 * R, 2.0), (0.8 * R, 2.4), (1.25 * R, 2.0),
+                      (1.6 * R, 1.6)):
+        p.append(circulo(raio, COBRE, esp, raio > R))
+        # a ponta, no topo do círculo: sentido horário (lei de Lenz)
+        p.append(seta(cx - 12, cy - raio, cx + 14, cy - raio, COBRE, esp))
+    p.append(texto(cx + 0.8 * R + 14, cy + 6, 'E', COBRE, 20, anc='start',
+                   italico=True))
+
+    p.append(texto(legenda_topo[0], legenda_topo[1] - 24,
+                   'B crescendo, saindo da tela,', SUAVE, 17))
+    p.append(texto(legenda_topo[0], legenda_topo[1],
+                   'dentro do círculo de raio R', SUAVE, 17))
+    p.append(texto(cx, cy + 1.6 * R + 56,
+                   'dentro, E cresce com s; fora, cai com 1/s', SUAVE, 17))
+    p.append(texto(cx, cy + 1.6 * R + 80,
+                   'há campo elétrico onde o magnético é nulo', SUAVE, 17))
+
+    io.open(IMG / 'cap07_induzido.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Campo elétrico induzido'))
+    return 'cap07_induzido.svg'
+
+
+# ---------------------------------------------------------------------------
+def duas_superficies():
+    """O capacitor carregando e as duas superfícies apoiadas na mesma curva."""
+    p = []
+    L, A = 880, 470
+    cy = 210
+    xa, xb = 470, 520          # placas
+
+    # o saco vai por baixo de tudo, senão esconde o fio e as placas
+    p.append('<path d="M 320 %d C 330 %d, 700 %d, 700 %d C 700 %d, 330 %d, 320 %d" '
+             'fill="%s" opacity="0.34" stroke="%s" stroke-width="2" '
+             'stroke-dasharray="8 6"/>'
+             % (cy - 100, cy - 186, cy - 186, cy,
+                cy + 186, cy + 186, cy + 100, '#e6d3c2', COBRE))
+
+    # o fio e as placas
+    p.append('<line x1="60" y1="%d" x2="%d" y2="%d" stroke="%s" '
+             'stroke-width="4"/>' % (cy, xa, cy, TINTA))
+    p.append('<line x1="%d" y1="%d" x2="820" y2="%d" stroke="%s" '
+             'stroke-width="4"/>' % (xb, cy, cy, TINTA))
+    for x, sinal in ((xa, '+'), (xb, '\u2212')):
+        p.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" '
+                 'stroke-width="6" stroke-linecap="round"/>'
+                 % (x, cy - 74, x, cy + 74, COBRE))
+        p.append(texto(x + (-18 if sinal == '+' else 18), cy - 92, sinal,
+                       COBRE, 22))
+    for j in range(5):
+        yy = cy - 56 + j * 28
+        p.append(seta(xa + 8, yy, xb - 8, yy, VERDE, 2.0, 9))
+    p.append(texto((xa + xb) / 2, cy + 104, 'E crescendo', VERDE, 17))
+    p.append(seta(150, cy - 24, 230, cy - 24, TINTA, 3.0))
+    p.append(texto(190, cy - 36, 'I', TINTA, 20, italico=True))
+
+    # a curva amperiana vista de perfil, e a superfície plana apoiada nela
+    p.append('<ellipse cx="320" cy="%d" rx="26" ry="100" fill="%s" '
+             'opacity="0.55" stroke="%s" stroke-width="2.4" '
+             'stroke-dasharray="8 6"/>' % (cy, '#cfe0d8', COBRE))
+    p.append(texto(320, cy - 122, 'a mesma curva', COBRE, 17))
+
+    p.append(texto(236, cy + 156, 'superfície plana:', VERDE, 17, anc='end'))
+    p.append(texto(236, cy + 180, 'o fio a atravessa, enlaça I', VERDE, 17,
+                   anc='end'))
+    p.append('<line x1="244" y1="%d" x2="302" y2="%d" stroke="%s" '
+             'stroke-width="1.4"/>' % (cy + 150, cy + 96, VERDE))
+
+    p.append(texto(700, cy + 156, 'superfície em saco:', COBRE, 17))
+    p.append(texto(700, cy + 180, 'passa entre as placas, não enlaça corrente',
+                   COBRE, 17))
+
+    p.append(texto(L / 2, cy + 232,
+                   'sem o termo de Maxwell as duas dariam respostas diferentes',
+                   SUAVE, 17))
+
+    io.open(IMG / 'cap07_superficies.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'As duas superfícies amperianas'))
+    return 'cap07_superficies.svg'
+
+
 def main():
     IMG.mkdir(parents=True, exist_ok=True)
     for fn in (forca_de_lorentz, balanca_de_corrente, cabo_coaxial,
                casca_girante, torque_na_espira, correntes_ligadas,
-               laco_de_histerese, condicoes_de_contorno):
+               laco_de_histerese, condicoes_de_contorno,
+               barra_nos_trilhos, campo_induzido, duas_superficies):
         print('  ' + fn())
 
 

@@ -11,7 +11,8 @@ import pathlib
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 PARTES = RAIZ / 'ferramentas' / 'partes'
 
-ORDEM = ['preambulo.js', 'trajetoria.js', 'esferamag.js', 'rodape.js']
+ORDEM = ['preambulo.js', 'trajetoria.js', 'esferamag.js', 'barra.js',
+         'rodape.js']
 
 
 def main():
