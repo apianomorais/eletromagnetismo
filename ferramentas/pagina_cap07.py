@@ -6,6 +6,8 @@ numeração de capítulo, nunca como fonte de frases, enunciados ou figuras:
 os exemplos aqui são de nossa autoria, com contextos e números próprios.
 """
 from molde import escreve, secoes_html
+import exercicios
+from lista_cap07 import LISTA
 
 FE = 'https://apianomorais.github.io/fisica-estatistica'
 
@@ -738,6 +740,9 @@ SECOES = [
     ('A corrente de deslocamento', S8),
     ('No Spyder', S9),
 ]
+
+
+SECOES.append(('Exercícios propostos', exercicios.bloco(LISTA)))
 
 
 def main():

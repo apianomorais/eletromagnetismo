@@ -49,6 +49,7 @@
     <li><a href="#s6">6. A lei de Ampère em ação</a></li>
     <li><a href="#s7">7. O potencial vetor</a></li>
     <li><a href="#s8">8. No Spyder</a></li>
+    <li><a href="#s9">9. Exercícios propostos</a></li>
   </ol>
 </aside>
 
@@ -652,16 +653,55 @@
   da casca a um ângulo polar \(\theta'\) é \(v = \omega R\sen\theta'\), na direção
   azimutal. Logo \(\vet{K} = \sigma\omega R\sen\theta'\,\vers{\phi}'\).</p>
 
-  <p>A conta direta de \(\vet{A}\) tem um truque que vale aprender: escolha o
-  ponto de observação <em>no eixo \(z\)</em>. Isso não perde generalidade, porque o
-  problema tem simetria de revolução e qualquer ponto pode ser levado ao eixo por
-  uma rotação; e ganha muito, porque as integrais em \(\phi'\) dos termos que
-  envolvem \(\cos\phi'\) e \(\sen\phi'\) se anulam de imediato, por serem
-  integrais de funções periódicas sobre um período completo.</p>
+  <p>A conta direta de \(\vet{A}\) tem dois truques que vale aprender, e o
+  segundo é a primeira aparição séria dos polinômios de Legendre neste curso.</p>
 
-  <p>Sobra uma integral em \(\theta'\) que se resolve com a substituição
-  \(u = \cos\theta'\), e o resultado, escrito de volta em coordenadas
-  genéricas, é</p>
+  <p><strong>Primeiro truque: inclinar o eixo em vez de mover o ponto.</strong>
+  Em vez de deixar \(\vet{\omega}\) ao longo de \(z\) e pôr o ponto de
+  observação num lugar qualquer, ponha o ponto de observação no eixo \(z\) e
+  incline \(\vet{\omega}\). Nada se perde, porque só o ângulo entre os dois
+  importa, e ganha-se que \(\imath\) passa a depender apenas de \(\theta'\):</p>
+
+  \[ \imath = \sqrt{R^2 + r^2 - 2Rr\cos\theta'}. \]
+
+  <p>Com \(\vet{K} = \sigma\left(\vet{\omega}\cruz\vet{r}'\right)\), o
+  vetor \(\vet{\omega}\) sai da integral:</p>
+
+  \[ \vet{A}(\vet{r}) = \frac{\mu_0\sigma}{4\pi}\,\vet{\omega}\cruz
+     \int \frac{\vet{r}'}{\imath}\,da'. \]
+
+  <p>Sobrou uma integral vetorial cujo resultado só pode apontar ao longo de
+  \(\vers{z}\), porque é a única direção que a geometria ainda distingue.
+  Logo basta calcular a sua componente \(z\), isto é,
+  \(\int R\cos\theta'\,da'/\imath\).</p>
+
+  <p><strong>Segundo truque: expandir \(1/\imath\) em polinômios de
+  Legendre.</strong> A identidade que gera esses polinômios é exatamente a
+  expansão do inverso da distância entre dois pontos,</p>
+
+  \[ \frac{1}{\imath} = \sum_{l=0}^{\infty}
+     \frac{r_<^{\,l}}{r_>^{\,l+1}}\,P_l(\cos\theta'), \]
+
+  <p>com \(r_<\) e \(r_>\) o menor e o maior entre \(r\) e \(R\). Substituindo
+  e integrando em \(\phi'\), que dá \(2\pi\) porque nada depende dele,</p>
+
+  \[ \int \frac{R\cos\theta'}{\imath}\,da'
+     = 2\pi R^3 \sum_{l} \frac{r_<^{\,l}}{r_>^{\,l+1}}
+       \int_{-1}^{1} u\,P_l(u)\,du. \]
+
+  <p>E aqui está o ponto. Como \(u = P_1(u)\), a última integral é o produto
+  escalar de \(P_1\) com \(P_l\), e a ortogonalidade dos polinômios de Legendre
+  manda que ela seja nula para todo \(l \ne 1\):</p>
+
+  \[ \int_{-1}^{1} P_1(u)P_l(u)\,du = \frac{2}{2l+1}\,\delta_{l1}
+     = \frac{2}{3}\,\delta_{l1}. \]
+
+  <p>A série inteira colapsa num único termo. Resta</p>
+
+  \[ \int \frac{\vet{r}'}{\imath}\,da'
+     = \frac{4\pi}{3}R^3\,\frac{r_<}{r_>^{\,2}}\;\vers{z}, \]
+
+  <p>e devolvendo isso ao produto vetorial e desfazendo a inclinação do eixo,</p>
 
   \[ \vet{A}(r,\theta) = \begin{cases}
      \dfrac{\mu_0 \sigma \omega R}{3}\,r\sen\theta\;\vers{\phi}, & r \le R,\\[1.1em]
@@ -681,6 +721,18 @@
   \(m = \frac{4}{3}\pi\sigma\omega R^4\), sem nenhum termo de ordem superior. Essa
   coincidência não é acidental: ela vem de \(\vet{K}\) variar exatamente como
   \(\sen\theta'\).</p>
+
+  <p>Essa coincidência agora tem nome: a corrente de superfície varia como
+  \(\sen\theta'\), que na base de Legendre é puro \(P_1\), e a ortogonalidade
+  elimina todos os outros multipolos antes mesmo de eles nascerem. Qualquer outra
+  dependência angular da corrente produziria quadrupolo, octupolo e o resto.</p>
+
+  <p><a href="codigo/casca_legendre.py">O programa <code>casca_legendre.py</code>
+  confere os três passos numericamente</a>: calcula os coeficientes
+  \(\int u P_l(u)du\) e mostra que só o de \(l=1\) sobrevive; refaz a integral de
+  superfície por força bruta, sem expansão nenhuma, e recupera a fórmula fechada
+  com erro de \(2\times10^{-12}\); e toma o rotacional para verificar que o campo
+  interno é uniforme e o externo é dipolar até oito raios de distância.</p>
   </div>
 
   <h3>Condições de contorno</h3>
@@ -751,6 +803,15 @@
       <p><strong>Confira assim:</strong> varie a separação e veja a uniformidade
       piorar para os dois lados do valor \(d = R\).</p>
     </article>
+    <article class="cartao">
+      <h3><a href="codigo/casca_legendre.py">casca_legendre.py</a></h3>
+      <p>Refaz a casca girante pelos dois caminhos: a expansão em polinômios de
+      Legendre, que colapsa num único termo, e a integral de superfície por força
+      bruta, sem expansão nenhuma.</p>
+      <p><strong>Confira assim:</strong> os coeficientes de todos os \(l \ne 1\)
+      têm de se anular; a integral bruta tem de reproduzir a fórmula fechada; e o
+      rotacional tem de dar campo uniforme dentro e dipolo puro fora.</p>
+    </article>
   </div>
 
   <h3>Por que o integrador de Boris</h3>
@@ -768,6 +829,188 @@
   magnética é implementada como uma <em>rotação</em>, ela preserva o módulo da
   velocidade por construção, exatamente como a física manda. O erro continua
   existindo, mas vai para a fase, e não para a energia.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s9">9. Exercícios propostos</h2>
+
+  <p>Os enunciados são nossos, e as soluções estão aqui mesmo, recolhidas. Resolva antes de abrir: ler solução pronta dá a sensação de ter entendido, que é diferente de ter entendido.</p>
+
+  <div class="bloco ex">
+    <span class="rotulo">5.1  O cíclotron de bancada</span>
+    <p>Um próton (\(q = 1{,}60\times10^{-19}\ \mathrm{C}\),
+       \(m = 1{,}67\times10^{-27}\ \mathrm{kg}\)) entra perpendicularmente num
+       campo uniforme de \(0{,}60\ \mathrm{T}\) com energia cinética de
+       \(1{,}0\ \mathrm{MeV}\). Calcule o raio da órbita e o período, e diga por
+       que o período não depende da energia enquanto a velocidade for pequena
+       comparada à da luz.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>Da energia, \(v = \sqrt{2K/m}\), com
+       \(K = 1{,}0\ \mathrm{MeV} = 1{,}60\times10^{-13}\ \mathrm{J}\):</p>
+       <p>\[ v = \sqrt{\frac{2\times1{,}60\times10^{-13}}{1{,}67\times10^{-27}}}
+          = 1{,}38\times10^{7}\ \mathrm{m/s}. \]</p>
+       <p>O raio sai de \(qvB = mv^2/r\):</p>
+       <p>\[ r = \frac{mv}{qB}
+          = \frac{1{,}67\times10^{-27}\times1{,}38\times10^{7}}
+                 {1{,}60\times10^{-19}\times0{,}60}
+          = 0{,}24\ \mathrm{m}. \]</p>
+       <p>O período é \(T = 2\pi m/qB = 1{,}09\times10^{-7}\ \mathrm{s}\), isto é
+       \(0{,}11\ \mu\mathrm{s}\), e a frequência de cíclotron é
+       \(9{,}2\ \mathrm{MHz}\).</p>
+       <p><b>Por que o período não depende da energia.</b> Dobrar a velocidade
+       dobra o raio, e portanto dobra também o comprimento da volta; os dois
+       efeitos se cancelam exatamente. É essa coincidência que torna o cíclotron
+       possível, porque a tensão aceleradora pode oscilar com frequência fixa. Ela
+       se perde quando \(v\) se aproxima de \(c\), porque aí a massa efetiva
+       cresce com \(\gamma\) e o período aumenta: daí o síncrotron.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">5.2  O seletor de velocidades</span>
+    <p>Numa região há um campo elétrico de \(1{,}2\times10^{4}\ \mathrm{V/m}\)
+       e um campo magnético de \(0{,}25\ \mathrm{T}\), perpendiculares entre si e
+       ambos perpendiculares a um feixe de íons. Qual velocidade atravessa a
+       região sem desviar? Mostre que a resposta não depende da carga nem da
+       massa do íon, e explique o que acontece com os íons mais rápidos e mais
+       lentos.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>A força total é \(\vet{F} = q(\vet{E} + \vet{v}\cruz\vet{B})\), e
+       ela se anula quando \(E = vB\), ou seja</p>
+       <p>\[ v = \frac{E}{B} = \frac{1{,}2\times10^{4}}{0{,}25}
+          = 4{,}8\times10^{4}\ \mathrm{m/s}. \]</p>
+       <p>A carga \(q\) aparece como fator comum nas duas forças e se cancela; a
+       massa nem chega a entrar, porque a condição é de força nula e não de
+       aceleração dada. Por isso o aparelho seleciona velocidade, e não energia
+       nem momento.</p>
+       <p>Um íon mais rápido tem a força magnética maior que a elétrica e é
+       desviado no sentido de \(\vet{v}\cruz\vet{B}\); um mais lento é desviado no
+       sentido oposto, pela força elétrica. Colocando uma fenda na saída, só a
+       velocidade certa passa. É o primeiro estágio de um espectrômetro de massa:
+       o segundo estágio, com só campo magnético, aí sim separa por \(m/q\).</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">5.3  A força sobre meio círculo</span>
+    <p>Um fio conduz corrente \(I\) e tem a forma de um semicírculo de raio
+       \(a\) fechado pelo diâmetro, todo num plano perpendicular a um campo
+       uniforme \(\vet{B}\). Calcule a força sobre o arco e sobre o diâmetro, e
+       mostre que a força total sobre o circuito fechado é nula.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>Para um fio num campo uniforme, a força é</p>
+       <p>\[ \vet{F} = I\int d\vet{\ell}\cruz\vet{B}
+          = I\left(\int d\vet{\ell}\right)\cruz\vet{B}, \]</p>
+       <p>porque \(\vet{B}\) é constante e sai da integral. Ou seja, <b>só importa
+       o vetor que liga as duas pontas</b>, e não o caminho.</p>
+       <p>Para o arco, esse vetor é o diâmetro, de módulo \(2a\), de modo que
+       \(F_{\text{arco}} = 2aIB\), perpendicular ao diâmetro e ao campo. Para o
+       segmento reto, o vetor é o mesmo diâmetro, porém percorrido no sentido
+       contrário, de modo que \(F_{\text{reta}} = 2aIB\) na direção oposta.</p>
+       <p>A soma é nula, e tinha de ser: num circuito fechado,
+       \(\oint d\vet{\ell} = 0\), e portanto a força resultante num campo uniforme
+       é sempre zero. Sobra o torque, que é o assunto do capítulo 6.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">5.4  O fio grosso com corrente mal distribuída</span>
+    <p>Um fio cilíndrico de raio \(a\) conduz corrente total \(I\), mas com
+       densidade que cresce com a distância ao eixo, \(J(s) = k s\). Ache \(k\) em
+       função de \(I\) e \(a\), e calcule \(B(s)\) dentro e fora do fio. Compare o
+       resultado interno com o do fio de densidade uniforme.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>A corrente total fixa \(k\):</p>
+       <p>\[ I = \int_0^a k s\,(2\pi s\,ds) = \frac{2\pi k a^3}{3}
+          \;\Longrightarrow\; k = \frac{3I}{2\pi a^3}. \]</p>
+       <p>Para \(s \lt a\), a corrente enlaçada é</p>
+       <p>\[ I_{\text{enl}} = \frac{2\pi k s^3}{3} = I\frac{s^3}{a^3}, \]</p>
+       <p>e a lei de Ampère dá</p>
+       <p>\[ B\,(2\pi s) = \mu_0 I\frac{s^3}{a^3}
+          \;\Longrightarrow\; B = \frac{\mu_0 I s^2}{2\pi a^3}. \]</p>
+       <p>Fora, a corrente enlaçada é \(I\) e vale o resultado de sempre,
+       \(B = \mu_0 I/2\pi s\), que é contínuo com o de dentro em \(s=a\).</p>
+       <p><b>Comparação.</b> Com densidade uniforme o campo interno cresce
+       linearmente, \(B \propto s\); aqui ele cresce com \(s^2\), porque há menos
+       corrente perto do eixo. Em ambos os casos o campo externo é idêntico: de
+       fora não se enxerga como a corrente está distribuída, só o total. É o
+       análogo magnético do teorema das cascas da eletrostática.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">5.5  O campo na boca do solenoide</span>
+    <p>Mostre, por Biot-Savart, que o campo no centro da extremidade de um
+       solenoide semi-infinito vale metade do campo no interior profundo,
+       \(B = \mu_0 n I/2\). Em seguida estime o erro de usar \(\mu_0 n I\) no
+       centro de um solenoide real de comprimento \(L = 20\ \mathrm{cm}\) e raio
+       \(R = 2{,}0\ \mathrm{cm}\).</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>O campo no eixo, a uma distância \(z\) de uma espira de raio \(R\),
+       vale \(\mu_0 I R^2/2(R^2+z^2)^{3/2}\). Somando as espiras de um solenoide
+       com \(n\) por unidade de comprimento, a contribuição das que estão entre
+       \(z\) e \(z+dz\) é \(n\,dz\) vezes isso. Para o solenoide que vai de
+       \(z = 0\) a \(\infty\), com o ponto na boca,</p>
+       <p>\[ B = \frac{\mu_0 n I R^2}{2}\int_0^{\infty}
+          \frac{dz}{(R^2+z^2)^{3/2}}
+          = \frac{\mu_0 n I R^2}{2}\cdot\frac{1}{R^2}
+          = \frac{\mu_0 n I}{2}. \]</p>
+       <p>Para o solenoide infinito nos dois sentidos a integral vai de
+       \(-\infty\) a \(\infty\) e dá o dobro, \(\mu_0 n I\), como manda a lei de
+       Ampère.</p>
+       <p><b>O solenoide real.</b> Integrando de \(-L/2\) a \(L/2\) com o ponto no
+       centro, sai</p>
+       <p>\[ B = \mu_0 n I\,\frac{L/2}{\sqrt{R^2+(L/2)^2}}
+          = \mu_0 n I\,\frac{0{,}10}{\sqrt{0{,}02^2+0{,}10^2}}
+          = 0{,}981\,\mu_0 n I. \]</p>
+       <p>O erro é de 1,9 %, e cai com \((R/L)^2\). É por isso que a aproximação
+       de solenoide infinito funciona tão bem em laboratório: basta o comprimento
+       ser umas cinco vezes o diâmetro.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">5.6  Uma casca com outra corrente: qual multipolo sobrevive</span>
+    <p>Repita o raciocínio do exemplo da casca girante, mas com uma corrente
+       superficial que varia como \(\vet{K} = K_0\sen\theta'\cos\theta'\,
+       \vers{\phi}'\) em vez de \(\sen\theta'\). Mostre, sem calcular nenhuma
+       integral difícil, qual termo da série de Legendre sobrevive, e conclua se o
+       campo externo ainda é um dipolo puro.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>No exemplo da casca girante, a integral angular que decide tudo é
+       \(\int_{-1}^{1} u\,P_l(u)\,du\), que é o produto escalar de \(P_1\) com
+       \(P_l\). A dependência angular da fonte entra ali, e a ortogonalidade faz o
+       resto.</p>
+       <p>Com \(\vet{K} \propto \sen\theta'\cos\theta'\), o papel de \(u\) passa a
+       ser ocupado por \(u\sqrt{1-u^2}\)... convém reescrever de outro jeito: a
+       fonte agora é proporcional a \(\sen\theta'\cos\theta'\), e a família
+       angular natural para correntes azimutais é a dos polinômios associados
+       \(P_l^1(\cos\theta')\). Os dois primeiros são</p>
+       <p>\[ P_1^1 = -\sen\theta',\qquad P_2^1 = -3\sen\theta'\cos\theta'. \]</p>
+       <p>Ou seja: a corrente do exemplo era puro \(P_1^1\), e esta é puro
+       \(P_2^1\). Pela ortogonalidade, o único termo que sobrevive agora é o de
+       \(l = 2\).</p>
+       <p><b>Conclusão.</b> O campo externo não é mais dipolo nenhum: o momento de
+       dipolo é <em>zero</em>, e o termo de menor ordem é o quadrupolo, que cai
+       com \(1/r^4\) em vez de \(1/r^3\). Fisicamente faz sentido: a corrente
+       muda de sentido no equador (\(\cos\theta'\) troca de sinal), de modo que os
+       dois hemisférios produzem momentos opostos que se cancelam.</p>
+       <p>Confira com o programa <code>casca_legendre.py</code>: troque a
+       dependência angular da corrente e veja os coeficientes mudarem de linha na
+       tabela.</p>
+    </div>
+    </details>
+  </div>
 
 
   <nav class="nav-aulas">

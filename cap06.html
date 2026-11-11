@@ -47,6 +47,7 @@
     <li><a href="#s4">4. O campo auxiliar H</a></li>
     <li><a href="#s5">5. Como o material responde</a></li>
     <li><a href="#s6">6. No Spyder</a></li>
+    <li><a href="#s7">7. Exercícios propostos</a></li>
   </ol>
 </aside>
 
@@ -320,6 +321,68 @@
   morrem na de baixo, como se houvesse carga magnética ali, e dentro da esfera
   apontam contra \(\vet{M}\).</p>
 
+  <div class="destaque">
+  <p><strong>Exemplo trabalhado: a esfera magnetizada por separação de
+  variáveis.</strong> A mesma esfera de raio \(R\) e magnetização uniforme
+  \(\vet{M} = M\vers{z}\), agora resolvida sem calcular corrente nenhuma. Como
+  não há corrente livre, \(\rot{\vet{H}} = 0\) em toda parte, e portanto
+  \(\vet{H}\) deriva de um potencial escalar,</p>
+
+  \[ \vet{H} = -\nabla W. \]
+
+  <p>Onde \(\vet{M}\) é uniforme, \(\divg{\vet{H}} = -\divg{\vet{M}} = 0\), de
+  modo que \(W\) satisfaz a equação de Laplace dentro e fora, e toda a física fica
+  nas condições de contorno em \(r = R\). A solução geral com simetria azimutal é
+  a série de Legendre:</p>
+
+  \[ W_{\text{dentro}} = \sum_l A_l\,r^l P_l(\cos\theta),\qquad
+     W_{\text{fora}} = \sum_l \frac{B_l}{r^{l+1}}P_l(\cos\theta). \]
+
+  <p>A primeira condição é que \(W\) seja contínuo, porque \(\vet{H}\) é finito:
+  \(A_l R^l = B_l/R^{l+1}\). A segunda vem de \(B_\perp\) ser contínuo. Com
+  \(\vet{B} = \mu_0(\vet{H}+\vet{M})\), a componente normal de \(\vet{H}\) salta
+  exatamente do que a de \(\vet{M}\) salta, e o salto é</p>
+
+  \[ \pder{W_{\text{fora}}}{r} - \pder{W_{\text{dentro}}}{r}
+     = -\vet{M}\cdot\vers{n} = -M\cos\theta. \]
+
+  <p>Repare no que está escrito à direita: é a mesma estrutura de uma carga
+  superficial em eletrostática. É comum chamar \(\sigma_m = \vet{M}\cdot\vers{n}\)
+  de <em>carga magnética</em> efetiva, lembrando que ela não existe: é apenas a
+  contabilidade de \(\vet{H}\).</p>
+
+  <p>E agora o ponto que interessa: \(\cos\theta\) é exatamente \(P_1\). Pela
+  ortogonalidade, só o termo \(l=1\) pode casar com a fonte, e todos os outros
+  coeficientes são obrigados a se anular. Com \(l=1\) as duas condições viram um
+  sistema de duas equações,</p>
+
+  \[ A_1 R = \frac{B_1}{R^2},\qquad
+     -\frac{2B_1}{R^3} - A_1 = -M, \]
+
+  <p>cuja solução é \(A_1 = M/3\) e \(B_1 = MR^3/3\). Portanto</p>
+
+  \[ W_{\text{dentro}} = \frac{M}{3}\,r\cos\theta = \frac{M}{3}z
+     \;\Longrightarrow\;
+     \boxed{\;\vet{H}_{\text{dentro}} = -\frac{M}{3}\vers{z},\;} \]
+
+  <p>que é o campo desmagnetizante, com o fator \(1/3\) da esfera, e</p>
+
+  \[ W_{\text{fora}} = \frac{MR^3}{3}\frac{\cos\theta}{r^2}, \]
+
+  <p>que é o potencial de um dipolo de momento \(m = \frac{4}{3}\pi R^3 M\), isto
+  é, \(\vet{M}\) vezes o volume. Dentro, \(\vet{B} = \mu_0(\vet{H}+\vet{M}) =
+  \frac{2}{3}\mu_0 M\vers{z}\), o mesmo resultado que a corrente ligada deu, por
+  um caminho que não mencionou corrente em momento nenhum.</p>
+
+  <p><a href="codigo/esfera_legendre.py">O programa <code>esfera_legendre.py</code>
+  faz os dois caminhos e compara</a>: projeta \(\sigma_m\) na base de Legendre e
+  confirma que só \(l=1\) sobrevive, resolve o sistema das condições de contorno
+  numericamente, sem usar o resultado acima, e confere o campo resultante contra a
+  integração direta de \(\vet{K}_b = \vet{M}\cruz\vers{n}\) por Biot-Savart. Os
+  dois métodos concordam em quatro casas em todos os pontos testados, dentro e
+  fora, e a diferença que sobra é a discretização dos anéis.</p>
+  </div>
+
   <h3>Condições de contorno, agora com H</h3>
 
   <p>As condições do capítulo 5 se reescrevem separando livre de ligado:</p>
@@ -492,6 +555,15 @@
       <p><a href="https://apianomorais.github.io/fisica-estatistica/aula09.html">O mesmo modelo, pelo lado da
       física estatística.</a></p>
     </article>
+    <article class="cartao">
+      <h3><a href="codigo/esfera_legendre.py">esfera_legendre.py</a></h3>
+      <p>Resolve a esfera magnetizada por separação de variáveis, projetando a
+      fonte na base de Legendre e resolvendo as condições de contorno
+      numericamente, e compara com a integração da corrente ligada.</p>
+      <p><strong>Confira assim:</strong> só o coeficiente \(l = 1\) pode
+      sobreviver, \(A_1\) tem de dar \(M/3\), e os dois métodos têm de dar o
+      mesmo campo ponto a ponto.</p>
+    </article>
   </div>
 
   <p>Vale dizer o que o segundo programa <em>não</em> é. A histerese que ele
@@ -501,6 +573,190 @@
   a existência da temperatura crítica, e erra a coercividade por ordens de
   grandeza. É um bom exemplo de modelo que ensina o mecanismo sem servir para
   projetar nada.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s7">7. Exercícios propostos</h2>
+
+  <p>Os enunciados são nossos, e as soluções estão aqui mesmo, recolhidas. Resolva antes de abrir: ler solução pronta dá a sensação de ter entendido, que é diferente de ter entendido.</p>
+
+  <div class="bloco ex">
+    <span class="rotulo">6.1  Quanto vale o alinhamento, de verdade</span>
+    <p>Uma amostra paramagnética tem \(n = 5{,}0\times10^{27}\) átomos por
+       metro cúbico, cada um com momento \(\mu = 1{,}0\,\mu_B\). Compare a energia
+       de alinhamento \(\mu B\) num campo de \(1{,}0\ \mathrm{T}\) com a energia
+       térmica a \(300\ \mathrm{K}\), e estime a fração de momentos efetivamente
+       alinhados e a magnetização resultante.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>A energia de alinhamento é</p>
+       <p>\[ \mu B = 9{,}27\times10^{-24}\times1{,}0
+          = 9{,}27\times10^{-24}\ \mathrm{J}, \]</p>
+       <p>e a térmica é \(\kB T = 1{,}38\times10^{-23}\times300 =
+       4{,}14\times10^{-21}\ \mathrm{J}\). A razão é</p>
+       <p>\[ \frac{\mu B}{\kB T} = 2{,}2\times10^{-3}. \]</p>
+       <p>Dois milésimos. No regime de campo fraco a magnetização vale
+       \(M \approx n\mu\,(\mu B/\kB T)\), de modo que a fração alinhada é da ordem
+       de \(0{,}2\,\%\) e</p>
+       <p>\[ M \approx 5{,}0\times10^{27}\times9{,}27\times10^{-24}
+          \times2{,}2\times10^{-3} \approx 1{,}0\times10^{2}\ \mathrm{A/m}, \]</p>
+       <p>que corresponde a \(\mu_0 M \approx 1{,}3\times10^{-4}\ \mathrm{T}\),
+       isto é \(\chi_m \sim 10^{-4}\).</p>
+       <p><b>A moral.</b> Mesmo num campo de um tesla, que já é um ímã
+       supercondutor pequeno, o alinhamento é quase nada. A agitação térmica ganha
+       por três ordens de grandeza, e é por isso que o paramagnetismo é fraco e
+       depende de \(1/T\). O ferromagnetismo só é forte porque não depende do
+       campo externo para alinhar: quem alinha é o vizinho.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">6.2  Corrente ligada num cilindro mal magnetizado</span>
+    <p>Um cilindro longo de raio \(a\) tem magnetização que cresce com a
+       distância ao eixo, \(\vet{M} = k s\,\vers{\phi}\). Calcule as correntes
+       ligadas de volume e de superfície, verifique que a corrente total é nula e
+       ache \(\vet{B}\) dentro e fora.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>Em cilíndricas, com \(\vet{M} = M_\phi(s)\vers{\phi}\),</p>
+       <p>\[ \vet{J}_b = \rot{\vet{M}}
+          = \frac{1}{s}\der{(sM_\phi)}{s}\vers{z}
+          = \frac{1}{s}\der{(ks^2)}{s}\vers{z} = 2k\,\vers{z}, \]</p>
+       <p>uniforme. Na superfície,</p>
+       <p>\[ \vet{K}_b = \vet{M}\cruz\vers{n}
+          = ka\,\vers{\phi}\cruz\vers{s} = -ka\,\vers{z}. \]</p>
+       <p><b>A corrente total.</b> No volume, \(2k \times \pi a^2 = 2\pi k a^2\);
+       na superfície, \(-ka \times 2\pi a = -2\pi k a^2\). Somam zero, como tem de
+       ser: corrente ligada não transporta carga para lugar nenhum.</p>
+       <p><b>O campo.</b> Fora, a corrente enlaçada é nula e portanto
+       \(\vet{B} = 0\). Dentro, pela lei de Ampère com a corrente ligada de
+       volume,</p>
+       <p>\[ B\,(2\pi s) = \mu_0\,2k\,\pi s^2
+          \;\Longrightarrow\; \vet{B} = \mu_0 k s\,\vers{\phi} = \mu_0\vet{M}, \]</p>
+       <p>o que também sai de imediato de \(\vet{H} = 0\), já que não há corrente
+       livre e a simetria obriga \(\vet{H}\) a ser azimutal e com circulação
+       nula.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">6.3  O torque que a bússola sente</span>
+    <p>A agulha de uma bússola tem momento magnético
+       \(m = 0{,}80\ \mathrm{A\,m^2}\) e está num campo horizontal de
+       \(2{,}5\times10^{-5}\ \mathrm{T}\), que é a ordem do campo terrestre.
+       Calcule o torque máximo e a energia necessária para virar a agulha de
+       ponta-cabeça. Compare com a energia de uma formiga de 5 mg subindo
+       1 cm.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>O torque é \(\tau = mB\sen\theta\), máximo em \(\theta = 90^\circ\):</p>
+       <p>\[ \tau_{\max} = 0{,}80\times2{,}5\times10^{-5}
+          = 2{,}0\times10^{-5}\ \mathrm{N\,m}. \]</p>
+       <p>A energia é \(U = -\vet{m}\cdot\vet{B}\), de modo que virar de
+       \(\theta = 0\) para \(\theta = 180^\circ\) custa</p>
+       <p>\[ \Delta U = 2mB = 4{,}0\times10^{-5}\ \mathrm{J}. \]</p>
+       <p>A formiga: \(mgh = 5\times10^{-6}\times9{,}8\times0{,}01 =
+       4{,}9\times10^{-7}\ \mathrm{J}\), isto é, oitenta vezes menos.</p>
+       <p><b>Interpretação.</b> O campo terrestre é fraco, mas a agulha é leve e o
+       atrito do pivô é minúsculo, de modo que esse torque basta. É também por isso
+       que a bússola é tão sensível a qualquer ferro por perto: um prego a dez
+       centímetros produz facilmente mais do que \(2{,}5\times10^{-5}\
+       \mathrm{T}\).</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">6.4  O entreferro domina o circuito magnético</span>
+    <p>Um toroide de ferro de permeabilidade relativa \(\mu_r = 2000\),
+       comprimento médio \(\ell = 30\ \mathrm{cm}\), tem um entreferro de ar de
+       \(g = 1{,}0\ \mathrm{mm}\). Com \(N = 500\) espiras e \(I = 1{,}5\
+       \mathrm{A}\), calcule \(B\) no entreferro, supondo que o fluxo não se
+       espalhe nas bordas.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>A lei de Ampère para \(\vet{H}\) dá, ao longo do caminho médio,</p>
+       <p>\[ H_{\text{fe}}(\ell - g) + H_{\text{ar}}\,g = NI. \]</p>
+       <p>A componente normal de \(\vet{B}\) é contínua na interface, de modo que
+       \(B\) é o mesmo nos dois meios, e</p>
+       <p>\[ H_{\text{fe}} = \frac{B}{\mu_r\mu_0},\qquad
+          H_{\text{ar}} = \frac{B}{\mu_0}. \]</p>
+       <p>Substituindo,</p>
+       <p>\[ B = \frac{\mu_0 NI}{\dfrac{\ell-g}{\mu_r} + g}
+          = \frac{4\pi\times10^{-7}\times500\times1{,}5}
+                 {\dfrac{0{,}299}{2000} + 0{,}0010}
+          = \frac{9{,}42\times10^{-4}}{1{,}15\times10^{-3}}
+          = 0{,}82\ \mathrm{T}. \]</p>
+       <p><b>O que o resultado ensina.</b> O entreferro tem um milímetro contra
+       trinta centímetros de ferro, e mesmo assim responde por 87 % da
+       "resistência magnética" do circuito, porque o ferro é dois mil vezes mais
+       permeável. Fechando o entreferro, a mesma conta daria \(6{,}3\
+       \mathrm{T}\), quase oito vezes mais, resultado que o ferro não entrega:
+       ele satura em torno de \(2\ \mathrm{T}\) e a permeabilidade despenca
+       muito antes disso. Em compensação, é no entreferro que o campo fica
+       acessível, e é por isso que todo eletroímã útil tem um.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">6.5  A energia que o transformador joga fora</span>
+    <p>O laço de histerese de um material tem área equivalente a
+       \(240\ \mathrm{J/m^3}\) por ciclo. Um núcleo de transformador desse
+       material tem volume de \(1{,}2\times10^{-3}\ \mathrm{m^3}\) e opera a
+       \(60\ \mathrm{Hz}\). Calcule a potência perdida só por histerese e compare
+       com um transformador de 500 W.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>A área do laço é a energia dissipada por unidade de volume e por
+       ciclo. Logo</p>
+       <p>\[ \wp = (240\ \mathrm{J/m^3})\times(1{,}2\times10^{-3}\ \mathrm{m^3})
+          \times(60\ \mathrm{s^{-1}}) = 17{,}3\ \mathrm{W}. \]</p>
+       <p>Contra 500 W de potência útil, isso é 3,5 % só de histerese, sem contar
+       as perdas por corrente de Foucault e as ôhmicas do enrolamento.</p>
+       <p><b>Por isso o material importa.</b> Um aço-silício de grão orientado tem
+       laço bem mais estreito que o do exemplo, e os ferrites, usados em alta
+       frequência, mais estreito ainda. Repare que a perda cresce linearmente com
+       a frequência: a 60 Hz ela é tolerável, a 100 kHz, numa fonte chaveada, o
+       mesmo material derreteria o núcleo.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">6.6  Uma esfera com magnetização não uniforme</span>
+    <p>Uma esfera de raio \(R\) tem magnetização \(\vet{M} = M_0
+       \left(\frac{3}{2}\cos^2\theta - \frac{1}{2}\right)\vers{r}\), isto é,
+       radial e proporcional a \(P_2(\cos\theta)\). Usando o potencial escalar
+       magnético, diga qual termo da série de Legendre sobrevive e escreva
+       \(\vet{H}\) dentro e fora, sem fazer nenhuma integral difícil.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p>A magnetização é radial, de modo que a carga magnética efetiva de
+       superfície é</p>
+       <p>\[ \sigma_m = \vet{M}\cdot\vers{n} = M_0 P_2(\cos\theta), \]</p>
+       <p>e, como \(\vet{M}\) não depende de \(r\), não há carga de volume:
+       \(\divg{\vet{M}} = \frac{1}{r^2}\partial_r(r^2 M_r) = \frac{2M_r}{r}\),
+       que não é nula, atenção: aparece sim uma densidade de volume
+       \(\rho_m = -\divg{\vet{M}} = -2M_0P_2/r\). Trate-a como fonte distribuída,
+       ou resolva por superposição; o essencial para esta questão é a estrutura
+       angular.</p>
+       <p><b>A estrutura angular.</b> Tanto a fonte de superfície quanto a de
+       volume são proporcionais a \(P_2(\cos\theta)\). Pela ortogonalidade dos
+       polinômios de Legendre, só o termo \(l = 2\) da série pode ser excitado:</p>
+       <p>\[ W_{\text{dentro}} = A_2\,r^2 P_2(\cos\theta),\qquad
+          W_{\text{fora}} = \frac{B_2}{r^3}P_2(\cos\theta), \]</p>
+       <p>e \(\vet{H} = -\nabla W\) em cada região. Os coeficientes saem das duas
+       condições de contorno em \(r = R\), como no exemplo da esfera
+       uniformemente magnetizada, trocando \(l = 1\) por \(l = 2\).</p>
+       <p><b>O que isso diz.</b> Não há dipolo: o momento de dipolo desta esfera é
+       rigorosamente nulo, e o campo externo cai como \(1/r^4\), não como
+       \(1/r^3\). A estrutura angular da fonte decide, sozinha, qual multipolo
+       existe, e é essa a utilidade prática da base de Legendre.</p>
+    </div>
+    </details>
+  </div>
 
 
   <nav class="nav-aulas">

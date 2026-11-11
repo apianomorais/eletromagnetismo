@@ -6,6 +6,8 @@ numeração de capítulo, nunca como fonte de frases, enunciados ou figuras:
 os exemplos aqui são de nossa autoria, com contextos e números próprios.
 """
 from molde import escreve, secoes_html
+import exercicios
+from lista_cap05 import LISTA
 
 S1 = r'''
 <p>A eletrostática começa com uma força entre cargas paradas e termina com
@@ -594,16 +596,55 @@ dentro e fora.</p>
 da casca a um ângulo polar \(\theta'\) é \(v = \omega R\sen\theta'\), na direção
 azimutal. Logo \(\vet{K} = \sigma\omega R\sen\theta'\,\vers{\phi}'\).</p>
 
-<p>A conta direta de \(\vet{A}\) tem um truque que vale aprender: escolha o
-ponto de observação <em>no eixo \(z\)</em>. Isso não perde generalidade, porque o
-problema tem simetria de revolução e qualquer ponto pode ser levado ao eixo por
-uma rotação; e ganha muito, porque as integrais em \(\phi'\) dos termos que
-envolvem \(\cos\phi'\) e \(\sen\phi'\) se anulam de imediato, por serem
-integrais de funções periódicas sobre um período completo.</p>
+<p>A conta direta de \(\vet{A}\) tem dois truques que vale aprender, e o
+segundo é a primeira aparição séria dos polinômios de Legendre neste curso.</p>
 
-<p>Sobra uma integral em \(\theta'\) que se resolve com a substituição
-\(u = \cos\theta'\), e o resultado, escrito de volta em coordenadas
-genéricas, é</p>
+<p><strong>Primeiro truque: inclinar o eixo em vez de mover o ponto.</strong>
+Em vez de deixar \(\vet{\omega}\) ao longo de \(z\) e pôr o ponto de
+observação num lugar qualquer, ponha o ponto de observação no eixo \(z\) e
+incline \(\vet{\omega}\). Nada se perde, porque só o ângulo entre os dois
+importa, e ganha-se que \(\imath\) passa a depender apenas de \(\theta'\):</p>
+
+\[ \imath = \sqrt{R^2 + r^2 - 2Rr\cos\theta'}. \]
+
+<p>Com \(\vet{K} = \sigma\left(\vet{\omega}\cruz\vet{r}'\right)\), o
+vetor \(\vet{\omega}\) sai da integral:</p>
+
+\[ \vet{A}(\vet{r}) = \frac{\mu_0\sigma}{4\pi}\,\vet{\omega}\cruz
+   \int \frac{\vet{r}'}{\imath}\,da'. \]
+
+<p>Sobrou uma integral vetorial cujo resultado só pode apontar ao longo de
+\(\vers{z}\), porque é a única direção que a geometria ainda distingue.
+Logo basta calcular a sua componente \(z\), isto é,
+\(\int R\cos\theta'\,da'/\imath\).</p>
+
+<p><strong>Segundo truque: expandir \(1/\imath\) em polinômios de
+Legendre.</strong> A identidade que gera esses polinômios é exatamente a
+expansão do inverso da distância entre dois pontos,</p>
+
+\[ \frac{1}{\imath} = \sum_{l=0}^{\infty}
+   \frac{r_<^{\,l}}{r_>^{\,l+1}}\,P_l(\cos\theta'), \]
+
+<p>com \(r_<\) e \(r_>\) o menor e o maior entre \(r\) e \(R\). Substituindo
+e integrando em \(\phi'\), que dá \(2\pi\) porque nada depende dele,</p>
+
+\[ \int \frac{R\cos\theta'}{\imath}\,da'
+   = 2\pi R^3 \sum_{l} \frac{r_<^{\,l}}{r_>^{\,l+1}}
+     \int_{-1}^{1} u\,P_l(u)\,du. \]
+
+<p>E aqui está o ponto. Como \(u = P_1(u)\), a última integral é o produto
+escalar de \(P_1\) com \(P_l\), e a ortogonalidade dos polinômios de Legendre
+manda que ela seja nula para todo \(l \ne 1\):</p>
+
+\[ \int_{-1}^{1} P_1(u)P_l(u)\,du = \frac{2}{2l+1}\,\delta_{l1}
+   = \frac{2}{3}\,\delta_{l1}. \]
+
+<p>A série inteira colapsa num único termo. Resta</p>
+
+\[ \int \frac{\vet{r}'}{\imath}\,da'
+   = \frac{4\pi}{3}R^3\,\frac{r_<}{r_>^{\,2}}\;\vers{z}, \]
+
+<p>e devolvendo isso ao produto vetorial e desfazendo a inclinação do eixo,</p>
 
 \[ \vet{A}(r,\theta) = \begin{cases}
    \dfrac{\mu_0 \sigma \omega R}{3}\,r\sen\theta\;\vers{\phi}, & r \le R,\\[1.1em]
@@ -623,6 +664,18 @@ e é também o modelo mais simples de dínamo planetário.</p>
 \(m = \frac{4}{3}\pi\sigma\omega R^4\), sem nenhum termo de ordem superior. Essa
 coincidência não é acidental: ela vem de \(\vet{K}\) variar exatamente como
 \(\sen\theta'\).</p>
+
+<p>Essa coincidência agora tem nome: a corrente de superfície varia como
+\(\sen\theta'\), que na base de Legendre é puro \(P_1\), e a ortogonalidade
+elimina todos os outros multipolos antes mesmo de eles nascerem. Qualquer outra
+dependência angular da corrente produziria quadrupolo, octupolo e o resto.</p>
+
+<p><a href="codigo/casca_legendre.py">O programa <code>casca_legendre.py</code>
+confere os três passos numericamente</a>: calcula os coeficientes
+\(\int u P_l(u)du\) e mostra que só o de \(l=1\) sobrevive; refaz a integral de
+superfície por força bruta, sem expansão nenhuma, e recupera a fórmula fechada
+com erro de \(2\times10^{-12}\); e toma o rotacional para verificar que o campo
+interno é uniforme e o externo é dipolar até oito raios de distância.</p>
 </div>
 
 <h3>Condições de contorno</h3>
@@ -692,6 +745,15 @@ que resolve, o que imprime e como conferir se a resposta está certa.</p>
     <p><strong>Confira assim:</strong> varie a separação e veja a uniformidade
     piorar para os dois lados do valor \(d = R\).</p>
   </article>
+  <article class="cartao">
+    <h3><a href="codigo/casca_legendre.py">casca_legendre.py</a></h3>
+    <p>Refaz a casca girante pelos dois caminhos: a expansão em polinômios de
+    Legendre, que colapsa num único termo, e a integral de superfície por força
+    bruta, sem expansão nenhuma.</p>
+    <p><strong>Confira assim:</strong> os coeficientes de todos os \(l \ne 1\)
+    têm de se anular; a integral bruta tem de reproduzir a fórmula fechada; e o
+    rotacional tem de dar campo uniforme dentro e dipolo puro fora.</p>
+  </article>
 </div>
 
 <h3>Por que o integrador de Boris</h3>
@@ -721,6 +783,9 @@ SECOES = [
     ('O potencial vetor', S7),
     ('No Spyder', S8),
 ]
+
+
+SECOES.append(('Exercícios propostos', exercicios.bloco(LISTA)))
 
 
 def main():

@@ -6,6 +6,8 @@ as remissões são feitas no ponto exato em que a pergunta muda de "o que o
 material faz com o campo" para "por que ele faz isso a esta temperatura".
 """
 from molde import escreve, secoes_html
+import exercicios
+from lista_cap06 import LISTA
 
 FE = 'https://apianomorais.github.io/fisica-estatistica'
 
@@ -269,6 +271,68 @@ para cima e voltando por fora. As de \(\vet{H}\) nascem na face de cima e
 morrem na de baixo, como se houvesse carga magnética ali, e dentro da esfera
 apontam contra \(\vet{M}\).</p>
 
+<div class="destaque">
+<p><strong>Exemplo trabalhado: a esfera magnetizada por separação de
+variáveis.</strong> A mesma esfera de raio \(R\) e magnetização uniforme
+\(\vet{M} = M\vers{z}\), agora resolvida sem calcular corrente nenhuma. Como
+não há corrente livre, \(\rot{\vet{H}} = 0\) em toda parte, e portanto
+\(\vet{H}\) deriva de um potencial escalar,</p>
+
+\[ \vet{H} = -\nabla W. \]
+
+<p>Onde \(\vet{M}\) é uniforme, \(\divg{\vet{H}} = -\divg{\vet{M}} = 0\), de
+modo que \(W\) satisfaz a equação de Laplace dentro e fora, e toda a física fica
+nas condições de contorno em \(r = R\). A solução geral com simetria azimutal é
+a série de Legendre:</p>
+
+\[ W_{\text{dentro}} = \sum_l A_l\,r^l P_l(\cos\theta),\qquad
+   W_{\text{fora}} = \sum_l \frac{B_l}{r^{l+1}}P_l(\cos\theta). \]
+
+<p>A primeira condição é que \(W\) seja contínuo, porque \(\vet{H}\) é finito:
+\(A_l R^l = B_l/R^{l+1}\). A segunda vem de \(B_\perp\) ser contínuo. Com
+\(\vet{B} = \mu_0(\vet{H}+\vet{M})\), a componente normal de \(\vet{H}\) salta
+exatamente do que a de \(\vet{M}\) salta, e o salto é</p>
+
+\[ \pder{W_{\text{fora}}}{r} - \pder{W_{\text{dentro}}}{r}
+   = -\vet{M}\cdot\vers{n} = -M\cos\theta. \]
+
+<p>Repare no que está escrito à direita: é a mesma estrutura de uma carga
+superficial em eletrostática. É comum chamar \(\sigma_m = \vet{M}\cdot\vers{n}\)
+de <em>carga magnética</em> efetiva, lembrando que ela não existe: é apenas a
+contabilidade de \(\vet{H}\).</p>
+
+<p>E agora o ponto que interessa: \(\cos\theta\) é exatamente \(P_1\). Pela
+ortogonalidade, só o termo \(l=1\) pode casar com a fonte, e todos os outros
+coeficientes são obrigados a se anular. Com \(l=1\) as duas condições viram um
+sistema de duas equações,</p>
+
+\[ A_1 R = \frac{B_1}{R^2},\qquad
+   -\frac{2B_1}{R^3} - A_1 = -M, \]
+
+<p>cuja solução é \(A_1 = M/3\) e \(B_1 = MR^3/3\). Portanto</p>
+
+\[ W_{\text{dentro}} = \frac{M}{3}\,r\cos\theta = \frac{M}{3}z
+   \;\Longrightarrow\;
+   \boxed{\;\vet{H}_{\text{dentro}} = -\frac{M}{3}\vers{z},\;} \]
+
+<p>que é o campo desmagnetizante, com o fator \(1/3\) da esfera, e</p>
+
+\[ W_{\text{fora}} = \frac{MR^3}{3}\frac{\cos\theta}{r^2}, \]
+
+<p>que é o potencial de um dipolo de momento \(m = \frac{4}{3}\pi R^3 M\), isto
+é, \(\vet{M}\) vezes o volume. Dentro, \(\vet{B} = \mu_0(\vet{H}+\vet{M}) =
+\frac{2}{3}\mu_0 M\vers{z}\), o mesmo resultado que a corrente ligada deu, por
+um caminho que não mencionou corrente em momento nenhum.</p>
+
+<p><a href="codigo/esfera_legendre.py">O programa <code>esfera_legendre.py</code>
+faz os dois caminhos e compara</a>: projeta \(\sigma_m\) na base de Legendre e
+confirma que só \(l=1\) sobrevive, resolve o sistema das condições de contorno
+numericamente, sem usar o resultado acima, e confere o campo resultante contra a
+integração direta de \(\vet{K}_b = \vet{M}\cruz\vers{n}\) por Biot-Savart. Os
+dois métodos concordam em quatro casas em todos os pontos testados, dentro e
+fora, e a diferença que sobra é a discretização dos anéis.</p>
+</div>
+
 <h3>Condições de contorno, agora com H</h3>
 
 <p>As condições do capítulo 5 se reescrevem separando livre de ligado:</p>
@@ -439,6 +503,15 @@ S6 = r'''
     <p><a href="''' + FE + r'''/aula09.html">O mesmo modelo, pelo lado da
     física estatística.</a></p>
   </article>
+  <article class="cartao">
+    <h3><a href="codigo/esfera_legendre.py">esfera_legendre.py</a></h3>
+    <p>Resolve a esfera magnetizada por separação de variáveis, projetando a
+    fonte na base de Legendre e resolvendo as condições de contorno
+    numericamente, e compara com a integração da corrente ligada.</p>
+    <p><strong>Confira assim:</strong> só o coeficiente \(l = 1\) pode
+    sobreviver, \(A_1\) tem de dar \(M/3\), e os dois métodos têm de dar o
+    mesmo campo ponto a ponto.</p>
+  </article>
 </div>
 
 <p>Vale dizer o que o segundo programa <em>não</em> é. A histerese que ele
@@ -458,6 +531,9 @@ SECOES = [
     ('Como o material responde', S5),
     ('No Spyder', S6),
 ]
+
+
+SECOES.append(('Exercícios propostos', exercicios.bloco(LISTA)))
 
 
 def main():
