@@ -592,6 +592,13 @@ h3.unidade:first-of-type{margin-top:1.2rem}
 .destaque p,.destaque ul,.destaque ol{text-align:left}
 .destaque.citacao p{text-align:center}
 
+/* A linha do tempo da página de entrada: os cartões herdam o acento da
+   paleta, e não uma cor própria, para acompanharem qualquer troca. */
+.cartoes.linha-tempo .cartao{border-left:3px solid var(--laranja);
+  background:var(--acento-leve)}
+.cartoes.linha-tempo .cartao h3{color:var(--laranja-texto);
+  font-family:var(--sans);letter-spacing:.04em;font-size:.95rem}
+
 figure.figura-exemplo{margin:1.1rem auto 1.3rem;max-width:34rem}
 figure.figura-exemplo img{width:100%;height:auto;display:block}
 figure.figura-exemplo figcaption{
