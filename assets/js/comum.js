@@ -20,6 +20,11 @@ window.MathJax = {
       tan: '\\operatorname{tg}',
       cotg: '\\operatorname{cotg}',
       cot: '\\operatorname{cotg}',
+      /* hiperbólicas na notação brasileira */
+      senh: '\\operatorname{senh}',
+      sinh: '\\operatorname{senh}',
+      tgh: '\\operatorname{tgh}',
+      tanh: '\\operatorname{tgh}',
       arcsen: '\\operatorname{arcsen}',
       arcsin: '\\operatorname{arcsen}',
       arctg: '\\operatorname{arctg}',

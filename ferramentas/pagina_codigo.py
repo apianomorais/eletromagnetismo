@@ -29,6 +29,40 @@ GRUPOS = [
          'raio, apesar de o divergente ser nulo fora da origem.'),
     ]),
 
+    ('Eletrostática: distribuições, Gauss e Laplace', [
+        ('campo_distribuicao.py', 'Capítulo 2',
+         'Integra E e V de fio, anel e disco discretizados em pedaços, e '
+         'compara com as fórmulas fechadas.',
+         'O erro cai como 1/n², os limites de carga pontual e de fio infinito '
+         'aparecem sozinhos, e E_z bate com −dV/dz em 1e-7.'),
+        ('gauss_numerico.py', 'Capítulo 2',
+         'Fluxo de uma carga pontual por esfera centrada, deslocada, amassada '
+         'e cubo, com a carga dentro e fora.',
+         'Dentro, dá q/ε₀ em todas as superfícies; fora, dá zero. A esfera '
+         'amassada dá o mesmo que a centrada, porque o integrando se reduz ao '
+         'ângulo sólido.'),
+        ('laplace_relaxacao.py', 'Capítulo 3',
+         'Resolve Laplace por relaxação, substituindo cada ponto pela média '
+         'dos vizinhos até convergir. É o programa mais reaproveitável do '
+         'site.',
+         'No duto, o centro dá V0/4 exato (a grade tem a mesma simetria), e o '
+         'erro num ponto sem simetria cai como h². Com um bloco aterrado no '
+         'meio, que nenhuma série resolve, ele não se incomoda.'),
+        ('metodo_imagens.py', 'Capítulo 3',
+         'A carga acima do plano aterrado pela imagem, com a carga induzida '
+         'integrada, e o mesmo problema refeito por relaxação sem usar imagem '
+         'nenhuma.',
+         'A carga induzida total dá −q, metade dela está dentro de √3 d, e a '
+         'relaxação reproduz o perfil de σ com erro de 1 a 2 % longe da '
+         'carga.'),
+        ('multipolos.py', 'Capítulo 3',
+         'Momentos de uma distribuição discreta e comparação da série '
+         'truncada com o potencial exato, ordem por ordem.',
+         'O erro da ordem n cai com o expoente certo (medido: 2,00 para o '
+         'dipolo), e o momento de dipolo muda com a origem assim que a carga '
+         'total deixa de ser nula.'),
+    ]),
+
     ('Integração de campos: Biot-Savart e companhia', [
         ('biot_savart.py', 'Capítulo 5',
          'O módulo de base: discretiza um fio em segmentos e soma a '
@@ -165,13 +199,6 @@ S3 = r'''
 correspondentes:</p>
 
 <ul>
-<li><strong>Relaxação para a equação de Laplace</strong>, no capítulo 3: o
-método que resolve o potencial numa região de forma qualquer, iterando a média
-dos vizinhos até parar de mudar. É a mesma técnica que depois resolve o guia de
-onda.</li>
-<li><strong>Método das imagens conferido numericamente</strong>, também no
-capítulo 3: comparar a solução de imagem com a relaxação é o jeito mais
-convincente de mostrar que a imagem não é um truque, é a solução.</li>
 <li><strong>Propagação de pulso</strong>, no capítulo 9: integrar a equação de
 onda no tempo e ver a reflexão numa interface, com a fração refletida batendo
 com os coeficientes de Fresnel.</li>
