@@ -44,8 +44,14 @@
   /* fonte de display da identidade do LFCA */
   --display:"Audiowide",system-ui,sans-serif;
   /* cores da logo do laboratório */
-  --laranja:#fd6500;        /* laranja da marca — preenchimentos e bordas */
-  --laranja-texto:#bc4a00;  /* versão escurecida, legível sobre branco */
+  --laranja:#b05a1f;        /* laranja da marca — preenchimentos e bordas */
+  --laranja-texto:#894618;  /* versão escurecida, legível sobre branco */
+  /* tons claros do acento, usados em fundos; paleta.py recalcula todos */
+  --acento-leve:#faf5f2;
+  --acento-etiqueta:#f6ebe4;
+  --acento-fundo:#fbf7f4;
+  --acento-borda:#e1c0aa;
+  --acento-forte:#efded2;
   --preto-lfca:#000000;
 }
 
@@ -413,12 +419,12 @@ mjx-container[display="true"]{
 
 /* o laranja da marca como cor de acento */
 .destaque{
-  background:#fff8f2;border-color:#f2c49b;
+  background:var(--acento-fundo);border-color:var(--acento-borda);
 }
-.bloco.fisica{border-left-color:var(--laranja);background:#fff7f0}
+.bloco.fisica{border-left-color:var(--laranja);background:var(--acento-leve)}
 .bloco.fisica .rotulo{color:var(--laranja-texto)}
 .cartao:hover{border-color:var(--laranja)}
-.etiqueta{background:#ffeede;color:var(--laranja-texto)}
+.etiqueta{background:var(--acento-etiqueta);color:var(--laranja-texto)}
 .topo{border-bottom:3px solid var(--laranja)}
 .rodape{border-top:3px solid var(--laranja)}
 
@@ -443,7 +449,7 @@ mjx-container[display="true"]{
 }
 .tri-cel:hover{border-color:var(--laranja);color:var(--laranja-texto);background:#fff}
 .tri-cel.linha-ativa{background:#eaf1f8;border-color:#b9cfe3;color:var(--azul)}
-.tri-cel.pai{background:#ffe4cc;border-color:var(--laranja);color:var(--laranja-texto)}
+.tri-cel.pai{background:var(--acento-forte);border-color:var(--laranja);color:var(--laranja-texto)}
 .tri-cel.sel{
   background:var(--azul);border-color:var(--azul);color:#fff;
   transform:scale(1.1);box-shadow:0 2px 8px rgba(16,64,58,.3);

@@ -80,9 +80,25 @@
     };
   }
 
+  /* O widget costuma ser montado antes de o MathJax terminar de carregar,
+     e nesse caso typesetPromise ainda não existe. Em vez de desistir em
+     silêncio, deixando \(\mu_0\) cru na tela, espera a promessa de
+     inicialização e tipografa depois. */
   function tipografar(no) {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      window.MathJax.typesetPromise([no]).catch(function () {});
+    var mj = window.MathJax;
+    if (!mj) {
+      window.addEventListener('load', function () {
+        if (window.MathJax && window.MathJax.typesetPromise) tipografar(no);
+      }, { once: true });
+      return;
+    }
+    if (mj.typesetPromise) { mj.typesetPromise([no]).catch(function () {}); return; }
+    if (mj.startup && mj.startup.promise) {
+      mj.startup.promise.then(function () {
+        if (window.MathJax.typesetPromise) {
+          window.MathJax.typesetPromise([no]).catch(function () {});
+        }
+      });
     }
   }
 

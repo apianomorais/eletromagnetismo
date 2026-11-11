@@ -32,6 +32,19 @@ PALETAS = {
 }
 
 
+def mistura(cor, f):
+    """Clareia a cor misturando-a com branco na fração f."""
+    r, v, a = (int(cor[i:i + 2], 16) for i in (1, 3, 5))
+    m = lambda x: int(round(x + (255 - x) * f))
+    return '#%02x%02x%02x' % (m(r), m(v), m(a))
+
+
+def escurece(cor, f):
+    r, v, a = (int(cor[i:i + 2], 16) for i in (1, 3, 5))
+    m = lambda x: int(round(x * (1 - f)))
+    return '#%02x%02x%02x' % (m(r), m(v), m(a))
+
+
 def aplica(nome):
     if nome not in PALETAS:
         raise SystemExit('paletas: %s' % ', '.join(sorted(PALETAS)))
@@ -39,7 +52,16 @@ def aplica(nome):
     s = io.open(CSS, encoding='utf-8').read()
     pares = [('--azul', p), ('--azul-claro', claro), ('--azul-pastel', pastel),
              ('--vinho', destaque), ('--verde', sec),
-             ('--papel-alt', papel2), ('--borda', borda)]
+             ('--papel-alt', papel2), ('--borda', borda),
+             # o acento da marca acompanha a paleta, senão o laranja do logo
+             # continua aparecendo no topo, nas etiquetas e nos destaques
+             ('--laranja', destaque),
+             ('--laranja-texto', escurece(destaque, 0.22)),
+             ('--acento-leve', mistura(destaque, 0.94)),
+             ('--acento-etiqueta', mistura(destaque, 0.88)),
+             ('--acento-fundo', mistura(destaque, 0.95)),
+             ('--acento-borda', mistura(destaque, 0.62)),
+             ('--acento-forte', mistura(destaque, 0.80))]
     for var, cor in pares:
         s = re.sub(r'(%s:)#[0-9a-fA-F]{6}' % var, r'\g<1>' + cor, s, count=1)
     io.open(CSS, 'w', encoding='utf-8').write(s)
