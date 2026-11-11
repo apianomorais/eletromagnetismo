@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """A página de entrada: o mapa das três disciplinas sobre os capítulos."""
 import molde
-from molde import CAPITULOS, DISCIPLINAS, escreve
+from molde import CAPITULOS, DISCIPLINAS, escreve, existe
 
 EMENTAS = {
     'EM I': 'Eletrostática. Técnicas especiais na eletrostática. Campos elétricos '
@@ -33,10 +33,17 @@ def cartoes_disciplinas():
     for sigla, nome, codigo in DISCIPLINAS:
         caps = [c for c in CAPITULOS if c[4] == sigla]
         enc = sum(c[5] for c in caps)
-        itens = '\n'.join(
-            '        <li><a href="%s">%s</a> <small>%d encontro%s</small></li>'
-            % (c[0], c[2].split(': ')[1].capitalize(), c[5], 's' if c[5] > 1 else '')
-            for c in caps)
+        def item(c):
+            rotulo = c[2].split(': ')[1].capitalize()
+            enc = '%d encontro%s' % (c[5], 's' if c[5] > 1 else '')
+            if existe(c[0]):
+                return ('        <li><a href="%s">%s</a> <small>%s</small></li>'
+                        % (c[0], rotulo, enc))
+            # ainda não escrito: fica listado, sem link, para o aluno saber
+            # que o capítulo existe no plano da disciplina
+            return ('        <li><span class="pendente">%s</span> '
+                    '<small>%s · em preparação</small></li>' % (rotulo, enc))
+        itens = '\n'.join(item(c) for c in caps)
         linhas.append('''    <article class="cartao">
       <h3>%s <span class="etiqueta">%s</span></h3>
       <p class="ficha">%s · pré-requisito %s · 60 horas · %d encontros de duas horas</p>

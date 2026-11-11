@@ -129,6 +129,11 @@ CABECA = '''<!DOCTYPE html>
 '''
 
 
+def existe(arquivo):
+    """O capítulo já foi escrito? Só então vira link."""
+    return (RAIZ / arquivo).exists()
+
+
 def menu(atual):
     partes = []
     disciplina_atual = None
@@ -140,6 +145,11 @@ def menu(atual):
         if disc != disciplina_atual:
             disciplina_atual = disc
             partes.append('      <span class="grupo">%s</span>' % disc)
+        if not existe(arq) and arq != atual:
+            # capítulo ainda não escrito: aparece apagado, e não como link
+            partes.append('      <span class="num pendente" title="%s: em '
+                          'preparação">%s</span>' % (titulo, curto))
+            continue
         cls = 'num ativo' if arq == atual else 'num'
         partes.append('      <a href="%s" class="%s" title="%s">%s</a>'
                       % (arq, cls, titulo, curto))
@@ -147,14 +157,18 @@ def menu(atual):
 
 
 def navegacao(atual):
-    i = [c[0] for c in CAPITULOS].index(atual)
+    """Anterior e próximo, pulando o que ainda não foi escrito."""
+    arquivos = [c[0] for c in CAPITULOS]
+    i = arquivos.index(atual)
     saida = []
-    if i > 0:
+    anterior = next((c for c in reversed(CAPITULOS[:i]) if existe(c[0])), None)
+    proximo = next((c for c in CAPITULOS[i + 1:] if existe(c[0])), None)
+    if anterior:
         saida.append('    <a href="%s"><small>Anterior</small>← %s</a>'
-                     % (CAPITULOS[i - 1][0], CAPITULOS[i - 1][2]))
-    if i < len(CAPITULOS) - 1:
+                     % (anterior[0], anterior[2]))
+    if proximo:
         saida.append('    <a class="prox" href="%s"><small>Próximo</small>%s →</a>'
-                     % (CAPITULOS[i + 1][0], CAPITULOS[i + 1][2]))
+                     % (proximo[0], proximo[2]))
     return '\n'.join(saida)
 
 

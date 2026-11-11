@@ -426,6 +426,9 @@ mjx-container[display="true"]{
 .cartao:hover{border-color:var(--laranja)}
 .etiqueta{background:var(--acento-etiqueta);color:var(--laranja-texto)}
 .topo{border-bottom:3px solid var(--laranja)}
+.cartao li .pendente{color:var(--tinta-suave);opacity:.72}
+.menu .num.pendente{color:var(--topo-suave);opacity:.45;cursor:default;
+  padding:.3rem .42rem}
 .rodape{border-top:3px solid var(--laranja)}
 
 

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Os programas | Eletromagnetismo</title>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/css/estilo.css">
+<script src="assets/js/comum.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="marca" href="index.html">Eletromagnetismo <span>· LFCA/URCA</span></a>
+    <nav class="menu">
+      <a href="index.html">Início</a>
+      <span class="grupo">EM I</span>
+      <a href="cap01.html" class="num" title="Capítulo 1: análise vetorial">1</a>
+      <span class="num pendente" title="Capítulo 2: eletrostática: em preparação">2</span>
+      <span class="num pendente" title="Capítulo 3: potenciais e técnicas especiais: em preparação">3</span>
+      <span class="num pendente" title="Capítulo 4: campos elétricos na matéria: em preparação">4</span>
+      <span class="grupo">EM II</span>
+      <a href="cap05.html" class="num" title="Capítulo 5: magnetostática">5</a>
+      <a href="cap06.html" class="num" title="Capítulo 6: campos magnéticos na matéria">6</a>
+      <a href="cap07.html" class="num" title="Capítulo 7: eletrodinâmica">7</a>
+      <span class="grupo">EM III</span>
+      <span class="num pendente" title="Capítulo 8: leis de conservação: em preparação">8</span>
+      <span class="num pendente" title="Capítulo 9: ondas eletromagnéticas: em preparação">9</span>
+      <span class="num pendente" title="Capítulo 10: potenciais e campos: em preparação">10</span>
+      <span class="num pendente" title="Capítulo 11: radiação: em preparação">11</span>
+      <a href="formulario.html">Formulário</a>
+      <a href="codigo.html" class="ativo">Código</a>
+    </nav>
+  </div>
+</header>
+
+<div class="envoltorio">
+
+<aside class="lateral">
+  <h4>Neste capítulo</h4>
+  <ol>
+    <li><a href="#s1">1. Como rodar</a></li>
+    <li><a href="#s2">2. Os programas, por técnica</a></li>
+    <li><a href="#s3">3. O que ainda falta</a></li>
+  </ol>
+</aside>
+
+<main class="conteudo">
+
+
+  <h1>Os programas</h1>
+  <p class="subtitulo">Os scripts em Python para rodar no Spyder, um por técnica, com o que cada um resolve e como conferir se a resposta está certa.</p>
+  <!-- ============================================== -->
+  <h2 id="s1">1. Como rodar</h2>
+
+  <p>Todos os programas usam apenas <code>numpy</code>, <code>scipy</code> e
+  <code>matplotlib</code>, que já vêm na instalação padrão do Anaconda. Nenhum
+  deles precisa de configuração, argumento de linha de comando ou arquivo de
+  dados: baixe, abra no Spyder e aperte o botão de executar.</p>
+
+  <div class="cartoes">
+    <article class="cartao">
+      <h3>1. Baixar</h3>
+      <p>Clique no nome do programa, nesta página ou na do capítulo, e salve o
+      arquivo <code>.py</code> numa pasta sua.</p>
+    </article>
+    <article class="cartao">
+      <h3>2. Abrir</h3>
+      <p>No Spyder, use <em>Arquivo → Abrir</em> e escolha o arquivo. O cabeçalho
+      explica o que ele resolve e como conferir a resposta.</p>
+    </article>
+    <article class="cartao">
+      <h3>3. Executar</h3>
+      <p>F5, ou o botão verde. Os números saem no console e as figuras no painel
+      de gráficos.</p>
+    </article>
+    <article class="cartao">
+      <h3>4. Mexer</h3>
+      <p>Os parâmetros ficam em maiúsculas logo depois dos <code>import</code>.
+      Troque um, rode de novo, veja o que muda.</p>
+    </article>
+  </div>
+
+  <div class="bloco alerta">
+  <span class="rotulo">Uma dependência, só uma</span>
+  <p>O arquivo <code>biot_savart.py</code> é importado por
+  <code>helmholtz.py</code>, <code>esfera_magnetizada.py</code>,
+  <code>esfera_legendre.py</code> e <code>indutancia_mutua.py</code>. Se for usar
+  qualquer um desses, guarde os dois na <em>mesma pasta</em>. Todos os outros
+  programas são independentes.</p>
+  </div>
+
+  <p>Cada programa traz, no alto, quatro blocos: o que resolve, a física por trás,
+  como conferir se a resposta está certa, e a autoria. O terceiro é o mais
+  importante. Programa numérico que roda sem erro e entrega número errado é a
+  regra, não a exceção, e a única defesa é ter sempre um limite conhecido, uma
+  simetria ou uma lei de conservação para comparar.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s2">2. Os programas, por técnica</h2>
+
+  <h3>Operadores, teoremas e a delta</h3>
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/operadores_vetoriais.py">operadores_vetoriais.py</a></h3>
+      <p class="ficha">Capítulo 1</p>
+      <p>Gradiente, divergente, rotacional e laplaciano por diferenças finitas numa grade tridimensional.</p>
+      <p><strong>Confira assim:</strong> As identidades rot(grad) = 0 e div(rot) = 0 valem exatamente na grade, e o resíduo que sobra é arredondamento: ele cresce, e não cai, quando a grade é refinada.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/teoremas_integrais.py">teoremas_integrais.py</a></h3>
+      <p class="ficha">Capítulo 1</p>
+      <p>Os dois lados do teorema da divergência e do teorema de Stokes, calculados por quadratura.</p>
+      <p><strong>Confira assim:</strong> No cubo, os dois lados dão 48 exatos; na calota, o fluxo do rotacional, o fluxo pelo disco de mesma borda e a circulação convergem para o mesmo número, com razão 4 por refinamento.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/delta_dirac.py">delta_dirac.py</a></h3>
+      <p class="ficha">Capítulo 1</p>
+      <p>A delta como limite de gaussianas, a propriedade de filtragem e o fluxo de r/r² por esferas de qualquer raio.</p>
+      <p><strong>Confira assim:</strong> O erro da filtragem cai como ε² e o fluxo dá 4π de 0,1 a 100 de raio, apesar de o divergente ser nulo fora da origem.</p>
+    </article>
+  </div>
+  <h3>Integração de campos: Biot-Savart e companhia</h3>
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/biot_savart.py">biot_savart.py</a></h3>
+      <p class="ficha">Capítulo 5</p>
+      <p>O módulo de base: discretiza um fio em segmentos e soma a contribuição de cada um. É importado pelos outros programas desta seção.</p>
+      <p><strong>Confira assim:</strong> O campo no centro de uma espira tem de dar μ₀I/2R, e o erro cai por um fator 4 a cada duplicação do número de segmentos.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/helmholtz.py">helmholtz.py</a></h3>
+      <p class="ficha">Capítulo 5</p>
+      <p>Campo no eixo de duas bobinas coaxiais, e a demonstração de que a uniformidade é máxima quando a separação iguala o raio.</p>
+      <p><strong>Confira assim:</strong> A curvatura no centro troca de sinal exatamente em d = R, e o campo ali vale (4/5)^(3/2) μ₀NI/R.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/casca_legendre.py">casca_legendre.py</a></h3>
+      <p class="ficha">Capítulo 5</p>
+      <p>A casca girante pelos dois caminhos: a série de Legendre, que colapsa no termo de dipolo, e a integral de superfície por força bruta.</p>
+      <p><strong>Confira assim:</strong> Os coeficientes de l ≠ 1 se anulam, a integral bruta reproduz a fórmula fechada com erro de 2×10⁻¹², e o campo externo é dipolo puro até oito raios.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/esfera_magnetizada.py">esfera_magnetizada.py</a></h3>
+      <p class="ficha">Capítulo 6</p>
+      <p>A esfera uniformemente magnetizada resolvida pela corrente ligada de superfície, somando anéis de latitude.</p>
+      <p><strong>Confira assim:</strong> O interior dá (2/3)μ₀M uniforme, o exterior é o dipolo de momento (4/3)πR³M, e H dentro dá −M/3.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/esfera_legendre.py">esfera_legendre.py</a></h3>
+      <p class="ficha">Capítulo 6</p>
+      <p>A mesma esfera por separação de variáveis, com o potencial escalar magnético e a série de Legendre.</p>
+      <p><strong>Confira assim:</strong> Só o coeficiente l = 1 sobrevive, A₁ dá M/3, e o campo bate com o da corrente ligada em quatro casas.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/indutancia_mutua.py">indutancia_mutua.py</a></h3>
+      <p class="ficha">Capítulo 7</p>
+      <p>Indutância mútua pela fórmula de Neumann, por integração dupla sobre os dois contornos.</p>
+      <p><strong>Confira assim:</strong> A reciprocidade é confirmada por dois caminhos independentes, o resultado bate com a fórmula de integrais elípticas e converge em segunda ordem.</p>
+    </article>
+  </div>
+  <h3>Trajetórias e circuitos no tempo</h3>
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/trajetoria_lorentz.py">trajetoria_lorentz.py</a></h3>
+      <p class="ficha">Capítulo 5</p>
+      <p>Movimento de uma carga em campos E e B pelo método de Boris, o integrador padrão de física de plasmas.</p>
+      <p><strong>Confira assim:</strong> Sem campo elétrico a energia tem de ser conservada exatamente, porque a parte magnética é implementada como rotação; e a deriva tem de valer E/B, qualquer que seja a carga.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/barra_deslizante.py">barra_deslizante.py</a></h3>
+      <p class="ficha">Capítulo 7</p>
+      <p>A barra nos trilhos, com a equação de movimento acoplada à corrente e os acumuladores de energia.</p>
+      <p><strong>Confira assim:</strong> A velocidade tende ao valor terminal FR/(Bh)², o decaimento sem força externa é exponencial, e o balanço W = ΔEc + Q fecha com desvio de 10⁻⁹.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/capacitor_deslocamento.py">capacitor_deslocamento.py</a></h3>
+      <p class="ficha">Capítulo 7</p>
+      <p>O capacitor carregando num circuito RC, com a corrente de condução e a de deslocamento lado a lado.</p>
+      <p><strong>Confira assim:</strong> As duas superfícies apoiadas na mesma curva dão a mesma corrente, e o resíduo cai como dt²; o campo magnético é contínuo na borda da placa.</p>
+    </article>
+  </div>
+  <h3>Matéria e transições</h3>
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/weiss_histerese.py">weiss_histerese.py</a></h3>
+      <p class="ficha">Capítulo 6</p>
+      <p>A equação de campo médio de Weiss resolvida por ponto fixo amortecido, varrendo o campo nos dois sentidos.</p>
+      <p><strong>Confira assim:</strong> Abaixo de Tc o laço abre sozinho e acima fecha (área 8×10⁻¹²), e a susceptibilidade ajusta o expoente −1 de Curie-Weiss.</p>
+    </article>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="s3">3. O que ainda falta</h2>
+
+  <p>O que ainda falta escrever, e que entra junto com os capítulos
+  correspondentes:</p>
+
+  <ul>
+  <li><strong>Relaxação para a equação de Laplace</strong>, no capítulo 3: o
+  método que resolve o potencial numa região de forma qualquer, iterando a média
+  dos vizinhos até parar de mudar. É a mesma técnica que depois resolve o guia de
+  onda.</li>
+  <li><strong>Método das imagens conferido numericamente</strong>, também no
+  capítulo 3: comparar a solução de imagem com a relaxação é o jeito mais
+  convincente de mostrar que a imagem não é um truque, é a solução.</li>
+  <li><strong>Propagação de pulso</strong>, no capítulo 9: integrar a equação de
+  onda no tempo e ver a reflexão numa interface, com a fração refletida batendo
+  com os coeficientes de Fresnel.</li>
+  <li><strong>Dipolo radiante</strong>, no capítulo 11: os campos retardados de
+  uma carga oscilante, e o padrão de radiação em sen²θ.</li>
+  </ul>
+
+  <p>Quem quiser se adiantar pode começar pelo primeiro: a relaxação cabe em
+  quinze linhas e resolve, com uma mudança de condição de contorno, metade dos
+  problemas de eletrostática que não têm simetria.</p>
+
+
+  <nav class="nav-aulas">
+    <a href="formulario.html"><small>Anterior</small>← Formulário</a>
+  </nav>
+
+</main>
+</div>
+
+<footer class="rodape">
+  <img class="logo-rodape" src="assets/img/logo.png" alt="LFCA | URCA">
+  <p><strong>Prof. Apiano Morais</strong> · <a href="mailto:apiano.morais@urca.br">apiano.morais@urca.br</a><br>
+  Laboratório de Física Computacional Aplicada (LFCA) · Universidade Regional do Cariri</p>
+</footer>
+
+<script src="assets/js/widgets.js"></script>
+</body>
+</html>

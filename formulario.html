@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formulário | Eletromagnetismo</title>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/css/estilo.css">
+<script src="assets/js/comum.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="marca" href="index.html">Eletromagnetismo <span>· LFCA/URCA</span></a>
+    <nav class="menu">
+      <a href="index.html">Início</a>
+      <span class="grupo">EM I</span>
+      <a href="cap01.html" class="num" title="Capítulo 1: análise vetorial">1</a>
+      <span class="num pendente" title="Capítulo 2: eletrostática: em preparação">2</span>
+      <span class="num pendente" title="Capítulo 3: potenciais e técnicas especiais: em preparação">3</span>
+      <span class="num pendente" title="Capítulo 4: campos elétricos na matéria: em preparação">4</span>
+      <span class="grupo">EM II</span>
+      <a href="cap05.html" class="num" title="Capítulo 5: magnetostática">5</a>
+      <a href="cap06.html" class="num" title="Capítulo 6: campos magnéticos na matéria">6</a>
+      <a href="cap07.html" class="num" title="Capítulo 7: eletrodinâmica">7</a>
+      <span class="grupo">EM III</span>
+      <span class="num pendente" title="Capítulo 8: leis de conservação: em preparação">8</span>
+      <span class="num pendente" title="Capítulo 9: ondas eletromagnéticas: em preparação">9</span>
+      <span class="num pendente" title="Capítulo 10: potenciais e campos: em preparação">10</span>
+      <span class="num pendente" title="Capítulo 11: radiação: em preparação">11</span>
+      <a href="formulario.html" class="ativo">Formulário</a>
+      <a href="codigo.html">Código</a>
+    </nav>
+  </div>
+</header>
+
+<div class="envoltorio">
+
+<aside class="lateral">
+  <h4>Neste capítulo</h4>
+  <ol>
+    <li><a href="#s1">1. Operadores nas três coordenadas</a></li>
+    <li><a href="#s2">2. Identidades, teoremas e a delta</a></li>
+    <li><a href="#s3">3. As equações de Maxwell e as condições de contorno</a></li>
+    <li><a href="#s4">4. Campos, potenciais e energia</a></li>
+    <li><a href="#s5">5. Constantes</a></li>
+  </ol>
+</aside>
+
+<main class="conteudo">
+
+
+  <h1>Formulário</h1>
+  <p class="subtitulo">Tudo o que o curso usa, em uma página só: operadores, teoremas, as equações de Maxwell nas quatro formas e as condições de contorno.</p>
+  <!-- ============================================== -->
+  <h2 id="s1">1. Operadores nas três coordenadas</h2>
+
+  <p>Nas três linhas abaixo, \(T\) é um campo escalar e \(\vet{v}\) um campo
+  vetorial. Em cilíndricas, \(s\) é a distância ao eixo \(z\); em esféricas,
+  \(r\) é a distância à origem, \(\theta\) o ângulo polar medido do eixo \(z\) e
+  \(\phi\) o azimutal.</p>
+
+  <h3>Cartesianas</h3>
+
+  \[ \nabla T = \pder{T}{x}\vers{x} + \pder{T}{y}\vers{y} + \pder{T}{z}\vers{z} \]
+
+  \[ \divg{\vet{v}} = \pder{v_x}{x} + \pder{v_y}{y} + \pder{v_z}{z} \]
+
+  \[ \rot{\vet{v}} =
+     \left(\pder{v_z}{y}-\pder{v_y}{z}\right)\vers{x} +
+     \left(\pder{v_x}{z}-\pder{v_z}{x}\right)\vers{y} +
+     \left(\pder{v_y}{x}-\pder{v_x}{y}\right)\vers{z} \]
+
+  \[ \nabla^2 T = \frac{\partial^2T}{\partial x^2}
+     + \frac{\partial^2T}{\partial y^2} + \frac{\partial^2T}{\partial z^2},
+     \qquad d\tau = dx\,dy\,dz \]
+
+  <h3>Cilíndricas</h3>
+
+  \[ \nabla T = \pder{T}{s}\vers{s} + \frac{1}{s}\pder{T}{\phi}\vers{\phi}
+     + \pder{T}{z}\vers{z} \]
+
+  \[ \divg{\vet{v}} = \frac{1}{s}\pder{(sv_s)}{s}
+     + \frac{1}{s}\pder{v_\phi}{\phi} + \pder{v_z}{z} \]
+
+  \[ \rot{\vet{v}} =
+     \left(\frac{1}{s}\pder{v_z}{\phi}-\pder{v_\phi}{z}\right)\vers{s}
+     + \left(\pder{v_s}{z}-\pder{v_z}{s}\right)\vers{\phi}
+     + \frac{1}{s}\left(\pder{(sv_\phi)}{s}-\pder{v_s}{\phi}\right)\vers{z} \]
+
+  \[ \nabla^2 T = \frac{1}{s}\pder{}{s}\left(s\pder{T}{s}\right)
+     + \frac{1}{s^2}\frac{\partial^2T}{\partial\phi^2}
+     + \frac{\partial^2T}{\partial z^2},
+     \qquad d\tau = s\,ds\,d\phi\,dz \]
+
+  <h3>Esféricas</h3>
+
+  \[ \nabla T = \pder{T}{r}\vers{r} + \frac{1}{r}\pder{T}{\theta}\vers{\theta}
+     + \frac{1}{r\sen\theta}\pder{T}{\phi}\vers{\phi} \]
+
+  \[ \divg{\vet{v}} = \frac{1}{r^2}\pder{(r^2v_r)}{r}
+     + \frac{1}{r\sen\theta}\pder{(\sen\theta\,v_\theta)}{\theta}
+     + \frac{1}{r\sen\theta}\pder{v_\phi}{\phi} \]
+
+  \[ \nabla^2 T = \frac{1}{r^2}\pder{}{r}\left(r^2\pder{T}{r}\right)
+     + \frac{1}{r^2\sen\theta}\pder{}{\theta}
+       \left(\sen\theta\pder{T}{\theta}\right)
+     + \frac{1}{r^2\sen^2\theta}\frac{\partial^2T}{\partial\phi^2} \]
+
+  \[ \rot{\vet{v}} = \frac{1}{r\sen\theta}
+     \left[\pder{(\sen\theta\,v_\phi)}{\theta}-\pder{v_\theta}{\phi}\right]\vers{r}
+     + \frac{1}{r}\left[\frac{1}{\sen\theta}\pder{v_r}{\phi}
+       -\pder{(rv_\phi)}{r}\right]\vers{\theta}
+     + \frac{1}{r}\left[\pder{(rv_\theta)}{r}-\pder{v_r}{\theta}\right]\vers{\phi} \]
+
+  \[ d\tau = r^2\sen\theta\,dr\,d\theta\,d\phi,
+     \qquad d\vet{a}\big|_{r=R} = R^2\sen\theta\,d\theta\,d\phi\;\vers{r} \]
+
+  <!-- ============================================== -->
+  <h2 id="s2">2. Identidades, teoremas e a delta</h2>
+
+  <h3>Identidades que o curso usa</h3>
+
+  \[ \rot{\left(\nabla T\right)} = 0, \qquad
+     \divg{\left(\rot{\vet{v}}\right)} = 0 \]
+
+  \[ \rot{\left(\rot{\vet{v}}\right)}
+     = \nabla\left(\divg{\vet{v}}\right) - \nabla^2\vet{v} \]
+
+  \[ \nabla(fg) = f\nabla g + g\nabla f, \qquad
+     \divg{(f\vet{A})} = f\divg{\vet{A}} + \vet{A}\cdot\nabla f \]
+
+  \[ \rot{(f\vet{A})} = f\rot{\vet{A}} - \vet{A}\cruz\nabla f \]
+
+  \[ \divg{\left(\vet{A}\cruz\vet{B}\right)}
+     = \vet{B}\cdot\left(\rot{\vet{A}}\right)
+     - \vet{A}\cdot\left(\rot{\vet{B}}\right) \]
+
+  \[ \vet{A}\cruz\left(\vet{B}\cruz\vet{C}\right)
+     = \vet{B}\left(\vet{A}\cdot\vet{C}\right)
+     - \vet{C}\left(\vet{A}\cdot\vet{B}\right) \]
+
+  <h3>Teoremas integrais</h3>
+
+  \[ \int_a^b\left(\nabla T\right)\cdot d\vet{\ell} = T(b)-T(a) \]
+
+  \[ \int_V\left(\divg{\vet{v}}\right)d\tau = \oint_S \vet{v}\cdot d\vet{a} \]
+
+  \[ \int_S\left(\rot{\vet{v}}\right)\cdot d\vet{a}
+     = \oint_C \vet{v}\cdot d\vet{\ell} \]
+
+  \[ \int_V f\left(\divg{\vet{A}}\right)d\tau
+     = -\int_V \vet{A}\cdot\left(\nabla f\right)d\tau
+     + \oint_S f\vet{A}\cdot d\vet{a} \]
+
+  <h3>A delta de Dirac</h3>
+
+  \[ \int f(x)\,\delta(x-a)\,dx = f(a)
+     \quad\text{se } a \text{ está no intervalo; zero se não está} \]
+
+  \[ \divg{\left(\frac{\vers{r}}{r^2}\right)} = 4\pi\delta^3(\vet{r}),
+     \qquad \nabla^2\!\left(\frac{1}{r}\right) = -4\pi\delta^3(\vet{r}) \]
+
+  \[ \delta(kx) = \frac{1}{|k|}\delta(x),
+     \qquad \delta\big(g(x)\big) = \sum_i\frac{\delta(x-x_i)}{|g'(x_i)|} \]
+
+  <h3>Funções e expansões</h3>
+
+  \[ \frac{1}{\left|\vet{r}-\vet{r}'\right|}
+     = \sum_{l=0}^{\infty}\frac{r_<^{\,l}}{r_>^{\,l+1}}\,P_l(\cos\gamma),
+     \qquad \int_{-1}^{1}P_l P_{l'}\,du = \frac{2}{2l+1}\delta_{ll'} \]
+
+  \[ P_0 = 1,\quad P_1 = u,\quad P_2 = \tfrac12(3u^2-1),
+     \quad P_3 = \tfrac12(5u^3-3u) \]
+
+  <!-- ============================================== -->
+  <h2 id="s3">3. As equações de Maxwell e as condições de contorno</h2>
+
+  <h3>No vácuo</h3>
+
+  <div class="tabela-rolavel">
+  <table>
+  <thead><tr><th>forma diferencial</th><th>forma integral</th><th>nome</th></tr></thead>
+  <tbody>
+  <tr>
+    <td>\(\divg{\vet{E}} = \dfrac{\rho}{\varepsilon_0}\)</td>
+    <td>\(\oint\vet{E}\cdot d\vet{a} = \dfrac{Q_{\text{int}}}{\varepsilon_0}\)</td>
+    <td>Gauss</td>
+  </tr>
+  <tr>
+    <td>\(\divg{\vet{B}} = 0\)</td>
+    <td>\(\oint\vet{B}\cdot d\vet{a} = 0\)</td>
+    <td>sem monopolos</td>
+  </tr>
+  <tr>
+    <td>\(\rot{\vet{E}} = -\pder{\vet{B}}{t}\)</td>
+    <td>\(\oint\vet{E}\cdot d\vet{\ell} = -\der{\Phi_B}{t}\)</td>
+    <td>Faraday</td>
+  </tr>
+  <tr>
+    <td>\(\rot{\vet{B}} = \mu_0\vet{J}
+        + \mu_0\varepsilon_0\pder{\vet{E}}{t}\)</td>
+    <td>\(\oint\vet{B}\cdot d\vet{\ell} = \mu_0 I_{\text{enl}}
+        + \mu_0\varepsilon_0\der{\Phi_E}{t}\)</td>
+    <td>Ampère-Maxwell</td>
+  </tr>
+  </tbody>
+  </table>
+  </div>
+
+  \[ \vet{F} = q\left(\vet{E}+\vet{v}\cruz\vet{B}\right),
+     \qquad \divg{\vet{J}} = -\pder{\rho}{t} \]
+
+  <h3>Na matéria</h3>
+
+  \[ \vet{D} = \varepsilon_0\vet{E} + \vet{P},
+     \qquad \vet{H} = \frac{\vet{B}}{\mu_0} - \vet{M} \]
+
+  \[ \divg{\vet{D}} = \rho_f, \qquad \divg{\vet{B}} = 0, \qquad
+     \rot{\vet{E}} = -\pder{\vet{B}}{t}, \qquad
+     \rot{\vet{H}} = \vet{J}_f + \pder{\vet{D}}{t} \]
+
+  \[ \rho_b = -\divg{\vet{P}},\quad \sigma_b = \vet{P}\cdot\vers{n},\quad
+     \vet{J}_b = \rot{\vet{M}},\quad \vet{K}_b = \vet{M}\cruz\vers{n},\quad
+     \vet{J}_p = \pder{\vet{P}}{t} \]
+
+  \[ \vet{P} = \varepsilon_0\chi_e\vet{E},\quad \varepsilon = \varepsilon_0(1+\chi_e),
+     \qquad \vet{M} = \chi_m\vet{H},\quad \mu = \mu_0(1+\chi_m) \]
+
+  <h3>Condições de contorno</h3>
+
+  <div class="tabela-rolavel">
+  <table>
+  <thead><tr><th></th><th>componente normal</th><th>componente tangencial</th></tr></thead>
+  <tbody>
+  <tr><td>\(\vet{E}\)</td>
+      <td>\(E^{\text{ac}}_\perp - E^{\text{ab}}_\perp
+          = \dfrac{\sigma}{\varepsilon_0}\)</td>
+      <td>\(\vet{E}^{\text{ac}}_\parallel = \vet{E}^{\text{ab}}_\parallel\)</td></tr>
+  <tr><td>\(\vet{B}\)</td>
+      <td>\(B^{\text{ac}}_\perp = B^{\text{ab}}_\perp\)</td>
+      <td>\(\vet{B}^{\text{ac}}_\parallel - \vet{B}^{\text{ab}}_\parallel
+          = \mu_0\left(\vet{K}\cruz\vers{n}\right)\)</td></tr>
+  <tr><td>\(\vet{D}\)</td>
+      <td>\(D^{\text{ac}}_\perp - D^{\text{ab}}_\perp = \sigma_f\)</td>
+      <td>\(\vet{D}^{\text{ac}}_\parallel - \vet{D}^{\text{ab}}_\parallel
+          = \vet{P}^{\text{ac}}_\parallel - \vet{P}^{\text{ab}}_\parallel\)</td></tr>
+  <tr><td>\(\vet{H}\)</td>
+      <td>\(H^{\text{ac}}_\perp - H^{\text{ab}}_\perp
+          = -\left(M^{\text{ac}}_\perp - M^{\text{ab}}_\perp\right)\)</td>
+      <td>\(\vet{H}^{\text{ac}}_\parallel - \vet{H}^{\text{ab}}_\parallel
+          = \vet{K}_f\cruz\vers{n}\)</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+  <p class="legenda">O padrão vale a pena guardar: carga superficial faz saltar a
+  componente <em>perpendicular</em>; corrente superficial faz saltar a
+  <em>paralela</em>.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s4">4. Campos, potenciais e energia</h2>
+
+  <h3>Eletrostática</h3>
+
+  \[ \vet{E} = \frac{1}{4\pi\varepsilon_0}\int
+     \frac{\vers{\imath}}{\imath^2}\,\rho\,d\tau',
+     \qquad V = \frac{1}{4\pi\varepsilon_0}\int\frac{\rho}{\imath}\,d\tau' \]
+
+  \[ \vet{E} = -\nabla V, \qquad \nabla^2 V = -\frac{\rho}{\varepsilon_0} \]
+
+  \[ W = \frac{\varepsilon_0}{2}\int E^2 d\tau,
+     \qquad u_E = \frac{\varepsilon_0E^2}{2}
+     \quad\left(\frac{\vet{D}\cdot\vet{E}}{2}\text{ na matéria linear}\right) \]
+
+  \[ V(\vet{r}) = \frac{1}{4\pi\varepsilon_0}\sum_{n}
+     \frac{1}{r^{n+1}}\int (r')^nP_n(\cos\alpha)\,\rho\,d\tau'
+     \qquad\text{(multipolos)} \]
+
+  \[ \vet{p} = \int\vet{r}'\rho\,d\tau',\qquad
+     V_{\text{dip}} = \frac{\vet{p}\cdot\vers{r}}{4\pi\varepsilon_0 r^2} \]
+
+  <h3>Magnetostática</h3>
+
+  \[ \vet{B} = \frac{\mu_0}{4\pi}I\int\frac{d\vet{\ell}'\cruz\vers{\imath}}
+     {\imath^2},
+     \qquad \vet{A} = \frac{\mu_0}{4\pi}\int\frac{\vet{J}}{\imath}\,d\tau' \]
+
+  \[ \vet{B} = \rot{\vet{A}}, \qquad \nabla^2\vet{A} = -\mu_0\vet{J}
+     \quad\text{(calibre de Coulomb)} \]
+
+  \[ W = \frac{1}{2\mu_0}\int B^2 d\tau, \qquad u_B = \frac{B^2}{2\mu_0} \]
+
+  \[ \vet{m} = I\vet{a},\qquad
+     \vet{\tau} = \vet{m}\cruz\vet{B},\qquad
+     U = -\vet{m}\cdot\vet{B},\qquad
+     \vet{F} = \nabla\left(\vet{m}\cdot\vet{B}\right) \]
+
+  <h3>Resultados que se usam de cor</h3>
+
+  <div class="tabela-rolavel">
+  <table>
+  <thead><tr><th>situação</th><th>campo</th></tr></thead>
+  <tbody>
+  <tr><td>carga pontual</td>
+      <td>\(E = \dfrac{q}{4\pi\varepsilon_0 r^2}\)</td></tr>
+  <tr><td>fio carregado infinito</td>
+      <td>\(E = \dfrac{\lambda}{2\pi\varepsilon_0 s}\)</td></tr>
+  <tr><td>plano carregado infinito</td>
+      <td>\(E = \dfrac{\sigma}{2\varepsilon_0}\)</td></tr>
+  <tr><td>capacitor de placas</td>
+      <td>\(E = \dfrac{\sigma}{\varepsilon_0}\), \(C = \dfrac{\varepsilon_0 A}{d}\)</td></tr>
+  <tr><td>fio com corrente</td>
+      <td>\(B = \dfrac{\mu_0 I}{2\pi s}\)</td></tr>
+  <tr><td>centro de espira</td>
+      <td>\(B = \dfrac{\mu_0 I}{2R}\)</td></tr>
+  <tr><td>solenoide longo</td>
+      <td>\(B = \mu_0 n I\) dentro, zero fora</td></tr>
+  <tr><td>toroide</td>
+      <td>\(B = \dfrac{\mu_0 N I}{2\pi s}\)</td></tr>
+  <tr><td>plano de corrente</td>
+      <td>\(B = \dfrac{\mu_0 K}{2}\), invertendo ao cruzar</td></tr>
+  <tr><td>solenoide: autoindutância</td>
+      <td>\(L = \dfrac{\mu_0 N^2 A}{\ell}\)</td></tr>
+  <tr><td>casca girante, dentro</td>
+      <td>\(B = \dfrac{2\mu_0\sigma\omega R}{3}\), uniforme</td></tr>
+  <tr><td>esfera magnetizada, dentro</td>
+      <td>\(\vet{B} = \tfrac23\mu_0\vet{M}\), \(\vet{H} = -\tfrac13\vet{M}\)</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="s5">5. Constantes</h2>
+
+  <div class="tabela-rolavel">
+  <table>
+  <thead><tr><th>constante</th><th>símbolo</th><th>valor</th></tr></thead>
+  <tbody>
+  <tr><td>permissividade do vácuo</td><td>\(\varepsilon_0\)</td>
+      <td>\(8{,}854\times10^{-12}\ \mathrm{F/m}\)</td></tr>
+  <tr><td>permeabilidade do vácuo</td><td>\(\mu_0\)</td>
+      <td>\(1{,}257\times10^{-6}\ \mathrm{H/m}\) (\(4\pi\times10^{-7}\))</td></tr>
+  <tr><td>constante de Coulomb</td><td>\(1/4\pi\varepsilon_0\)</td>
+      <td>\(8{,}988\times10^{9}\ \mathrm{N\,m^2/C^2}\)</td></tr>
+  <tr><td>velocidade da luz</td><td>\(c = 1/\sqrt{\varepsilon_0\mu_0}\)</td>
+      <td>\(2{,}998\times10^{8}\ \mathrm{m/s}\)</td></tr>
+  <tr><td>carga elementar</td><td>\(e\)</td>
+      <td>\(1{,}602\times10^{-19}\ \mathrm{C}\)</td></tr>
+  <tr><td>massa do elétron</td><td>\(m_e\)</td>
+      <td>\(9{,}109\times10^{-31}\ \mathrm{kg}\)</td></tr>
+  <tr><td>massa do próton</td><td>\(m_p\)</td>
+      <td>\(1{,}673\times10^{-27}\ \mathrm{kg}\)</td></tr>
+  <tr><td>magnéton de Bohr</td><td>\(\mu_B\)</td>
+      <td>\(9{,}274\times10^{-24}\ \mathrm{J/T}\)</td></tr>
+  <tr><td>constante de Boltzmann</td><td>\(\kB\)</td>
+      <td>\(1{,}381\times10^{-23}\ \mathrm{J/K}\)</td></tr>
+  <tr><td>constante de Planck</td><td>\(h\)</td>
+      <td>\(6{,}626\times10^{-34}\ \mathrm{J\,s}\)</td></tr>
+  <tr><td>quantum de fluxo</td><td>\(h/2e\)</td>
+      <td>\(2{,}068\times10^{-15}\ \mathrm{Wb}\)</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+  <p class="legenda">Desde 2019 a carga elementar e a constante de Planck têm
+  valor exato por definição, e é \(\varepsilon_0\) que passou a ser medido. O
+  \(\mu_0\) deixou de valer exatamente \(4\pi\times10^{-7}\), mas a diferença
+  aparece na décima casa e não muda nada neste curso.</p>
+
+
+  <nav class="nav-aulas">
+    <a href="cap07.html"><small>Anterior</small>← Capítulo 7: eletrodinâmica</a>
+    <a class="prox" href="codigo.html"><small>Próximo</small>Os programas →</a>
+  </nav>
+
+</main>
+</div>
+
+<footer class="rodape">
+  <img class="logo-rodape" src="assets/img/logo.png" alt="LFCA | URCA">
+  <p><strong>Prof. Apiano Morais</strong> · <a href="mailto:apiano.morais@urca.br">apiano.morais@urca.br</a><br>
+  Laboratório de Física Computacional Aplicada (LFCA) · Universidade Regional do Cariri</p>
+</footer>
+
+<script src="assets/js/widgets.js"></script>
+</body>
+</html>
