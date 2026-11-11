@@ -90,6 +90,23 @@ GRUPOS = [
          'E e B ficam iguais; os potenciais ficam irreconhecíveis; e a condição '
          'de Lorenz deixa de valer, porque o lambda escolhido não satisfaz a '
          'equação de onda.'),
+        ('radiacao_dipolo.py', 'Capítulo 11',
+         'Monta os potenciais retardados exatos de uma antena curta, tira E e B '
+         'por diferenças finitas e integra o fluxo de energia sobre esferas.',
+         'A potência média bate com Larmor e não depende do raio; o padrão é '
+         'sen²θ com erro de 1e-4; e o expoente do campo passa de −3 a −1 ao '
+         'cruzar um comprimento de onda.'),
+        ('sincrotron.py', 'Capítulo 11',
+         'A fórmula de Liénard aplicada ao movimento circular, com a energia '
+         'perdida por volta no LEP, no LHC e no Sirius.',
+         'Reproduz a regra prática 88,46 E⁴/ρ em 1,0000; o expoente com a '
+         'energia dá 4,0000; e a razão próton/elétron dá (mₑ/m_p)⁴.'),
+        ('espalhamento.py', 'Capítulo 11',
+         'A seção de choque de Thomson obtida de Larmor, e a de Rayleigh obtida '
+         'do índice de refração do ar, aplicada à atmosfera cor por cor.',
+         'σ_T dá 6,652e-29 m² para qualquer intensidade e frequência, e a '
+         'profundidade óptica calculada bate com a medida: 0,21 no azul contra '
+         '0,05 no vermelho.'),
     ]),
 
     ('Matéria polarizada e magnetizada', [

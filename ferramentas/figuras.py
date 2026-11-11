@@ -841,13 +841,94 @@ def cargas_ligadas():
     return 'cap04_ligadas.svg'
 
 
+def padrao_de_radiacao():
+    """As duas folhas de sen^2(theta) e a projeção que as produz."""
+    import math as _m
+    p = []
+    L, A = 980, 490
+
+    # ------------------------------------------- painel 1: o padrão angular
+    cx, cy, R = 250, 235, 158
+    pts = []
+    for i in range(361):
+        th = _m.radians(i)
+        r = R * _m.sin(th) ** 2
+        pts.append('%.1f,%.1f' % (cx + r * _m.sin(th), cy - r * _m.cos(th)))
+    p.append('<polygon points="%s" fill="%s" fill-opacity="0.55" '
+             'stroke="%s" stroke-width="2.2"/>'
+             % (' '.join(pts), CLARO, VERDE))
+
+    # eixo da aceleração
+    p.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" '
+             'stroke-width="1.4" stroke-dasharray="7 6"/>'
+             % (cx, cy - R - 42, cx, cy + R + 42, BORDA))
+    p.append(seta(cx, cy, cx, cy - 92, COBRE, 3.4))
+    p.append(texto(cx + 13, cy - 86, 'a', COBRE, 21, anc='start', italico=True))
+    p.append('<circle cx="%d" cy="%d" r="5" fill="%s"/>' % (cx, cy, TINTA))
+
+    # uma direção de observação, com o ângulo
+    th = _m.radians(52)
+    rr = R * _m.sin(th) ** 2
+    xo, yo = cx + (rr + 54) * _m.sin(th), cy - (rr + 54) * _m.cos(th)
+    p.append(seta(cx, cy, xo, yo, TINTA, 2.6))
+    p.append(texto(xo + 8, yo - 4, 'S', TINTA, 20, anc='start', italico=True))
+    p.append('<path d="M %.1f %.1f A 56 56 0 0 1 %.1f %.1f" fill="none" '
+             'stroke="%s" stroke-width="1.6"/>'
+             % (cx, cy - 56, cx + 56 * _m.sin(th), cy - 56 * _m.cos(th), SUAVE))
+    p.append(texto(cx + 30, cy - 62, 'θ', SUAVE, 19, anc='start', italico=True))
+
+    p.append(texto(cx, cy - R - 62, 'nada é irradiado ao longo de a', SUAVE, 17))
+    p.append(texto(cx + R + 44, cy + 6, 'máximo', SUAVE, 17, anc='start'))
+    p.append(texto(cx + R + 44, cy + 28, 'em 90°', SUAVE, 17, anc='start'))
+    p.append(texto(cx, cy + R + 52, 'o lóbulo é sen²θ, com simetria', SUAVE, 17))
+    p.append(texto(cx, cy + R + 74, 'de revolução em torno de a', SUAVE, 17))
+
+    # ------------------------------------------- painel 2: por que sen(theta)
+    ox, oy = 700, 235
+    p.append('<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" '
+             'stroke-width="1.4" stroke-dasharray="7 6"/>'
+             % (ox, oy - 190, ox, oy + 150, BORDA))
+    p.append('<circle cx="%d" cy="%d" r="5" fill="%s"/>' % (ox, oy, TINTA))
+    p.append(seta(ox, oy, ox, oy - 150, COBRE, 3.4))
+    p.append(texto(ox - 14, oy - 146, 'a', COBRE, 21, anc='end', italico=True))
+
+    # a direção de observação
+    ang = _m.radians(52)
+    ux, uy = _m.sin(ang), -_m.cos(ang)
+    p.append(seta(ox, oy, ox + 230 * ux, oy + 230 * uy, SUAVE, 2.4))
+    p.append(texto(ox + 238 * ux, oy + 230 * uy - 6, 'r̂', SUAVE, 20,
+                   anc='start', italico=True))
+
+    # decomposição de a: a parte ao longo de r̂ não irradia
+    apar = 150 * _m.cos(ang)              # a . r̂, com |a| = 150
+    qx, qy = ox + apar * ux, oy + apar * uy
+    p.append('<line x1="%d" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" '
+             'stroke-width="1.8" stroke-dasharray="6 6"/>'
+             % (ox, oy - 150, qx, qy, BORDA))
+    # a componente perpendicular, que é a que irradia
+    ex, ey = -150 * _m.cos(ang) * ux, -150 - 150 * _m.cos(ang) * uy
+    p.append(seta(ox, oy, ox + ex, oy + ey, VERDE, 3.4))
+    p.append(texto(ox + ex - 10, oy + ey + 24,
+                   'a sen θ', VERDE, 19, anc='end', italico=True))
+
+    p.append(texto(ox + 10, oy + 170, 'só a componente de a perpendicular a r̂',
+                   SUAVE, 17))
+    p.append(texto(ox + 10, oy + 192, 'chega ao observador: daí o sen θ,',
+                   SUAVE, 17))
+    p.append(texto(ox + 10, oy + 214, 'e o sen²θ na potência', SUAVE, 17))
+
+    io.open(IMG / 'cap11_padrao.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Padrão angular da radiação de dipolo'))
+    return 'cap11_padrao.svg'
+
+
 def main():
     IMG.mkdir(parents=True, exist_ok=True)
     for fn in (forca_de_lorentz, balanca_de_corrente, cabo_coaxial,
                casca_girante, torque_na_espira, correntes_ligadas,
                laco_de_histerese, condicoes_de_contorno,
                barra_nos_trilhos, campo_induzido, duas_superficies,
-               cargas_ligadas):
+               cargas_ligadas, padrao_de_radiacao):
         print('  ' + fn())
 
 
