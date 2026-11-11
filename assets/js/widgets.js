@@ -398,8 +398,8 @@
         }
       }
 
-      var cor = (qual === 'B') ? cor('--vinho') : cor('--verde');
-      ct.strokeStyle = cor;
+      var traco = (qual === 'B') ? cor('--vinho') : cor('--verde');
+      ct.strokeStyle = traco;
       ct.lineWidth = 1.6;
       ct.lineJoin = 'round';
       var lim = 0.5 * Math.min(L, A) / esc;
@@ -419,7 +419,7 @@
               var j = Math.floor(pts.length * f);
               if (j > 6) {
                 seta(ct, X(pts[j - 6][0]), Z(pts[j - 6][1]),
-                     X(pts[j][0]), Z(pts[j][1]), cor, 1.8);
+                     X(pts[j][0]), Z(pts[j][1]), traco, 1.8);
               }
             });
           }
