@@ -543,11 +543,73 @@ def laco_de_histerese():
     return 'cap06_histerese.svg'
 
 
+# ---------------------------------------------------------------------------
+def condicoes_de_contorno():
+    """O que salta e o que não salta ao atravessar uma folha de corrente."""
+    p = []
+    L, A = 940, 460
+    cy = 215
+
+    def folha(x0, x1, com_rotulo):
+        q = ['<line x1="%d" y1="%d" x2="%d" y2="%d" stroke="%s" '
+             'stroke-width="4" stroke-linecap="round"/>' % (x0, cy, x1, cy, COBRE)]
+        n = int((x1 - x0) / 62)
+        for i in range(n + 1):
+            q.append(entra(x0 + 31 + i * 62, cy, 9, COBRE))
+        if com_rotulo:
+            q.append(texto(x1 - 4, cy - 18, 'K', COBRE, 20, anc='end', italico=True))
+        return q
+
+    # ------------------------------------------- painel 1: a componente normal
+    ax0, ax1 = 40, 440
+    p += folha(ax0, ax1, True)
+    cx = (ax0 + ax1) // 2
+    p.append('<rect x="%d" y="%d" width="150" height="54" rx="4" fill="none" '
+             'stroke="%s" stroke-width="1.6" stroke-dasharray="7 6"/>'
+             % (cx - 75, cy - 27, SUAVE))
+    p.append(texto(cx - 92, cy + 46, 'tijolo achatado', SUAVE, 17, anc='end'))
+    for dx in (-40, 40):
+        p.append(seta(cx + dx, cy + 112, cx + dx, cy + 32, VERDE, 3.2))
+        p.append(seta(cx + dx, cy - 32, cx + dx, cy - 112, VERDE, 3.2))
+    perp = ('<tspan font-style="italic">B</tspan>'
+            '<tspan font-size="14" dy="4">\u22a5</tspan>')
+    p.append(texto(cx - 52, cy - 104, perp, VERDE, 20, anc='end'))
+    p.append(texto(cx - 52, cy + 120, perp, VERDE, 20, anc='end'))
+    p.append(texto(cx, cy + 176, 'o que entra por baixo sai por cima:', SUAVE, 17))
+    p.append(texto(cx, cy + 200, 'a componente normal não salta', SUAVE, 17))
+
+    # --------------------------------------- painel 2: a componente tangencial
+    bx0, bx1 = 500, 900
+    p += folha(bx0, bx1, True)
+    dx = (bx0 + bx1) // 2
+    p.append('<rect x="%d" y="%d" width="170" height="110" rx="4" fill="none" '
+             'stroke="%s" stroke-width="1.6" stroke-dasharray="7 6"/>'
+             % (dx - 85, cy - 55, SUAVE))
+    p.append(texto(dx + 100, cy + 40, 'curva amperiana', SUAVE, 17, anc='start'))
+    # o sentido de percurso, coerente com a corrente que entra na tela
+    for xa, ya, xb, yb in ((dx - 85, cy + 20, dx - 85, cy - 20),
+                           (dx - 20, cy - 55, dx + 20, cy - 55),
+                           (dx + 85, cy - 20, dx + 85, cy + 20),
+                           (dx + 20, cy + 55, dx - 20, cy + 55)):
+        p.append(seta(xa, ya, xb, yb, SUAVE, 1.8, 10))
+    # o campo da própria folha: para a direita em cima, para a esquerda embaixo
+    p.append(seta(dx - 70, cy - 90, dx + 70, cy - 90, VERDE, 3.2))
+    p.append(texto(dx, cy - 102, 'μ₀K/2', VERDE, 18))
+    p.append(seta(dx + 70, cy + 90, dx - 70, cy + 90, VERDE, 3.2))
+    p.append(texto(dx, cy + 118, 'μ₀K/2', VERDE, 18))
+    p.append(texto(dx, cy + 176, 'a corrente enlaçada muda o lado esquerdo:', SUAVE, 17))
+    p.append(texto(dx, cy + 200, 'a componente paralela salta de μ₀K', SUAVE, 17))
+
+    io.open(IMG / 'cap05_contorno.svg', 'w', encoding='utf-8').write(
+        svg(L, A, '\n'.join(p), 'Condições de contorno do campo magnético'))
+    return 'cap05_contorno.svg'
+
+
 def main():
     IMG.mkdir(parents=True, exist_ok=True)
     for fn in (forca_de_lorentz, balanca_de_corrente, cabo_coaxial,
                casca_girante, torque_na_espira, correntes_ligadas,
-               laco_de_histerese):
+               laco_de_histerese, condicoes_de_contorno):
         print('  ' + fn())
 
 

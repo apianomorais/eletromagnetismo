@@ -634,6 +634,15 @@ comporta assim:</p>
    \vet{B}_\parallel^{\text{acima}} - \vet{B}_\parallel^{\text{abaixo}}
    = \mu_0\left(\vet{K}\cruz\vers{n}\right). \]
 
+<figure class="figura-exemplo" style="max-width:40rem">
+  <img src="assets/img/cap05_contorno.svg" alt="Condições de contorno do campo magnético">
+  <figcaption>As duas superfícies de prova, com a corrente entrando na tela.
+  À esquerda, o tijolo achatado de \(\divg{\vet{B}}=0\); à direita, a curva
+  amperiana, que enlaça a corrente e por isso vê o salto. O campo desenhado é o
+  da própria folha, \(\mu_0K/2\) de cada lado e em sentidos opostos, que
+  somados dão o salto \(\mu_0K\).</figcaption>
+</figure>
+
 <p>A primeira sai de \(\divg{\vet{B}}=0\) aplicado a um tijolo achatado que
 atravessa a superfície: o fluxo que entra por baixo tem de sair por cima. A
 segunda sai da lei de Ampère aplicada a um retângulo que atravessa a mesma
