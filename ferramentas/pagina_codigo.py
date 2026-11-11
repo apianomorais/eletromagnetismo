@@ -63,6 +63,20 @@ GRUPOS = [
          'total deixa de ser nula.'),
     ]),
 
+    ('Leis de conservação', [
+        ('poynting_fio.py', 'Capítulo 8',
+         'Integra o vetor de Poynting sobre cilindros de vários raios em volta '
+         'de um fio com corrente e compara com a potência dissipada.',
+         'O fluxo entra radialmente, dá exatamente I²R e não depende do raio '
+         'escolhido; dentro do condutor, acompanha a dissipação do miolo, que '
+         'cresce com s².'),
+        ('tensor_maxwell.py', 'Capítulo 8',
+         'Calcula a força entre duas cargas integrando o tensor de tensões '
+         'sobre superfícies de formas diferentes, sem usar a lei de Coulomb.',
+         'Esferas (inclusive deslocadas) reproduzem Coulomb em 1e-13; o cubo '
+         'converge em h², limitado pelas quinas, com 2e-6 em malha fina.'),
+    ]),
+
     ('Potenciais, radiação e calibre', [
         ('lienard_wiechert.py', 'Capítulo 10',
          'Resolve o tempo retardado por bisseção e monta os campos de uma carga '

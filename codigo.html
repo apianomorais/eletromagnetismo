@@ -26,7 +26,7 @@
       <a href="cap06.html" class="num" title="Capítulo 6: campos magnéticos na matéria">6</a>
       <a href="cap07.html" class="num" title="Capítulo 7: eletrodinâmica">7</a>
       <span class="grupo">EM III</span>
-      <span class="num pendente" title="Capítulo 8: leis de conservação: em preparação">8</span>
+      <a href="cap08.html" class="num" title="Capítulo 8: leis de conservação">8</a>
       <a href="cap09.html" class="num" title="Capítulo 9: ondas eletromagnéticas">9</a>
       <a href="cap10.html" class="num" title="Capítulo 10: potenciais e campos">10</a>
       <span class="num pendente" title="Capítulo 11: radiação: em preparação">11</span>
@@ -153,6 +153,21 @@
       <p class="ficha">Capítulo 3</p>
       <p>Momentos de uma distribuição discreta e comparação da série truncada com o potencial exato, ordem por ordem.</p>
       <p><strong>Confira assim:</strong> O erro da ordem n cai com o expoente certo (medido: 2,00 para o dipolo), e o momento de dipolo muda com a origem assim que a carga total deixa de ser nula.</p>
+    </article>
+  </div>
+  <h3>Leis de conservação</h3>
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/poynting_fio.py">poynting_fio.py</a></h3>
+      <p class="ficha">Capítulo 8</p>
+      <p>Integra o vetor de Poynting sobre cilindros de vários raios em volta de um fio com corrente e compara com a potência dissipada.</p>
+      <p><strong>Confira assim:</strong> O fluxo entra radialmente, dá exatamente I²R e não depende do raio escolhido; dentro do condutor, acompanha a dissipação do miolo, que cresce com s².</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/tensor_maxwell.py">tensor_maxwell.py</a></h3>
+      <p class="ficha">Capítulo 8</p>
+      <p>Calcula a força entre duas cargas integrando o tensor de tensões sobre superfícies de formas diferentes, sem usar a lei de Coulomb.</p>
+      <p><strong>Confira assim:</strong> Esferas (inclusive deslocadas) reproduzem Coulomb em 1e-13; o cubo converge em h², limitado pelas quinas, com 2e-6 em malha fina.</p>
     </article>
   </div>
   <h3>Potenciais, radiação e calibre</h3>
