@@ -64,6 +64,14 @@ CAPITULOS = [
      'Radiação de dipolo elétrico e magnético, a potência irradiada por uma carga '
      'acelerada e a reação de radiação.',
      'EM III', 7),
+    ('cap12.html', '12', 'Capítulo 12: a eletrodinâmica de Weber',
+     'A teoria rival do século XIX: força central dependente da velocidade, ação a '
+     'distância, e a conta que mostra por que o campo venceu.',
+     'EM III', 4),
+
+    ('apendice.html', 'Apêndice', 'Apêndice: onde a teoria clássica termina',
+     'Altas energias e eletrodinâmica quântica, o vácuo não linear, o magnetismo '
+     'como fenômeno quântico e os potenciais como realidade física.', '', 0),
 
     ('formulario.html', 'Formulário', 'Formulário',
      'Tudo o que o curso usa, em uma página só: operadores, teoremas, as equações '
@@ -138,7 +146,7 @@ def menu(atual):
     partes = []
     disciplina_atual = None
     for arq, curto, titulo, _s, disc, _e in CAPITULOS:
-        if curto in ('Início', 'Formulário', 'Código'):
+        if curto in ('Início', 'Formulário', 'Código', 'Apêndice'):
             partes.append('      <a href="%s"%s>%s</a>'
                           % (arq, ' class="ativo"' if arq == atual else '', curto))
             continue

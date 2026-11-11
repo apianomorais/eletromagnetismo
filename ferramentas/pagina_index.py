@@ -284,7 +284,30 @@ CORPO = '''
   traz no cabeçalho o que resolve, o que imprime e como saber se acertou.
   <a href="codigo.html">A lista completa está na página do código.</a></p>
 
-  <h2 id="s5">5. Bibliografia</h2>
+  <h2 id="s5">5. Duas páginas fora da numeração</h2>
+
+  <p>A sequência do Griffiths termina no capítulo 11, e o site segue com mais
+  duas, por motivos diferentes.</p>
+
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="cap12.html">Capítulo 12: a eletrodinâmica de Weber</a></h3>
+      <p>A teoria rival do século XIX, que explicava a eletrostática, a lei de
+      Ampère e a indução sem campo nenhum, e de onde saiu a medida que deu a
+      velocidade da luz. Ela está aqui porque mostra, com uma conta só, por que
+      o conceito de campo venceu: sem propagação não há radiação, e em 1888
+      Hertz mediu uma onda atravessando a sala.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="apendice.html">Apêndice: onde a teoria clássica termina</a></h3>
+      <p>Os quatro lugares em que Maxwell precisa de reforço: as altas energias
+      e a renormalização, o vácuo que deixa de ser linear, o magnetismo que é
+      quântico desde a primeira linha, e os potenciais que, na mecânica
+      quântica, deixam de ser artifício de cálculo.</p>
+    </article>
+  </div>
+
+  <h2 id="s6">6. Bibliografia</h2>
 
   <div class="cartoes">
     <article class="cartao">
@@ -316,7 +339,8 @@ def main():
     escreve('index.html', corpo,
             secoes=['De onde isso tudo veio', 'As três disciplinas',
                     'Como as páginas são feitas',
-                    'O computador no eletromagnetismo', 'Bibliografia'],
+                    'O computador no eletromagnetismo',
+                    'Duas páginas fora da numeração', 'Bibliografia'],
             chapeu='', titulo_proprio=True)
 
 

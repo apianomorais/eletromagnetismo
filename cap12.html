@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capítulo 12: a eletrodinâmica de Weber | Eletromagnetismo</title>
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="stylesheet" href="assets/css/estilo.css">
+<script src="assets/js/comum.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-interno">
+    <a class="marca" href="index.html">Eletromagnetismo <span>· LFCA/URCA</span></a>
+    <nav class="menu">
+      <a href="index.html">Início</a>
+      <span class="grupo">EM I</span>
+      <a href="cap01.html" class="num" title="Capítulo 1: análise vetorial">1</a>
+      <a href="cap02.html" class="num" title="Capítulo 2: eletrostática">2</a>
+      <a href="cap03.html" class="num" title="Capítulo 3: potenciais e técnicas especiais">3</a>
+      <a href="cap04.html" class="num" title="Capítulo 4: campos elétricos na matéria">4</a>
+      <span class="grupo">EM II</span>
+      <a href="cap05.html" class="num" title="Capítulo 5: magnetostática">5</a>
+      <a href="cap06.html" class="num" title="Capítulo 6: campos magnéticos na matéria">6</a>
+      <a href="cap07.html" class="num" title="Capítulo 7: eletrodinâmica">7</a>
+      <span class="grupo">EM III</span>
+      <a href="cap08.html" class="num" title="Capítulo 8: leis de conservação">8</a>
+      <a href="cap09.html" class="num" title="Capítulo 9: ondas eletromagnéticas">9</a>
+      <a href="cap10.html" class="num" title="Capítulo 10: potenciais e campos">10</a>
+      <a href="cap11.html" class="num" title="Capítulo 11: radiação">11</a>
+      <a href="cap12.html" class="num ativo" title="Capítulo 12: a eletrodinâmica de Weber">12</a>
+      <a href="apendice.html">Apêndice</a>
+      <a href="formulario.html">Formulário</a>
+      <a href="codigo.html">Código</a>
+    </nav>
+  </div>
+</header>
+
+<div class="envoltorio">
+
+<aside class="lateral">
+  <h4>Neste capítulo</h4>
+  <ol>
+    <li><a href="#s1">1. Duas escolas, uma pergunta</a></li>
+    <li><a href="#s2">2. A força de Weber</a></li>
+    <li><a href="#s3">3. O que ela acerta, e o número que ela produziu</a></li>
+    <li><a href="#s4">4. As três rachaduras</a></li>
+    <li><a href="#s5">5. No Spyder</a></li>
+    <li><a href="#s6">6. Exercícios propostos</a></li>
+  </ol>
+</aside>
+
+<main class="conteudo">
+
+  <p class="chapeu">EM III · 4 encontros de duas horas</p>
+  <h1>Capítulo 12: a eletrodinâmica de Weber</h1>
+  <p class="subtitulo">A teoria rival do século XIX: força central dependente da velocidade, ação a distância, e a conta que mostra por que o campo venceu.</p>
+  <!-- ============================================== -->
+  <h2 id="s1">1. Duas escolas, uma pergunta</h2>
+
+  <p>O curso inteiro foi construído sobre uma ideia: existe campo. A carga cria
+  alguma coisa no espaço em volta, essa coisa se propaga com velocidade finita, e
+  é ela que age sobre a outra carga. Parece inevitável depois de onze capítulos,
+  mas não era nada óbvio em 1850, e a maior parte dos físicos do continente
+  europeu achava essa ideia uma invenção desnecessária.</p>
+
+  <p>A alternativa tinha prestígio. A gravitação de Newton funcionava assim: uma
+  força entre dois corpos, dependendo só da distância, sem nada no meio e sem
+  atraso. Por que a eletricidade seria diferente? Entre 1820 e 1870, a escola
+  continental, com
+  <a href="https://pt.wikipedia.org/wiki/Andr%C3%A9-Marie_Amp%C3%A8re">Ampère</a>,
+  Neumann e
+  <a href="https://pt.wikipedia.org/wiki/Wilhelm_Eduard_Weber">Wilhelm Weber</a>,
+  construiu uma eletrodinâmica completa sem campo nenhum, e ela funcionava.</p>
+
+  <p>Este capítulo é sobre essa teoria. Não por curiosidade de museu: ela é o
+  melhor instrumento que conheço para mostrar <em>por que</em> o campo venceu. A
+  diferença entre as duas não é de gosto nem de elegância, é de um fato
+  mensurável, e o fato tem nome.</p>
+
+  <div class="bloco def">
+  <span class="rotulo">Aviso de enquadramento</span>
+  <p>A eletrodinâmica de Weber é uma teoria superada, e este capítulo a trata
+  como tal. Há hoje um grupo pequeno de pesquisadores que a defende como
+  alternativa viva à eletrodinâmica de Maxwell; a literatura deles é
+  historicamente valiosa e as objeções físicas da seção 4 continuam de pé. O
+  interesse aqui é pedagógico e histórico, e a conclusão do capítulo não está em
+  disputa.</p>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="s2">2. A força de Weber</h2>
+
+  <p>Weber publicou a sua lei de força em 1846, e ela é uma única expressão,
+  válida para duas cargas pontuais quaisquer:</p>
+
+  \[ \boxed{\;F = \frac{1}{4\pi\varepsilon_0}\frac{q_1q_2}{r^2}
+     \left[1 - \frac{\dot r^2}{2c^2} + \frac{r\ddot r}{c^2}\right],\;} \]
+
+  <p>dirigida ao longo da linha que une as duas cargas. Aqui \(r\) é a distância
+  entre elas, \(\dot r\) é a taxa com que essa distância muda, e \(\ddot r\) a
+  derivada seguinte. Repare no que <em>não</em> aparece: a velocidade de cada
+  carga separadamente, a direção do movimento, o tempo retardado, e qualquer
+  referência a um meio ou a um referencial privilegiado. Só a distância entre as
+  duas e as suas duas primeiras derivadas.</p>
+
+  <p>Três leituras organizam a expressão.</p>
+
+  <p><strong>O limite estático.</strong> Com as cargas paradas, \(\dot r =
+  \ddot r = 0\) e sobra a lei de Coulomb exata. As correções entram com
+  \(\left(v/c\right)^2\), e para velocidades de laboratório elas são
+  invisíveis.</p>
+
+  <p><strong>A simetria.</strong> A força é central, depende apenas de grandezas
+  relativas e é rigorosamente igual e oposta nas duas cargas. Ela obedece à
+  terceira lei de Newton na forma forte, o que o capítulo 10 mostrou que a força
+  entre cargas em movimento, na teoria de Maxwell, <em>não</em> faz. Em Weber,
+  momento e momento angular se conservam sem que seja preciso inventar momento
+  guardado em campo nenhum.</p>
+
+  <p><strong>A energia.</strong> Existe uma função de \(r\) e \(\dot r\) que se
+  conserva,</p>
+
+  \[ E = \frac{1}{2}\mu\dot r^2
+     + \frac{1}{4\pi\varepsilon_0}\frac{q_1q_2}{r}
+       \left(1 - \frac{\dot r^2}{2c^2}\right), \]
+
+  <p>com \(\mu\) a massa reduzida. A verificação é direta: derivando no tempo e
+  agrupando, sobra \(\dot r\left[\mu\ddot r - F\right]\), que é nulo pela
+  equação de movimento. Weber tinha, portanto, uma teoria com conservação de
+  energia, momento e momento angular, todas exatas, e nenhum conceito novo além
+  da força.</p>
+
+  <div class="bloco fisica">
+  <span class="rotulo">De onde vem o fator 2</span>
+  <p>Weber escreveu a sua lei com uma constante própria, \(c_W\), determinada
+  experimentalmente, e na notação dele a força é
+  \(\left[1 - \dot r^2/c_W^2 + 2r\ddot r/c_W^2\right]\). A relação com a
+  velocidade da luz é \(c_W = \sqrt{2}\,c\), e é por isso que a medida de
+  Weber e Kohlrausch, que aparece na próxima seção, deu
+  \(4{,}4\times10^{8}\ \mathrm{m/s}\) e não \(3{,}0\times10^{8}\). O fator
+  \(\sqrt{2}\) é convenção, não física, e atrapalhou o entendimento do
+  resultado por alguns anos.</p>
+  </div>
+
+  <p>Uma consequência técnica merece atenção, porque a seção 4 vai voltar a ela.
+  A força depende de \(\ddot r\), e \(\ddot r\) é justamente o que a segunda lei
+  de Newton deveria fornecer. A equação de movimento é implícita, e resolvê-la
+  para a aceleração dá</p>
+
+  \[ \ddot r = \frac{\dfrac{k}{r^2}\left(1-\dfrac{\dot r^2}{2c^2}\right)}
+     {\mu - \dfrac{k}{rc^2}},
+     \qquad k = \frac{q_1q_2}{4\pi\varepsilon_0}. \]
+
+  <p>O denominador é uma <strong>massa efetiva</strong>, e ela depende da
+  distância.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s3">3. O que ela acerta, e o número que ela produziu</h2>
+
+  <p>A teoria de Weber não era uma curiosidade marginal: durante trinta anos ela
+  foi a eletrodinâmica padrão na Alemanha, e por bons motivos.</p>
+
+  <h3>Ela reproduz a magnetostática</h3>
+
+  <p>Somando a força de Weber sobre todos os pares de cargas de dois elementos
+  de corrente neutros, obtém-se a força de Ampère entre elementos de corrente,</p>
+
+  \[ d^2\vet{F} = -\frac{\mu_0I_1I_2}{4\pi}\frac{\vers{r}}{r^2}
+     \left[2\,d\vet{\ell}_1\cdot d\vet{\ell}_2
+     - 3\left(d\vet{\ell}_1\cdot\vers{r}\right)
+       \left(d\vet{\ell}_2\cdot\vers{r}\right)\right], \]
+
+  <p>que é central, como tudo em Weber. A expressão que este curso usou, vinda
+  de Biot-Savart, é a de Grassmann,</p>
+
+  \[ d^2\vet{F} = \frac{\mu_0I_1I_2}{4\pi}
+     \frac{d\vet{\ell}_2\cruz\left(d\vet{\ell}_1\cruz\vers{r}\right)}{r^2}, \]
+
+  <p>que não é central e não obedece à terceira lei elemento a elemento. As duas
+  discordam abertamente: para dois elementos paralelos lado a lado, a de Ampère
+  dá o dobro da de Grassmann; para dois elementos perpendiculares em linha, a de
+  Grassmann dá uma força transversal e a de Ampère dá exatamente zero.</p>
+
+  <div class="bloco alerta">
+  <span class="rotulo">E mesmo assim nenhum experimento as distingue</span>
+  <p>A diferença entre as duas expressões é um diferencial exato ao longo do
+  circuito fonte. Somando sobre um circuito <em>fechado</em>, ela se cancela, e
+  as duas dão rigorosamente a mesma força. O script
+  <code>weber.py</code> verifica isso: as duas somas coincidem em
+  \(10^{-15}\), e não apenas no limite de malha fina, mas em qualquer número de
+  pedaços.</p>
+  <p>Como corrente estacionária exige circuito fechado, nenhum experimento de
+  magnetostática podia escolher entre elas. A disputa durou meio século por
+  falta de um experimento decisivo, e não por falta de rigor.</p>
+  </div>
+
+  <h3>Ela reproduz a indução</h3>
+
+  <p>Weber derivou a lei de Faraday da sua força, sem campo e sem linhas. O termo
+  em \(\ddot r\) é o responsável: quando a corrente de um circuito varia, as
+  cargas do outro sentem uma força proporcional a essa variação, e o resultado é
+  uma força eletromotriz induzida com o sinal e o valor corretos.</p>
+
+  <h3>Ela produziu o número</h3>
+
+  <div class="destaque">
+  <p><strong>Exemplo trabalhado: a medida que mudou a física.</strong> Em 1855,
+  Weber e <a href="https://en.wikipedia.org/wiki/Rudolf_Kohlrausch">Rudolf
+  Kohlrausch</a> mediram a mesma carga de duas maneiras independentes: pela força
+  eletrostática entre cargas paradas e pela força magnética entre correntes. Cada
+  método define a sua unidade de carga, e a razão entre as duas unidades tem
+  dimensão de velocidade.</p>
+
+  <p><strong>Por que tem dimensão de velocidade.</strong> Pela lei de Coulomb,
+  \(F \sim q_{es}^2/4\pi\varepsilon_0r^2\); pela lei de Ampère,
+  \(F \sim \mu_0I^2/2\pi r \sim \mu_0q_{em}^2/2\pi rt^2\). Igualando as duas
+  forças,</p>
+
+  \[ \frac{q_{es}^2}{q_{em}^2} \sim \frac{1}{\varepsilon_0\mu_0}
+     \times\frac{\text{distância}^{2}}{\text{tempo}^{2}}
+     \;\Longrightarrow\;
+     \frac{q_{es}}{q_{em}} \sim \frac{1}{\sqrt{\varepsilon_0\mu_0}} = c. \]
+
+  <p>A constante \(c\) aparece porque \(\varepsilon_0\) e \(\mu_0\) aparecem, e
+  nada nessa conta menciona óptica.</p>
+
+  <p><strong>O resultado.</strong> Eles obtiveram
+  \(c_W = 4{,}39\times10^{8}\ \mathrm{m/s}\), que na constante da teoria de
+  Weber corresponde a</p>
+
+  \[ c = \frac{c_W}{\sqrt2} = 3{,}104\times10^{8}\ \mathrm{m/s}. \]
+
+  <p>A medida de Fizeau para a velocidade da luz, de 1849, dava
+  \(3{,}133\times10^{8}\ \mathrm{m/s}\). A diferença entre as duas é de
+  <strong>0,9 %</strong>, dentro das incertezas da época. Vale notar que as duas
+  erravam no mesmo sentido: a de Fizeau está 4,5 % acima do valor moderno, e a de
+  Weber e Kohlrausch, 3,5 %.</p>
+
+  <p><strong>O que fizeram com isso.</strong> Weber e Kohlrausch publicaram o
+  número e, surpreendentemente, não concluíram nada sobre luz: para eles, \(c\)
+  era a velocidade relativa em que a força entre duas cargas se anula, um
+  parâmetro da teoria. Foi Kirchhoff, em 1857, quem notou que sinais elétricos
+  num fio deveriam viajar com essa velocidade, e foi Maxwell, em 1861, quem disse
+  a frase inteira: a luz <em>é</em> uma onda eletromagnética. A diferença não é
+  de competência, é de arcabouço. Quem não tem campo não tem onde pôr uma
+  onda.</p>
+  </div>
+
+  <p>Vale fixar esse ponto, porque ele é a moral do capítulo. O mesmo número,
+  medido pelas mesmas pessoas com os mesmos aparelhos, significa uma coisa numa
+  teoria e outra coisa na outra. Dados não falam sozinhos.</p>
+
+  <!-- ============================================== -->
+  <h2 id="s4">4. As três rachaduras</h2>
+
+  <p>Três problemas derrubaram a teoria, e vale a pena conhecer os três, porque
+  eles são de naturezas diferentes.</p>
+
+  <h3>A massa negativa de Helmholtz</h3>
+
+  <p>Em 1872, Helmholtz apontou a massa efetiva da seção 2. Ela se anula
+  quando</p>
+
+  \[ \mu = \frac{k}{rc^2}
+     \;\Longrightarrow\;
+     r_{\text{crit}} = \frac{q_1q_2}{4\pi\varepsilon_0\mu c^2}, \]
+
+  <p>e para dois elétrons isso dá, como o script confere,</p>
+
+  \[ r_{\text{crit}} = 2r_e = 5{,}64\times10^{-15}\ \mathrm{m}, \]
+
+  <p>exatamente duas vezes o raio clássico do elétron. Abaixo desse raio a massa
+  efetiva é negativa, e o sistema responde à força ao contrário: duas cargas de
+  mesmo sinal se atrairiam e ganhariam energia cinética indefinidamente. Weber e
+  os seus defensores responderam que essa escala era inatingível, e tinham razão
+  na prática. Mas uma teoria que produz energia do nada a alguma distância é uma
+  teoria com um problema, não com um detalhe.</p>
+
+  <div class="bloco fisica">
+  <span class="rotulo">Repare onde isso acontece</span>
+  <p>A patologia aparece em \(2r_e\), e o capítulo 11 mostrou que a reação de
+  radiação de Abraham-Lorentz enlouquece exatamente na mesma escala, \(r_e\).
+  Não é coincidência: as duas teorias tentam descrever uma carga pontual usando
+  a energia eletrostática dela própria, e as duas quebram quando essa energia se
+  torna comparável a \(mc^2\). A escala em que a eletrodinâmica clássica termina
+  não depende de qual versão dela se escolhe.</p>
+  </div>
+
+  <h3>Não há radiação</h3>
+
+  <p>Este é o problema fatal, e é simples de enunciar. Na teoria de Weber, a
+  energia de um par de cargas é função de \(r\) e \(\dot r\). Num movimento
+  periódico, \(r\) e \(\dot r\) voltam ao valor inicial a cada ciclo, de modo que
+  a energia volta também: <strong>nada é perdido, nunca</strong>. Não há atraso,
+  então não há para onde a energia ir; não há campo, então não há onde guardá-la
+  em trânsito.</p>
+
+  <p>O script compara as duas previsões para um elétron oscilando com 0,1 nm de
+  amplitude a \(10^{15}\ \mathrm{Hz}\):</p>
+
+  <div class="tabela-rolavel">
+  <table>
+  <thead><tr><th>grandeza</th><th>Maxwell</th><th>Weber</th></tr></thead>
+  <tbody>
+  <tr><td>potência irradiada</td><td>4,45×10⁻¹¹ W</td><td>0</td></tr>
+  <tr><td>taxa de perda</td><td>2,47×10⁸ s⁻¹</td><td>0</td></tr>
+  <tr><td>vida da oscilação</td><td>4,0 ns, ou 4×10⁶ ciclos</td><td>infinita</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+  <p>Os 4 nanossegundos não são um número qualquer: é a ordem de grandeza certa
+  da vida de um estado atômico excitado, medida em laboratório. O oscilador
+  clássico acerta, e Weber não tem o que dizer.</p>
+
+  <p>A prova definitiva veio de Hertz, entre 1886 e 1888. Ele gerou ondas
+  eletromagnéticas com um centelhador, detectou-as a metros de distância, mediu o
+  comprimento de onda com um espelho e ondas estacionárias, e mostrou que elas
+  refletiam, refratavam e polarizavam como luz. Uma teoria de ação a distância
+  não pode explicar um sinal que sai de um lugar, leva tempo para chegar e chega
+  carregando energia que a fonte perdeu.</p>
+
+  <h3>Não é compatível com a relatividade</h3>
+
+  <p>A terceira objeção é posterior e é mais estrutural. A força de Weber depende
+  de \(\dot r\), a taxa de variação da distância, que não é uma grandeza
+  invariante: dois observadores em movimento relativo discordam sobre ela de
+  maneira que não se encaixa nas transformações de Lorentz. A teoria de Maxwell,
+  que ninguém projetou para ser relativística, acabou sendo exatamente isso, e
+  foi dela que Einstein partiu em 1905. A de Weber, projetada para ser simples e
+  newtoniana, não sobrevive à mudança de referencial.</p>
+
+  <div class="bloco ex">
+  <span class="rotulo">O que fica</span>
+  <p>A lição que vale levar não é "Weber errou". É que uma teoria pode reproduzir
+  todos os experimentos disponíveis, conservar tudo o que precisa conservar, ser
+  matematicamente consistente e ainda assim estar errada, porque o experimento
+  que a distingue ainda não foi feito. O campo não venceu por ser mais bonito:
+  venceu porque alguém, em 1888, mediu uma onda atravessando uma sala.</p>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="s5">5. No Spyder</h2>
+
+  <div class="cartoes">
+    <article class="cartao">
+      <h3><a href="codigo/weber.py">weber.py</a></h3>
+      <p>Implementa a força de Weber e faz os quatro testes do capítulo: as três
+      conservações, a massa efetiva de Helmholtz, Ampère contra Grassmann e a
+      ausência de radiação.</p>
+      <p><strong>Confira assim:</strong> o raio crítico tem de dar exatamente
+      \(2r_e\); a energia tem de ficar constante na colisão frontal sem nenhum
+      campo na conta; a soma de Ampère e a de Grassmann sobre a espira fechada
+      têm de coincidir em \(10^{-15}\) para qualquer número de pedaços; e a vida
+      do oscilador tem de ser 4 ns em Maxwell contra infinita em Weber.</p>
+    </article>
+    <article class="cartao">
+      <h3><a href="codigo/lienard_wiechert.py">lienard_wiechert.py</a></h3>
+      <p>Do capítulo 10, e útil aqui para a comparação: ele mostra o campo
+      apontando para a posição <em>presente</em> da carga, embora a informação
+      tenha saído da posição retardada.</p>
+      <p><strong>Confira assim:</strong> esse acerto, que parece ação a distância,
+      sai de uma teoria com atraso. A aparência de instantaneidade não é prova de
+      instantaneidade.</p>
+    </article>
+  </div>
+
+  <!-- ============================================== -->
+  <h2 id="s6">6. Exercícios propostos</h2>
+
+  <p>Os enunciados são nossos, e as soluções estão aqui mesmo, recolhidas. Resolva antes de abrir: ler solução pronta dá a sensação de ter entendido, que é diferente de ter entendido.</p>
+
+  <div class="bloco ex">
+    <span class="rotulo">12.1  Quando a correção de Weber importaria</span>
+    <p>A força de Weber difere de Coulomb por termos da ordem de
+       \(\dot r^2/2c^2\). Estime esse fator para dois elétrons de condução num
+       fio de cobre (velocidade de deriva \(10^{-4}\ \mathrm{m/s}\)) e para dois
+       elétrons num feixe acelerado por \(20\ \mathrm{kV}\). Comente o que isso
+       diz sobre a possibilidade de distinguir as duas teorias no século XIX.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>No fio.</b> Com \(v = 10^{-4}\ \mathrm{m/s}\),</p>
+       <p>\[ \frac{v^2}{2c^2} = \frac{10^{-8}}{2\times9{,}0\times10^{16}}
+          = 5{,}6\times10^{-26}. \]</p>
+       <p>É um número sem sentido experimental: nenhuma medida de qualquer época
+       chega perto disso.</p>
+       <p><b>No feixe.</b> De \(eV = \frac12mv^2\),</p>
+       <p>\[ v = \sqrt{\frac{2eV}{m}} = 8{,}39\times10^{7}\ \mathrm{m/s},
+          \qquad \frac{v^2}{2c^2} = 0{,}039, \]</p>
+       <p>isto é, quase 4 %, perfeitamente mensurável.</p>
+       <p><b>A moral.</b> A diferença entre Weber e Maxwell só aparece com cargas
+       livres rápidas, e cargas livres rápidas exigem vácuo, alta tensão e
+       detectores, coisas que só chegaram ao laboratório com Crookes e Thomson,
+       nos anos 1890. Até lá, toda a eletrodinâmica experimental era feita com
+       correntes em fios, em que a velocidade de deriva é ridícula e os dois
+       formalismos dão exatamente o mesmo resultado. A disputa não durou cinquenta
+       anos por teimosia: durou porque o experimento decisivo não existia.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">12.2  A energia que Weber conserva</span>
+    <p>Mostre que \(E = \frac12\mu\dot r^2 + \frac{k}{r}
+       \left(1-\frac{\dot r^2}{2c^2}\right)\), com \(k = q_1q_2/4\pi
+       \varepsilon_0\), é constante ao longo do movimento governado pela força de
+       Weber.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>Derive no tempo</b>, com cuidado no termo cruzado:</p>
+       <p>\[ \der{E}{t} = \mu\dot r\ddot r - \frac{k\dot r}{r^2}
+          - \frac{k}{2c^2}\der{}{t}\!\left(\frac{\dot r^2}{r}\right). \]</p>
+       <p>A última derivada vale</p>
+       <p>\[ \der{}{t}\!\left(\frac{\dot r^2}{r}\right)
+          = \frac{2\dot r\ddot r}{r} - \frac{\dot r^3}{r^2}. \]</p>
+       <p><b>Substituindo e pondo \(\dot r\) em evidência:</b></p>
+       <p>\[ \der{E}{t} = \dot r\left[\mu\ddot r - \frac{k}{r^2}
+          + \frac{k\dot r^2}{2r^2c^2} - \frac{k\ddot r}{rc^2}\right]
+          = \dot r\left[\mu\ddot r
+          - \frac{k}{r^2}\left(1 - \frac{\dot r^2}{2c^2}
+          + \frac{r\ddot r}{c^2}\right)\right]. \]</p>
+       <p>O colchete é exatamente \(\mu\ddot r - F_{\text{Weber}}\), que é nulo
+       pela segunda lei de Newton. Logo \(dE/dt = 0\).</p>
+       <p><b>O que isso significa.</b> Weber tinha conservação de energia sem
+       campo nenhum, e esse era um dos argumentos mais fortes a favor da teoria:
+       toda a energia do sistema está nas partículas, como na mecânica, e não
+       num ente invisível espalhado pelo espaço. O preço aparece no exercício
+       12.5: energia que não pode sair do sistema é energia que não pode
+       irradiar.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">12.3  A massa efetiva, e onde ela muda de sinal</span>
+    <p>Da equação de movimento implícita da seção 2, identifique a massa
+       efetiva e calcule o raio crítico para dois elétrons e para dois prótons.
+       Depois repita para um par elétron-próton e explique por que o problema
+       desaparece nesse caso.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>A massa efetiva</b> é o coeficiente de \(\ddot r\):</p>
+       <p>\[ \mu_{\text{ef}} = \mu - \frac{k}{rc^2},
+          \qquad r_{\text{crit}} = \frac{k}{\mu c^2}. \]</p>
+       <p><b>Dois elétrons.</b> Com \(\mu = m_e/2\),</p>
+       <p>\[ r_{\text{crit}} = \frac{2e^2}{4\pi\varepsilon_0m_ec^2} = 2r_e
+          = 5{,}64\times10^{-15}\ \mathrm{m}. \]</p>
+       <p><b>Dois prótons.</b> A mesma conta com \(m_p = 1836\,m_e\) dá</p>
+       <p>\[ r_{\text{crit}} = 3{,}07\times10^{-18}\ \mathrm{m}, \]</p>
+       <p>mil vezes menor, e bem dentro do próton.</p>
+       <p><b>Elétron e próton.</b> Agora \(q_1q_2 \lt 0\), de modo que \(k\) é
+       negativo e</p>
+       <p>\[ \mu_{\text{ef}} = \mu + \frac{|k|}{rc^2} \]</p>
+       <p>é sempre <em>maior</em> que \(\mu\), e nunca se anula. Cargas opostas
+       ficam mais "pesadas" ao se aproximarem, o que é inofensivo; o problema é
+       só das cargas de mesmo sinal.</p>
+       <p><b>A leitura.</b> A patologia mora na escala em que a energia
+       eletrostática do par iguala a energia de repouso, \(k/r \sim \mu c^2\).
+       Essa é a mesma condição que define o raio clássico do elétron e a mesma
+       que faz a reação de radiação do capítulo 11 produzir soluções fugitivas.
+       Duas teorias clássicas diferentes, e o mesmo muro.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">12.4  Ampère contra Grassmann, na mão</span>
+    <p>Calcule a força entre dois elementos de corrente paralelos, lado a
+       lado, pelas duas expressões da seção 3, e depois para dois elementos
+       perpendiculares alinhados um atrás do outro. Comente o que o resultado
+       tem a ver com a terceira lei de Newton.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>Paralelos, lado a lado.</b> Tome
+       \(d\vet{\ell}_1 = d\vet{\ell}_2 = d\ell\,\vers{x}\) e
+       \(\vers{r} = \vers{y}\), de modo que
+       \(d\vet{\ell}_1\cdot\vers{r} = d\vet{\ell}_2\cdot\vers{r} = 0\).</p>
+       <p>Por Grassmann, \(d\vet{\ell}_1\cruz\vers{y} = d\ell\,\vers{z}\), e</p>
+       <p>\[ d\vet{\ell}_2\cruz\left(d\ell\,\vers{z}\right)
+          = -d\ell^2\,\vers{y}
+          \;\Longrightarrow\;
+          d^2\vet{F} = -\frac{\mu_0I_1I_2}{4\pi}\frac{d\ell^2}{r^2}\vers{y}. \]</p>
+       <p>Por Ampère, só sobra o termo com o produto escalar:</p>
+       <p>\[ d^2\vet{F} = -\frac{\mu_0I_1I_2}{4\pi}\frac{\vers{y}}{r^2}
+          \left(2d\ell^2\right), \]</p>
+       <p>o <b>dobro</b>. As duas concordam no sinal (atração, como se espera de
+       correntes paralelas) e discordam no valor.</p>
+       <p><b>Perpendiculares, em linha.</b> Tome
+       \(d\vet{\ell}_1 = d\ell\,\vers{x}\),
+       \(d\vet{\ell}_2 = d\ell\,\vers{y}\) e \(\vers{r} = \vers{y}\). Agora
+       \(d\vet{\ell}_1\cdot d\vet{\ell}_2 = 0\) e
+       \(d\vet{\ell}_1\cdot\vers{r} = 0\), de modo que a força de Ampère é
+       <b>exatamente zero</b>. A de Grassmann dá</p>
+       <p>\[ d^2\vet{F} = +\frac{\mu_0I_1I_2}{4\pi}\frac{d\ell^2}{r^2}\vers{x}, \]</p>
+       <p>uma força <em>perpendicular</em> à linha que une os dois elementos.</p>
+       <p><b>A terceira lei.</b> A força de Grassmann não é central e não é
+       antissimétrica: trocando os papéis dos dois elementos, não se obtém o
+       negativo da anterior. Isolada, ela viola a terceira lei de Newton na forma
+       forte, e o capítulo 8 mostrou qual é a saída: o momento que falta está no
+       campo. A de Ampère nunca precisa dessa saída, porque é central por
+       construção, e é exatamente esse conforto que fazia a escola continental
+       preferi-la. O desconforto da de Grassmann é o preço de ter campo, e o
+       campo é o que permite ter radiação.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">12.5  O experimento que decide</span>
+    <p>Uma antena de \(30\ \mathrm{cm}\) a \(100\ \mathrm{MHz}\), com
+       \(1\ \mathrm{A}\) de amplitude, irradia cerca de \(4\ \mathrm{W}\) segundo
+       o capítulo 11. Quanto a teoria de Weber prevê? Projete, em palavras, o
+       experimento mais simples que distingue as duas previsões, e explique por
+       que ele não podia ser feito antes de 1880.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>A previsão de Weber: zero.</b> Não "pequeno", e sim
+       identicamente nulo. A energia do sistema de cargas é função de \(r\) e
+       \(\dot r\), e num movimento periódico ela retorna ao valor inicial a cada
+       ciclo. Sem atraso não há para onde a energia ir, e sem campo não há onde
+       guardá-la em trânsito.</p>
+       <p><b>O experimento.</b> Ponha um oscilador num canto da sala e um
+       detector ressonante no outro, sem nenhuma ligação entre eles. Meça três
+       coisas: que o detector responde; que a resposta some quando se interpõe
+       uma placa metálica; e que a fonte consome mais potência quando o detector
+       está presente e sintonizado do que quando não está. A terceira é a
+       decisiva, porque é a que mostra energia <em>saindo</em> da fonte.</p>
+       <p>Melhor ainda: meça o comprimento de onda. Com um refletor metálico
+       formam-se ondas estacionárias, e os nós ficam separados de meio
+       comprimento de onda. Medindo essa distância e conhecendo a frequência,
+       obtém-se uma velocidade de propagação finita, que é a refutação direta da
+       ação a distância.</p>
+       <p><b>Por que só depois de 1880.</b> O experimento exige gerar oscilações
+       de dezenas de megahertz, o que pede centelhadores e circuitos ressonantes
+       com indutância e capacitância pequenas, e exige detectar potências
+       minúsculas sem amplificação. Hertz conseguiu entre 1886 e 1888 com um
+       centelhador e um anel com uma fenda micrométrica, observando a faísca
+       secundária no escuro. É um experimento de bancada, e ainda assim precisou
+       de quarenta anos de desenvolvimento instrumental depois de Weber.</p>
+       <p><b>Um detalhe histórico que vale a pena.</b> Hertz fez o experimento
+       para <em>testar</em> as equações de Maxwell, em que ele mesmo não
+       acreditava inteiramente, e a pedido do seu orientador Helmholtz, que havia
+       formulado a objeção da massa negativa quinze anos antes. Perguntado sobre
+       a utilidade prática das ondas que descobrira, respondeu que não via
+       nenhuma. Marconi encontrou uma, sete anos depois.</p>
+    </div>
+    </details>
+  </div>
+
+  <div class="bloco ex">
+    <span class="rotulo">12.6  A razão entre as unidades, sem olhar a resposta</span>
+    <p>Mostre, por análise dimensional a partir da lei de Coulomb e da força
+       entre dois fios paralelos, que a razão entre a unidade eletrostática e a
+       unidade eletromagnética de carga tem dimensão de velocidade e vale
+       \(1/\sqrt{\varepsilon_0\mu_0}\). Depois calcule o valor que Weber e
+       Kohlrausch teriam obtido se os seus aparelhos fossem perfeitos, e compare
+       com o que eles obtiveram de fato.</p>
+    <details class="solucao"><summary>Ver solução</summary>
+    <div class="corpo-solucao">
+  <p><b>A unidade eletrostática</b> é definida pela força de Coulomb:
+       duas cargas unitárias a uma distância unitária se repelem com força
+       unitária, de modo que \(q_{es}^2 \sim 4\pi\varepsilon_0 Fd^2\).</p>
+       <p><b>A unidade eletromagnética</b> é definida pela força entre correntes:
+       \(F/\ell \sim \mu_0I^2/2\pi d\), e como \(I = q_{em}/t\),</p>
+       <p>\[ q_{em}^2 \sim \frac{2\pi F\ell d\,t^2}{\mu_0}. \]</p>
+       <p><b>A razão.</b> Dividindo uma pela outra e cortando as grandezas
+       mecânicas,</p>
+       <p>\[ \left(\frac{q_{es}}{q_{em}}\right)^2
+          \sim \frac{1}{\varepsilon_0\mu_0}\frac{t^2}{d^2}
+          \;\Longrightarrow\;
+          \frac{q_{es}}{q_{em}} \sim \frac{1}{\sqrt{\varepsilon_0\mu_0}}. \]</p>
+       <p>Nenhuma óptica entrou na conta: a velocidade apareceu porque as duas
+       definições de carga usam leis de força diferentes, e só isso.</p>
+       <p><b>O valor ideal.</b></p>
+       <p>\[ \frac{1}{\sqrt{\varepsilon_0\mu_0}}
+          = 2{,}998\times10^{8}\ \mathrm{m/s}. \]</p>
+       <p><b>O que eles obtiveram.</b> \(c_W = 4{,}39\times10^{8}\)
+       m/s, que dividido por \(\sqrt2\) dá \(3{,}104\times10^{8}\) m/s: um erro
+       de 3,5 % numa medida feita em 1855, comparando duas forças de naturezas
+       completamente diferentes. A de Fizeau para a luz, seis anos antes, errava
+       4,5 %, e no mesmo sentido.</p>
+       <p><b>A pergunta que fica.</b> Com dois números concordando em 1 % e
+       medidos por caminhos sem nenhuma relação aparente, por que ninguém
+       concluiu imediatamente que luz é eletromagnetismo? Porque concluir isso
+       exige uma teoria em que exista algo capaz de ondular. Na eletrodinâmica de
+       Weber esse algo não existe, e a coincidência numérica fica sendo apenas
+       uma coincidência numérica. O arcabouço decide o que um dado pode
+       significar.</p>
+    </div>
+    </details>
+  </div>
+
+
+  <nav class="nav-aulas">
+    <a href="cap11.html"><small>Anterior</small>← Capítulo 11: radiação</a>
+    <a class="prox" href="apendice.html"><small>Próximo</small>Apêndice: onde a teoria clássica termina →</a>
+  </nav>
+
+</main>
+</div>
+
+<footer class="rodape">
+  <img class="logo-rodape" src="assets/img/logo.png" alt="LFCA | URCA">
+  <p><strong>Prof. Apiano Morais</strong> · <a href="mailto:apiano.morais@urca.br">apiano.morais@urca.br</a><br>
+  Laboratório de Física Computacional Aplicada (LFCA) · Universidade Regional do Cariri</p>
+</footer>
+
+<script src="assets/js/widgets.js"></script>
+</body>
+</html>

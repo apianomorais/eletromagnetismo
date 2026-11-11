@@ -77,6 +77,17 @@ GRUPOS = [
          'converge em h², limitado pelas quinas, com 2e-6 em malha fina.'),
     ]),
 
+    ('Teorias alternativas', [
+        ('weber.py', 'Capítulo 12',
+         'A força de Weber implementada e posta à prova: conservações, massa '
+         'efetiva de Helmholtz, Ampère contra Grassmann e a ausência de '
+         'radiação.',
+         'O raio crítico dá exatamente 2rₑ; a energia se conserva sem campo '
+         'nenhum; Ampère e Grassmann coincidem em 1e-15 sobre a espira '
+         'fechada; e o oscilador que vive 4 ns em Maxwell vive para sempre em '
+         'Weber.'),
+    ]),
+
     ('Potenciais, radiação e calibre', [
         ('lienard_wiechert.py', 'Capítulo 10',
          'Resolve o tempo retardado por bisseção e monta os campos de uma carga '
