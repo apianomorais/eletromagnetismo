@@ -127,8 +127,10 @@ correta é que <em>todo</em> magnetismo da matéria é um efeito quântico: ele
 depende de níveis discretos e do spin. O modelo de órbita acima acerta a ordem
 de grandeza e o sinal porque imita, com linguagem clássica, o que a mecânica
 quântica faz de verdade.
-<a href="''' + FE + r'''/aula05.html">A função de partição que torna isso
-preciso está no Módulo 5 da Física Estatística.</a></p>
+<a href="''' + FE + r'''/aula09.html#s1">A demonstração do teorema, em quatro
+linhas, está na abertura do Módulo 9 da Física Estatística</a>, e a função de
+partição em que ela se apoia,
+<a href="''' + FE + r'''/aula05.html">no Módulo 5</a>.</p>
 </div>
 
 <h3>Paramagnetismo: alinhamento contra a desordem</h3>
