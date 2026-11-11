@@ -25,17 +25,17 @@
    =================================================================== */
 
 :root{
-  --azul:#1c2c60;
-  --azul-claro:#3a4e8f;
-  --azul-pastel:#eceff8;
-  --vinho:#a8181d;
-  --verde:#1d6b63;
+  --azul:#2b3240;
+  --azul-claro:#4f5a6b;
+  --azul-pastel:#edf0f4;
+  --vinho:#b05a1f;
+  --verde:#2c6e63;
   --ambar:#b5831f;
   --tinta:#1b1f24;
   --tinta-suave:#4a5560;
   --papel:#ffffff;
-  --papel-alt:#f7f8fc;
-  --borda:#d9ddea;
+  --papel-alt:#f7f8fa;
+  --borda:#dde2e8;
   --raio:10px;
   --sombra:0 1px 3px rgba(28,44,96,.10), 0 6px 20px rgba(28,44,96,.06);
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
@@ -579,3 +579,15 @@ h3.unidade:first-of-type{margin-top:1.2rem}
   font-size:.82rem;color:var(--tinta-suave);text-align:center;
   margin-top:.35rem;line-height:1.35}
 @media (max-width:620px){.figuras{gap:1.4rem}.figuras figure{flex:1 1 100%}}
+
+/* Figura de um exemplo trabalhado: a geometria antes das contas */
+/* O destaque centraliza, o que serve a uma frase, mas não a um exemplo
+   trabalhado de vários parágrafos: ali o texto volta a ser alinhado. */
+.destaque p,.destaque ul,.destaque ol{text-align:left}
+.destaque.citacao p{text-align:center}
+
+figure.figura-exemplo{margin:1.1rem auto 1.3rem;max-width:34rem}
+figure.figura-exemplo img{width:100%;height:auto;display:block}
+figure.figura-exemplo figcaption{
+  font-size:.84rem;color:var(--tinta-suave);text-align:center;
+  margin-top:.45rem;line-height:1.4}

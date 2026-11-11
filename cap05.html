@@ -276,6 +276,10 @@
   um campo uniforme \(B_0 = 0{,}25\,\mathrm{T}\) de um ímã permanente, com o campo
   perpendicular ao plano da espira. Os dois lados verticais também sentem força,
   mas elas são horizontais, iguais e opostas, e se cancelam. Sobra a vertical:</p>
+  <figure class="figura-exemplo">
+    <img src="assets/img/cap05_balanca.svg" alt="A espira pendurada: só o lado de baixo está dentro do campo, e a força que ele sente é equilibrada pelo peso no outro prato.">
+    <figcaption>A espira pendurada: só o lado de baixo está dentro do campo, e a força que ele sente é equilibrada pelo peso no outro prato.</figcaption>
+  </figure>
   \[ F_m = I\,a\,B_0. \]
   <p>Pendure uma massa \(m = 2{,}0\,\mathrm{g}\) no outro prato e pergunte qual
   corrente equilibra a balança:</p>
@@ -553,24 +557,28 @@
   <p>Por simetria cilíndrica, \(\vet{B}\) é azimutal e só depende de \(s\), então
   a curva amperiana é sempre um círculo e o lado esquerdo é sempre \(B\,2\pi s\).
   Só muda a corrente enlaçada.</p>
+  <figure class="figura-exemplo" style="max-width:40rem">
+    <img src="assets/img/cap05_coaxial.svg" alt="Corte do cabo e o perfil de B(s): cresce dentro do condutor central, cai como 1/s no vão, cai mais depressa dentro da malha e zera fora dela.">
+    <figcaption>Corte do cabo e o perfil de B(s): cresce dentro do condutor central, cai como 1/s no vão, cai mais depressa dentro da malha e zera fora dela.</figcaption>
+  </figure>
 
-  <p><strong>Dentro do condutor central</strong> (\(s<a\)): a corrente enlaçada é
+  <p><strong>Dentro do condutor central</strong> (\(s \lt a\)): a corrente enlaçada é
   a fração da área,</p>
   \[ I_{\text{enl}} = I\,\frac{\pi s^2}{\pi a^2}
      \;\Rightarrow\; B = \frac{\mu_0 I s}{2\pi a^2}. \]
   <p>Cresce linearmente do eixo até a superfície.</p>
 
-  <p><strong>Entre os condutores</strong> (\(a<s<b\)): toda a corrente central
+  <p><strong>Entre os condutores</strong> (\(a \lt s \lt b\)): toda a corrente central
   está enlaçada,</p>
   \[ B = \frac{\mu_0 I}{2\pi s}, \]
   <p>idêntico ao fio infinito. É nesta região que vive o campo do cabo.</p>
 
-  <p><strong>Dentro da malha</strong> (\(b<s<c\)): a corrente de volta entra
+  <p><strong>Dentro da malha</strong> (\(b \lt s \lt c\)): a corrente de volta entra
   progressivamente, com sinal contrário,</p>
   \[ I_{\text{enl}} = I - I\,\frac{s^2-b^2}{c^2-b^2}
      \;\Rightarrow\; B = \frac{\mu_0 I}{2\pi s}\,\frac{c^2-s^2}{c^2-b^2}. \]
 
-  <p><strong>Fora do cabo</strong> (\(s>c\)): as duas correntes se cancelam,</p>
+  <p><strong>Fora do cabo</strong> (\(s \gt c\)): as duas correntes se cancelam,</p>
   \[ I_{\text{enl}} = I - I = 0 \;\Rightarrow\; B = 0. \]
 
   <p>E aqui está a razão de ser do cabo coaxial: do lado de fora ele não produz
@@ -628,6 +636,10 @@
   esférica de raio \(R\) tem carga \(Q\) distribuída uniformemente na superfície e
   gira com velocidade angular \(\omega\) em torno do eixo \(z\). Queremos o campo
   dentro e fora.</p>
+  <figure class="figura-exemplo">
+    <img src="assets/img/cap05_casca.svg" alt="A casca girante: cada faixa de superfície é uma espira de corrente K = sigma v. Dentro, os campos somam um campo uniforme; fora, o de um dipolo.">
+    <figcaption>A casca girante: cada faixa de superfície é uma espira de corrente K = sigma v. Dentro, os campos somam um campo uniforme; fora, o de um dipolo.</figcaption>
+  </figure>
 
   <p>A densidade superficial é \(\sigma = Q/4\pi R^2\) e a velocidade de um ponto
   da casca a um ângulo polar \(\theta'\) é \(v = \omega R\sen\theta'\), na direção
