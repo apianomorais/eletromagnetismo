@@ -48,6 +48,11 @@ window.MathJax = {
       /* divergente e rotacional, para o eletromagnetismo */
       divg: ['\\nabla\\cdot #1', 1],
       rot: ['\\nabla\\times #1', 1],
+      /* integral de superfície fechada: o MathJax não traz \oiint,
+         que vem do pacote esint do LaTeX. O caractere Unicode U+222F
+         é o próprio símbolo, e aceita limites como qualquer operador. */
+      oiint: '\\mathop{\\Large ∯}',
+      oiiint: '\\mathop{\\Large ∰}',
       R: '\\mathbb{R}',
       N: '\\mathbb{N}'
     }
