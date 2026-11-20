@@ -44,8 +44,14 @@ LISTA = [
         \frac{\vers{R}}{R^2}. \]</p>
      <p>São diferentes em <em>direção</em> (posição retardada contra presente) e
      em <em>módulo</em> (o fator angular). A \(v = 0{,}5c\) e \(\theta =
-     90^\circ\), por exemplo, o fator vale \(1/\sqrt{1-0{,}25}\cdot ... \) — a
-     conta dá \(1{,}155\), ou seja, 15 % de diferença só no módulo.</p>
+     90^\circ\), por exemplo, o fator vale</p>
+     <p>\[ \frac{1-0{,}25}{\left(1-0{,}25\right)^{3/2}}
+        = \frac{1}{\sqrt{0{,}75}} = 1{,}155, \]</p>
+     <p>ou seja, 15 % de diferença só no módulo, e isso perpendicularmente ao
+     movimento, que é onde o achatamento mais aparece. Na direção do movimento,
+     \(\theta = 0\), o mesmo fator vale \(1-v^2/c^2 = 0{,}75\): o campo
+     <em>encolhe</em> por um quarto. O efeito líquido é a conhecida panqueca de
+     campo, achatada na direção do movimento e reforçada de lado.</p>
      <p><b>De onde vem o erro.</b> O campo é \(-\nabla V - \partial\vet{A}
      /\partial t\), e o gradiente age também sobre o \(t_r\), que depende de
      \(\vet{r}\). Essa dependência produz termos com \(\dot\rho\) e

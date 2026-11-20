@@ -9,8 +9,15 @@ A numeração segue os capítulos do Griffiths, que é o livro que os alunos
 têm na mão, e não o calendário. Cada capítulo diz de quantos encontros de
 duas horas ele precisa, para o plano fechar as trinta aulas por disciplina.
 """
+import datetime
 import io
 import pathlib
+
+# Carimbo de versao nos arquivos de CSS e JS. Sem ele, o navegador do aluno
+# continua servindo a folha de estilo e os widgets antigos depois de uma
+# atualizacao, e ferramentas/versao.py so resolvia ate a proxima geracao,
+# porque o molde reescrevia os enderecos sem o carimbo.
+VERSAO = datetime.datetime.now().strftime('%Y%m%d%H%M')
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 
@@ -94,8 +101,8 @@ CABECA = '''<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{titulo} | Eletromagnetismo</title>
 <link rel="icon" type="image/png" href="assets/img/favicon.png">
-<link rel="stylesheet" href="assets/css/estilo.css">
-<script src="assets/js/comum.js"></script>
+<link rel="stylesheet" href="assets/css/estilo.css?v={versao}">
+<script src="assets/js/comum.js?v={versao}"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body>
@@ -132,7 +139,7 @@ CABECA = '''<!DOCTYPE html>
   <!--PORTAL--><p><small><a href="https://apianomorais.github.io/">Todas as disciplinas e a pesquisa em apianomorais.github.io</a></small></p><!--/PORTAL-->
 </footer>
 
-<script src="assets/js/widgets.js"></script>
+<script src="assets/js/widgets.js?v={versao}"></script>
 </body>
 </html>
 '''
@@ -193,7 +200,7 @@ def escreve(arquivo, corpo, secoes=None, chapeu=None, titulo_proprio=False):
     if chapeu is None and disc:
         chapeu = '%s · %d encontro%s de duas horas' % (disc, enc, 's' if enc > 1 else '')
     pag = CABECA.format(
-        titulo=titulo, h1=titulo, menu=menu(arquivo), lateral=lateral,
+        titulo=titulo, h1=titulo, versao=VERSAO, menu=menu(arquivo), lateral=lateral,
         chapeu='  <p class="chapeu">%s</p>' % chapeu if chapeu else '',
         subtitulo='  <p class="subtitulo">%s</p>' % sub if sub else '',
         corpo=corpo, nav=navegacao(arquivo))
