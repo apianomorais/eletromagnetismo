@@ -16,7 +16,6 @@ PRE = {'EM I': 'DF003, DM004', 'EM II': 'DF032', 'EM III': 'DF033'}
 
 HERO = '''
   <section class="heroi">
-    <img class="placa-logo" src="assets/img/logo.svg" alt="LFCA | URCA">
     <div>
       <h1>Eletromagnetismo</h1>
       <p class="subtitulo">Da pedra que atrai o ferro até a luz que é campo: as
