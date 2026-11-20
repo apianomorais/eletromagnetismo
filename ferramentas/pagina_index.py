@@ -2,6 +2,7 @@
 """A página de entrada: o mapa das três disciplinas sobre os capítulos."""
 import molde
 from molde import CAPITULOS, DISCIPLINAS, escreve, existe
+import sites
 
 EMENTAS = {
     'EM I': 'Eletrostática. Técnicas especiais na eletrostática. Campos elétricos '
@@ -307,7 +308,11 @@ CORPO = '''
     </article>
   </div>
 
-  <h2 id="s6">6. Bibliografia</h2>
+  <h2 id="s6">6. Outros sites</h2>
+
+<!--OUTROSSITES-->
+
+  <h2 id="s7">7. Bibliografia</h2>
 
   <div class="cartoes">
     <article class="cartao">
@@ -336,11 +341,14 @@ CORPO = '''
 
 def main():
     corpo = HERO + CORPO.replace('<!--CARTOES-->', cartoes_disciplinas())
+    corpo = corpo.replace('<!--OUTROSSITES-->',
+                          sites.bloco(aqui='eletromagnetismo', titulo=False))
     escreve('index.html', corpo,
             secoes=['De onde isso tudo veio', 'As três disciplinas',
                     'Como as páginas são feitas',
                     'O computador no eletromagnetismo',
-                    'Duas páginas fora da numeração', 'Bibliografia'],
+                    'Duas páginas fora da numeração', 'Outros sites',
+                    'Bibliografia'],
             chapeu='', titulo_proprio=True)
 
 
